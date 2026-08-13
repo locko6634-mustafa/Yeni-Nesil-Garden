@@ -20,11 +20,11 @@ jobs:
     environment: production
     timeout-minutes: 15
     env:
-      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+      SERVER_HOST_FINGERPRINT: ${{ secrets.SERVER_HOST_FINGERPRINT }}
 
     steps:
       - name: Checkout repository
@@ -52,12 +52,17 @@ jobs:
           set -euo pipefail
           ready=true
 
-          for variable in DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS; do
+          for variable in SERVER_HOST SERVER_PORT SERVER_USER SERVER_SSH_KEY SERVER_HOST_FINGERPRINT; do
             if test -z "${!variable:-}"; then
               echo "::warning::Missing GitHub secret: ${variable}"
               ready=false
             fi
           done
+
+          if test "$ready" = "true" && [[ ! "$SERVER_HOST_FINGERPRINT" =~ ^SHA256:[A-Za-z0-9+/]{43}$ ]]; then
+            echo "::warning::SERVER_HOST_FINGERPRINT is not a valid SHA256 fingerprint"
+            ready=false
+          fi
 
           echo "ready=${ready}" >> "$GITHUB_OUTPUT"
 
@@ -67,9 +72,20 @@ jobs:
         run: |
           set -euo pipefail
           install -m 700 -d "$HOME/.ssh"
-          printf '%s\n' "$DEPLOY_SSH_KEY" > "$HOME/.ssh/id_ed25519"
-          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
-          chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+          printf '%s\n' "$SERVER_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+
+          scanned_host_key="$(ssh-keyscan -p "$SERVER_PORT" -t ed25519 "$SERVER_HOST" 2>/dev/null)"
+          test -n "$scanned_host_key"
+          scanned_fingerprint="$(printf '%s\n' "$scanned_host_key" | ssh-keygen -lf - -E sha256 | awk '{print $2}')"
+
+          if test "$scanned_fingerprint" != "$SERVER_HOST_FINGERPRINT"; then
+            echo "SSH host fingerprint mismatch" >&2
+            exit 1
+          fi
+
+          printf '%s\n' "$scanned_host_key" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
 
       - name: Sync static site
         if: steps.deployment.outputs.ready == 'true'
@@ -83,8 +99,8 @@ jobs:
             --exclude='run_server.bat' \
             --exclude='sunucu_baslat.ps1' \
             --exclude='tools/' \
-            -e "ssh -i $HOME/.ssh/id_ed25519 -p $DEPLOY_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
-            ./ "$DEPLOY_USER@$DEPLOY_HOST:/opt/yesil-nesil-garden/app/"
+            -e "ssh -i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            ./ "$SERVER_USER@$SERVER_HOST:/opt/yesil-nesil-garden/app/"
 
       - name: Build and activate release
         if: steps.deployment.outputs.ready == 'true'
@@ -92,10 +108,10 @@ jobs:
         run: |
           set -euo pipefail
           ssh -i "$HOME/.ssh/id_ed25519" \
-            -p "$DEPLOY_PORT" \
+            -p "$SERVER_PORT" \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
-            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "$SERVER_USER@$SERVER_HOST" \
             "cd /opt/yesil-nesil-garden/app && BUILD_REVISION='$GITHUB_SHA' docker compose -f compose.production.yaml up -d --build --remove-orphans --wait --wait-timeout 90"
 
       - name: Remove temporary SSH key
