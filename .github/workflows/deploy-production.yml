@@ -45,20 +45,34 @@ jobs:
           test -d assets
           node --check script.js
 
-      - name: Configure SSH
+      - name: Check deployment secrets
+        id: deployment
         shell: bash
         run: |
           set -euo pipefail
+          ready=true
+
           for variable in DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS; do
-            test -n "${!variable:-}" || { echo "Missing GitHub secret: ${variable}"; exit 1; }
+            if test -z "${!variable:-}"; then
+              echo "::warning::Missing GitHub secret: ${variable}"
+              ready=false
+            fi
           done
 
+          echo "ready=${ready}" >> "$GITHUB_OUTPUT"
+
+      - name: Configure SSH
+        if: steps.deployment.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
           install -m 700 -d "$HOME/.ssh"
           printf '%s\n' "$DEPLOY_SSH_KEY" > "$HOME/.ssh/id_ed25519"
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
           chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
 
       - name: Sync static site
+        if: steps.deployment.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -73,6 +87,7 @@ jobs:
             ./ "$DEPLOY_USER@$DEPLOY_HOST:/opt/yesil-nesil-garden/app/"
 
       - name: Build and activate release
+        if: steps.deployment.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
