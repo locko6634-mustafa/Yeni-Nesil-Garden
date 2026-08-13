@@ -1,0 +1,48 @@
+name: yesil-nesil-garden
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+      args:
+        BUILD_REVISION: ${BUILD_REVISION:-unknown}
+    image: yesil-nesil-garden-frontend:latest
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /run
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - edge_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=edge_proxy
+      - traefik.http.routers.yesil-nesil-garden.rule=Host(`yesilnesilthegarden.com`) || Host(`www.yesilnesilthegarden.com`)
+      - traefik.http.routers.yesil-nesil-garden.entrypoints=websecure
+      - traefik.http.routers.yesil-nesil-garden.tls=true
+      - traefik.http.routers.yesil-nesil-garden.tls.certresolver=mytlschallenge
+      - traefik.http.routers.yesil-nesil-garden.middlewares=yesil-nesil-garden-www-redirect,yesil-nesil-garden-compress
+      - traefik.http.services.yesil-nesil-garden.loadbalancer.server.port=8080
+      - traefik.http.middlewares.yesil-nesil-garden-www-redirect.redirectregex.regex=^https://www\.yesilnesilthegarden\.com/(.*)
+      - traefik.http.middlewares.yesil-nesil-garden-www-redirect.redirectregex.replacement=https://yesilnesilthegarden.com/$${1}
+      - traefik.http.middlewares.yesil-nesil-garden-www-redirect.redirectregex.permanent=true
+      - traefik.http.middlewares.yesil-nesil-garden-compress.compress=true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+networks:
+  edge_proxy:
+    external: true
+    name: edge_proxy
