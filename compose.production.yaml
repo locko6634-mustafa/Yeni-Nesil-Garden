@@ -12,10 +12,9 @@ services:
     init: true
     read_only: true
     tmpfs:
-      - /run
-      - /var/cache/nginx
-      - /var/run
-      - /tmp
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777
+      - /var/cache/nginx:rw,noexec,nosuid,nodev,size=16m,mode=1777
+      - /var/run:rw,noexec,nosuid,nodev,size=4m,mode=1777
     security_opt:
       - no-new-privileges:true
     cap_drop:
