@@ -585,7 +585,7 @@ h3 {
 .package-tabs {
   margin-left: auto;
   margin-right: auto;
-  max-width: 760px;
+  max-width: 1180px;
 }
 
 .package-tabs > input {
@@ -661,7 +661,7 @@ h3 {
 }
 
 .package-card {
-  align-self: start;
+  align-self: stretch;
   background: #fff;
   border: 1px solid rgba(31, 53, 24, 0.12);
   border-radius: 18px;
@@ -1796,6 +1796,14 @@ blockquote {
 
   .henna-grid .package-feature-list:not(.is-expanded) li:nth-child(n + 6) {
     display: none;
+  }
+
+  .henna-grid .package-card.is-expanded .package-cover {
+    display: none;
+  }
+
+  .henna-grid .package-card.is-expanded .package-body {
+    margin-left: 0;
   }
 
   .package-more {
