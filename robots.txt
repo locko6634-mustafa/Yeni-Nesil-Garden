@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /healthz
 
 Sitemap: https://yesilnesilthegarden.com/sitemap.xml

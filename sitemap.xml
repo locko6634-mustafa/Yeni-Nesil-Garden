@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
   <url>
     <loc>https://yesilnesilthegarden.com/</loc>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/assets/gardens/hayal-bahce-hero-1600.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/assets/gardens/hayal-bahce-thumb.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/assets/gardens/kale-bahce-thumb.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/assets/gardens/masal-bahce-thumb.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/assets/gardens/ruya-bahce-thumb.webp</image:loc>
+    </image:image>
   </url>
 </urlset>

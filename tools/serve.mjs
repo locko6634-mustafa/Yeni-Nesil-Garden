@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 export const DEFAULT_HOST = "127.0.0.1";
 const publicDirectories = new Set(["assets"]);
-const publicRootFiles = new Set(["index.html", "styles.css", "script.js"]);
+const publicRootFiles = new Set(["index.html", "styles.css", "script.js", "robots.txt", "sitemap.xml"]);
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -21,6 +21,8 @@ const mimeTypes = {
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
   ".woff": "font/woff",
   ".woff2": "font/woff2"
 };
