@@ -628,17 +628,23 @@ h3 {
 .package-track {
   display: grid;
   overflow: hidden;
+  position: relative;
 }
 
 .package-grid {
+  align-content: start;
+  align-self: start;
   display: grid;
   gap: 12px;
   grid-area: 1 / 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   opacity: 0;
   pointer-events: none;
+  position: absolute;
   transform: translateX(28px);
   transition: opacity 220ms ease, transform 220ms ease;
+  visibility: hidden;
+  width: 100%;
 }
 
 .photo-grid {
@@ -649,10 +655,13 @@ h3 {
 #henna-packages:checked ~ .package-track .henna-grid {
   opacity: 1;
   pointer-events: auto;
+  position: relative;
   transform: translateX(0);
+  visibility: visible;
 }
 
 .package-card {
+  align-self: start;
   background: #fff;
   border: 1px solid rgba(31, 53, 24, 0.12);
   border-radius: 18px;
