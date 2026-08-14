@@ -24,11 +24,18 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=edge_proxy
-      - traefik.http.routers.yesil-nesil-garden.rule=Host(`yesilnesilthegarden.com`) || Host(`www.yesilnesilthegarden.com`)
+      - traefik.http.routers.yesil-nesil-garden.rule=Host(`yesilnesilthegarden.com`)
       - traefik.http.routers.yesil-nesil-garden.entrypoints=websecure
       - traefik.http.routers.yesil-nesil-garden.tls=true
       - traefik.http.routers.yesil-nesil-garden.tls.certresolver=mytlschallenge
-      - traefik.http.routers.yesil-nesil-garden.middlewares=yesil-nesil-garden-www-redirect,yesil-nesil-garden-compress
+      - traefik.http.routers.yesil-nesil-garden.middlewares=yesil-nesil-garden-compress
+      - traefik.http.routers.yesil-nesil-garden.service=yesil-nesil-garden
+      - traefik.http.routers.yesil-nesil-garden-www.rule=Host(`www.yesilnesilthegarden.com`)
+      - traefik.http.routers.yesil-nesil-garden-www.entrypoints=websecure
+      - traefik.http.routers.yesil-nesil-garden-www.tls=true
+      - traefik.http.routers.yesil-nesil-garden-www.tls.certresolver=mytlschallenge
+      - traefik.http.routers.yesil-nesil-garden-www.middlewares=yesil-nesil-garden-www-redirect
+      - traefik.http.routers.yesil-nesil-garden-www.service=yesil-nesil-garden
       - traefik.http.services.yesil-nesil-garden.loadbalancer.server.port=8080
       - traefik.http.middlewares.yesil-nesil-garden-www-redirect.redirectregex.regex=^https://www\.yesilnesilthegarden\.com/(.*)
       - traefik.http.middlewares.yesil-nesil-garden-www-redirect.redirectregex.replacement=https://yesilnesilthegarden.com/$${1}

@@ -1888,10 +1888,10 @@ blockquote {
   }
 
   .contact {
-    border-radius: 28px;
-    margin-left: 12px;
-    margin-right: 12px;
-    padding: 28px 18px;
+    border-radius: 22px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 22px 14px;
   }
 
   .contact-heading,
@@ -1900,42 +1900,111 @@ blockquote {
   }
 
   .contact-heading {
-    gap: 14px;
-    margin-bottom: 24px;
+    gap: 10px;
+    margin-bottom: 18px;
   }
 
   .contact-heading h2 {
-    font-size: clamp(2.35rem, 10vw, 3.2rem);
+    font-size: clamp(2rem, 8.8vw, 2.65rem);
+    line-height: 0.98;
   }
 
   .contact-heading > p {
-    font-size: 0.96rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .contact .eyebrow {
+    font-size: 0.68rem;
+    margin-bottom: 9px;
+  }
+
+  .contact-layout {
+    gap: 12px;
   }
 
   .contact-map,
   .contact-map iframe {
-    min-height: 390px;
+    min-height: 238px;
+  }
+
+  .contact-map {
+    border-radius: 18px;
   }
 
   .contact-map-bar {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
+    border-radius: 13px;
+    bottom: 8px;
+    gap: 8px;
+    left: 8px;
+    padding: 9px 10px;
+    right: 8px;
   }
 
   .contact-map-bar a {
-    width: 100%;
+    border-radius: 10px;
+    font-size: 0.74rem;
+    min-height: 38px;
+    padding: 0 10px;
+  }
+
+  .contact-map-bar div span {
+    font-size: 0.58rem;
+  }
+
+  .contact-map-bar strong {
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+
+  .contact-channels {
+    gap: 9px;
   }
 
   .contact-channel {
-    min-height: 136px;
-    padding: 18px;
+    border-radius: 17px;
+    gap: 12px;
+    min-height: 82px;
+    padding: 12px 14px;
+  }
+
+  .contact-icon {
+    border-radius: 13px;
+    height: 44px;
+    width: 44px;
+  }
+
+  .contact-icon svg {
+    height: 23px;
+    width: 23px;
+  }
+
+  .contact-channel-copy small {
+    display: none;
+  }
+
+  .contact-channel-copy strong {
+    font-size: 1.06rem;
+  }
+
+  .contact-channel-copy > span {
+    font-size: 0.78rem;
+    margin-top: 3px;
+  }
+
+  .contact-arrow {
+    font-size: 1.1rem;
   }
 
   .contact-phone {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
+    border-radius: 13px;
+    font-size: 0.72rem;
+    min-height: 48px;
+    padding: 9px 12px;
+  }
+
+  .contact-phone strong {
+    font-size: 0.82rem;
   }
 
   .faq {
