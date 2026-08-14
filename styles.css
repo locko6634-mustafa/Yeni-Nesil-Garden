@@ -760,6 +760,10 @@ h3 {
   padding-top: 12px;
 }
 
+.package-more {
+  display: none;
+}
+
 .media-section,
 .satisfaction {
   max-width: none;
@@ -1560,6 +1564,38 @@ blockquote {
     gap: 7px;
   }
 
+  .henna-grid .package-feature-list:not(.is-expanded) li:nth-child(n + 6) {
+    display: none;
+  }
+
+  .package-more {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid rgba(31, 53, 24, 0.1);
+    color: var(--rose);
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 900;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding: 12px 0 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .package-more-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: transform 180ms ease;
+  }
+
+  .package-more[aria-expanded="true"] .package-more-icon {
+    transform: rotate(45deg);
+  }
+
   .package-body a {
     font-size: 0.78rem;
     padding-top: 9px;
@@ -1728,6 +1764,7 @@ blockquote {
 
 a:focus-visible,
 summary:focus-visible,
+.package-more:focus-visible,
 .package-switch label:focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 4px;

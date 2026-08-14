@@ -16,3 +16,22 @@ detailsElements.forEach((detailsElement) => {
   syncExpandedState();
   detailsElement.addEventListener("toggle", syncExpandedState);
 });
+
+const packageMoreButtons = document.querySelectorAll(".package-more");
+
+packageMoreButtons.forEach((button) => {
+  const featureList = document.getElementById(button.getAttribute("aria-controls"));
+  const buttonLabel = button.querySelector("span:first-child");
+
+  if (!featureList || !buttonLabel) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    const isExpanded = button.getAttribute("aria-expanded") === "true";
+
+    button.setAttribute("aria-expanded", String(!isExpanded));
+    featureList.classList.toggle("is-expanded", !isExpanded);
+    buttonLabel.textContent = isExpanded ? "Devamını Göster" : "Daha Az Göster";
+  });
+});
