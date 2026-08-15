@@ -834,6 +834,23 @@ h3 {
   grid-template-columns: minmax(0, 0.9fr) minmax(330px, 1fr);
 }
 
+.menu-copy {
+  position: relative;
+}
+
+.menu-intro {
+  color: rgba(31, 53, 24, 0.68);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.65;
+  margin: 22px 0 0;
+  max-width: 32ch;
+}
+
+.menu-note {
+  display: none;
+}
+
 .menu-list {
   background: transparent;
   border: 0;
@@ -1489,6 +1506,158 @@ blockquote {
   }
 }
 
+/* Tablet ve masaustu olcek katmani; mobil (<= 720px) kurallarindan tamamen izoledir. */
+@media (min-width: 721px) {
+  .hero {
+    padding-left: clamp(24px, 4vw, 72px);
+    padding-right: clamp(24px, 4vw, 72px);
+  }
+
+  .nav,
+  .hero-showcase,
+  .section,
+  .services,
+  .packages .section-heading,
+  .package-tabs,
+  .package-grid,
+  .satisfaction .section-heading,
+  .satisfaction-grid {
+    max-width: 1320px;
+  }
+
+  .section {
+    padding-left: clamp(24px, 4vw, 72px);
+    padding-right: clamp(24px, 4vw, 72px);
+  }
+
+  .packages,
+  .satisfaction,
+  .faq {
+    max-width: none;
+  }
+
+  .hero-showcase,
+  .hero-overlay {
+    min-height: clamp(620px, 48vw, 720px);
+  }
+
+  .hero-overlay {
+    padding: clamp(44px, 5vw, 72px);
+    width: min(800px, 70%);
+  }
+
+  .hero-overlay h1 {
+    font-size: clamp(5.4rem, 7vw, 6.6rem);
+  }
+
+  .hero-overlay .lead {
+    font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  }
+}
+
+@media (min-width: 921px) {
+  #menu.split {
+    align-items: stretch;
+    gap: clamp(18px, 2vw, 28px);
+    grid-template-columns: minmax(320px, 0.72fr) minmax(580px, 1.28fr);
+    padding-bottom: 92px;
+    padding-top: 92px;
+  }
+
+  #menu .menu-copy {
+    align-content: start;
+    background:
+      radial-gradient(circle at 92% 9%, rgba(233, 202, 144, 0.18) 0 72px, transparent 73px),
+      linear-gradient(145deg, #183b27 0%, #0b2f20 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    box-shadow: 0 24px 52px rgba(20, 49, 31, 0.16);
+    display: grid;
+    min-height: 100%;
+    overflow: hidden;
+    padding: clamp(38px, 4vw, 58px);
+  }
+
+  #menu .menu-copy::after {
+    border: 1px solid rgba(233, 202, 144, 0.26);
+    border-radius: 50%;
+    bottom: -102px;
+    content: "";
+    height: 270px;
+    position: absolute;
+    right: -96px;
+    width: 270px;
+  }
+
+  #menu .menu-copy .eyebrow {
+    color: #e9ca90;
+    position: relative;
+    z-index: 1;
+  }
+
+  #menu .menu-copy h2 {
+    color: #fffdf7;
+    font-size: clamp(3.65rem, 4.5vw, 5rem);
+    line-height: 0.94;
+    margin-top: 20px;
+    max-width: 7ch;
+    position: relative;
+    z-index: 1;
+  }
+
+  #menu .menu-intro {
+    color: rgba(255, 253, 247, 0.7);
+    font-size: clamp(1rem, 1.15vw, 1.1rem);
+    margin-top: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #menu .menu-note {
+    align-self: end;
+    color: rgba(233, 202, 144, 0.72);
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    margin-top: 64px;
+    position: relative;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  #menu .menu-list {
+    gap: 10px;
+  }
+
+  #menu .menu-row {
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(31, 53, 24, 0.07);
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  #menu .menu-row:hover {
+    border-color: rgba(184, 111, 96, 0.28);
+    box-shadow: 0 18px 34px rgba(31, 53, 24, 0.11);
+    transform: translateX(-4px);
+  }
+
+  #menu .menu-row summary {
+    grid-template-columns: 68px 1fr auto;
+    min-height: 98px;
+    padding: 14px 18px;
+  }
+
+  #menu .menu-row summary > img {
+    height: 68px;
+    width: 68px;
+  }
+
+  #menu .menu-row summary span {
+    font-size: clamp(1.28rem, 1.65vw, 1.62rem);
+  }
+}
+
 @media (min-width: 721px) and (max-width: 920px) {
   .nav {
     gap: 8px;
@@ -1516,6 +1685,81 @@ blockquote {
     font-size: 0.76rem;
     min-height: 34px;
     padding: 8px 7px;
+  }
+
+  .hero {
+    padding-bottom: 36px;
+  }
+
+  .hero-showcase {
+    margin-top: 28px;
+  }
+
+  .hero-showcase,
+  .hero-overlay {
+    min-height: 600px;
+  }
+
+  .hero-overlay {
+    padding: clamp(36px, 5.5vw, 46px);
+    width: 100%;
+  }
+
+  .hero-overlay h1 {
+    font-size: clamp(4.45rem, 9.5vw, 5rem);
+    max-width: 11ch;
+  }
+
+  .hero-overlay .lead {
+    border-radius: 20px;
+    max-width: 590px;
+    padding: 18px 20px;
+  }
+
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .package-card {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .contact-heading,
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-heading {
+    gap: 16px;
+  }
+
+  .contact-map,
+  .contact-map iframe {
+    min-height: 360px;
+  }
+
+  .contact-channels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+  }
+
+  .contact-channel {
+    gap: 12px;
+    grid-template-columns: auto minmax(0, 1fr);
+    min-height: 132px;
+    padding: 18px;
+  }
+
+  .contact-arrow {
+    display: none;
+  }
+
+  .contact-phone {
+    grid-column: 1 / -1;
+  }
+
+  .faq-heading h2 {
+    white-space: normal;
   }
 }
 
