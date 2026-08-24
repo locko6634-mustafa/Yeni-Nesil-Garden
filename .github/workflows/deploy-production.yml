@@ -50,6 +50,50 @@ jobs:
           test -d assets
           node --check script.js
 
+      - name: Validate production routes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          image_name="yesil-nesil-garden:ci-${GITHUB_SHA}"
+          container_name="yesil-nesil-garden-ci"
+
+          cleanup() {
+            docker rm -f "$container_name" >/dev/null 2>&1 || true
+          }
+
+          trap cleanup EXIT
+
+          docker build \
+            --build-arg "BUILD_REVISION=$GITHUB_SHA" \
+            --tag "$image_name" \
+            --file deploy/Dockerfile \
+            .
+
+          docker run \
+            --detach \
+            --rm \
+            --name "$container_name" \
+            --publish 127.0.0.1:18080:8080 \
+            "$image_name"
+
+          for attempt in {1..20}; do
+            if curl --fail --silent --show-error http://127.0.0.1:18080/healthz >/dev/null; then
+              break
+            fi
+
+            sleep 1
+          done
+
+          curl --fail --silent --show-error http://127.0.0.1:18080/healthz >/dev/null
+
+          for route in / /hayal-bahce /kale-bahce /masal-bahce /ruya-bahce; do
+            curl --fail --silent --show-error "http://127.0.0.1:18080$route" >/dev/null
+          done
+
+          redirect_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/hayal-bahce.html)"
+          test "$redirect_status" = "301"
+
       - name: Check deployment secrets
         id: deployment
         shell: bash
