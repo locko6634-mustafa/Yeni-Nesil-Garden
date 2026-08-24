@@ -55,13 +55,40 @@ test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanı
   assert.ok(content.match(/https:\/\/yesilnesilthegarden\.com\/media\/images\//g)?.length >= 20);
 });
 
-test("mobil galeri ilk görünümde üç fotoğrafı mozaik olarak gösterir", async () => {
-  const content = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
-  const mobileRules = content.match(/@media \(max-width: 720px\) \{([\s\S]*?)@media \(max-width: 390px\)/)?.[1];
+test("diğer bahçe galerileri tüm mekan ve altı çift fotoğrafını sunucudan kullanır", async () => {
+  const galleries = [
+    { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 7 },
+    { file: "kale-bahce.html", id: "kale-gallery", slug: "kale-bahce", venueCount: 8 },
+    { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 12 }
+  ];
 
-  assert.ok(mobileRules);
-  assert.match(mobileRules, /"a a"\s+"a a"\s+"b c"/);
-  assert.match(mobileRules, /max-height:\s*clamp\(348px, calc\(93vw \+ 18px\), 693px\)/);
+  for (const { file, id, slug, venueCount } of galleries) {
+    const content = await readFile(path.join(rootDir, file), "utf8");
+    const gallery = content.match(new RegExp(`<div class="garden-gallery" id="${id}">([\\s\\S]*?)<\\/div>`))?.[1];
+
+    assert.ok(gallery, `${file}: galeri bulunamadı.`);
+    assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/mekan-\\d{2}\\.webp`, "g"))?.length, venueCount);
+    assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/cift-\\d{2}\\.webp`, "g"))?.length, 6);
+    assert.doesNotMatch(content, /\.\/media\/images\//);
+    assert.match(content, /class="garden-video-grid"/);
+    assert.equal(content.match(/Video yakında/g)?.length, 2);
+    assert.doesNotMatch(content, /<(?:video|iframe)\b/);
+  }
+});
+
+test("tüm bahçe sayfaları ortak asimetrik galeri düzenini kullanır", async () => {
+  const content = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
+
+  assert.match(content, /\.garden-gallery\s*\{[\s\S]*?column-count:\s*2/);
+  assert.match(content, /\.garden-gallery figure\s*\{[\s\S]*?break-inside:\s*avoid/);
+  assert.match(content, /\.garden-gallery img\s*\{[\s\S]*?height:\s*auto/);
+  assert.doesNotMatch(content, /grid-template-areas:/);
+
+  for (const gardenPage of gardenPages) {
+    const pageContent = await readFile(path.join(rootDir, gardenPage), "utf8");
+    assert.match(pageContent, /class="garden-gallery"/);
+  }
 });
 
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
