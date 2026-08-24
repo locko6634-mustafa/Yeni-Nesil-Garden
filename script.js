@@ -48,11 +48,59 @@ galleryToggleButtons.forEach((button) => {
     return;
   }
 
+  const figures = Array.from(gallery.children).filter((element) => element.tagName === "FIGURE");
+  const columnsContainer = document.createElement("div");
+  const columns = [document.createElement("div"), document.createElement("div")];
+  const estimatedColumnHeights = [0, 0];
+
+  columnsContainer.className = "garden-gallery-columns";
+  columns.forEach((column) => {
+    column.className = "garden-gallery-column";
+    columnsContainer.append(column);
+  });
+
+  figures.forEach((figure, index) => {
+    const image = figure.querySelector("img");
+    const imageWidth = Number(image?.getAttribute("width")) || 1;
+    const imageHeight = Number(image?.getAttribute("height")) || imageWidth;
+    const targetColumn = index === 0 || estimatedColumnHeights[0] <= estimatedColumnHeights[1] ? 0 : 1;
+
+    figure.style.setProperty("--gallery-reveal-delay", `${Math.min(index * 24, 192)}ms`);
+    columns[targetColumn].append(figure);
+    estimatedColumnHeights[targetColumn] += imageHeight / imageWidth;
+  });
+
+  gallery.insertBefore(columnsContainer, button);
+  gallery.classList.add("is-layout-ready");
+
+  const syncExpandedHeight = () => {
+    gallery.style.setProperty("--gallery-expanded-height", `${Math.ceil(columnsContainer.scrollHeight)}px`);
+  };
+
+  requestAnimationFrame(syncExpandedHeight);
+  window.addEventListener("load", syncExpandedHeight, { once: true });
+
+  if ("ResizeObserver" in window) {
+    const galleryResizeObserver = new ResizeObserver(syncExpandedHeight);
+    galleryResizeObserver.observe(columnsContainer);
+  }
+
+  let openingAnimationTimer;
+
   button.addEventListener("click", () => {
     const isExpanded = button.getAttribute("aria-expanded") === "true";
 
+    syncExpandedHeight();
     button.setAttribute("aria-expanded", String(!isExpanded));
     gallery.classList.toggle("is-expanded", !isExpanded);
     buttonLabel.textContent = isExpanded ? "Tümünü Gör" : "Daha Az Göster";
+
+    clearTimeout(openingAnimationTimer);
+    gallery.classList.remove("is-opening");
+
+    if (!isExpanded) {
+      requestAnimationFrame(() => gallery.classList.add("is-opening"));
+      openingAnimationTimer = window.setTimeout(() => gallery.classList.remove("is-opening"), 800);
+    }
   });
 });

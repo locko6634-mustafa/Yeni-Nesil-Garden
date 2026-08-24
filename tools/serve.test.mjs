@@ -55,20 +55,21 @@ test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanı
   assert.ok(content.match(/https:\/\/yesilnesilthegarden\.com\/media\/images\//g)?.length >= 20);
 });
 
-test("diğer bahçe galerileri tüm mekan ve altı çift fotoğrafını sunucudan kullanır", async () => {
+test("diğer bahçe galerileri ayıklanmış mekan ve çeşitli çift fotoğraflarını sunucudan kullanır", async () => {
   const galleries = [
-    { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 7 },
-    { file: "kale-bahce.html", id: "kale-gallery", slug: "kale-bahce", venueCount: 8 },
-    { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 12 }
+    { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 6, coupleCount: 7, removed: ["mekan-05"] },
+    { file: "kale-bahce.html", id: "kale-gallery", slug: "kale-bahce", venueCount: 6, coupleCount: 8, removed: ["mekan-03", "mekan-04"] },
+    { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 11, coupleCount: 7, removed: ["mekan-03"] }
   ];
 
-  for (const { file, id, slug, venueCount } of galleries) {
+  for (const { file, id, slug, venueCount, coupleCount, removed } of galleries) {
     const content = await readFile(path.join(rootDir, file), "utf8");
     const gallery = content.match(new RegExp(`<div class="garden-gallery" id="${id}">([\\s\\S]*?)<\\/div>`))?.[1];
 
     assert.ok(gallery, `${file}: galeri bulunamadı.`);
     assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/mekan-\\d{2}\\.webp`, "g"))?.length, venueCount);
-    assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/cift-\\d{2}\\.webp`, "g"))?.length, 6);
+    assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/cift-\\d{2}\\.webp`, "g"))?.length, coupleCount);
+    for (const removedImage of removed) assert.doesNotMatch(gallery, new RegExp(`${slug}/${removedImage}\\.webp`));
     assert.doesNotMatch(content, /\.\/media\/images\//);
     assert.match(content, /class="garden-video-grid"/);
     assert.equal(content.match(/Video yakında/g)?.length, 2);
@@ -78,17 +79,27 @@ test("diğer bahçe galerileri tüm mekan ve altı çift fotoğrafını sunucuda
 
 test("tüm bahçe sayfaları ortak asimetrik galeri düzenini kullanır", async () => {
   const content = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
 
-  assert.match(content, /\.garden-gallery\s*\{[\s\S]*?column-count:\s*2/);
-  assert.match(content, /\.garden-gallery figure\s*\{[\s\S]*?break-inside:\s*avoid/);
+  assert.match(content, /\.garden-gallery-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2/);
+  assert.match(content, /\.garden-gallery-column\s*\{[\s\S]*?flex-direction:\s*column/);
   assert.match(content, /\.garden-gallery img\s*\{[\s\S]*?height:\s*auto/);
-  assert.doesNotMatch(content, /grid-template-areas:/);
+  assert.match(content, /\.garden-gallery\.is-opening figure\s*\{[\s\S]*?animation:/);
+  assert.match(script, /estimatedColumnHeights/);
+  assert.match(script, /--gallery-expanded-height/);
+  assert.match(script, /ResizeObserver/);
 
   for (const gardenPage of gardenPages) {
     const pageContent = await readFile(path.join(rootDir, gardenPage), "utf8");
     assert.match(pageContent, /class="garden-gallery"/);
   }
+});
+
+test("Rüya Bahçe galerisi birebir tekrar fotoğrafını içermez", async () => {
+  const content = await readFile(path.join(rootDir, "ruya-bahce.html"), "utf8");
+
+  assert.doesNotMatch(content, /ruya-bahce\/mekan-03\.webp/);
 });
 
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {

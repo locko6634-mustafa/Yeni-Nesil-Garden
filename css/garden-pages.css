@@ -220,17 +220,35 @@
 }
 
 .garden-gallery {
-  column-count: 2;
-  column-gap: 14px;
   display: block;
   max-height: 900px;
   overflow: hidden;
   position: relative;
   transition: max-height 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: max-height;
+}
+
+.garden-gallery:not(.is-layout-ready) {
+  column-count: 2;
+  column-gap: 14px;
+}
+
+.garden-gallery-columns {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-bottom: 78px;
+}
+
+.garden-gallery-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
 }
 
 .garden-gallery::after {
-  background: linear-gradient(0deg, rgba(13, 25, 10, 0.4), transparent 100%);
+  background: linear-gradient(0deg, rgba(13, 25, 10, 0.4) 0%, rgba(13, 25, 10, 0.12) 58%, transparent 100%);
   bottom: 0;
   content: "";
   height: 150px;
@@ -243,7 +261,7 @@
 }
 
 .garden-gallery.is-expanded {
-  max-height: 4200px;
+  max-height: calc(var(--gallery-expanded-height, 4200px) + 1px);
 }
 
 .garden-gallery.is-expanded::after {
@@ -258,6 +276,27 @@
   margin: 0 0 14px;
   overflow: hidden;
   position: relative;
+}
+
+.garden-gallery.is-layout-ready figure {
+  margin: 0;
+}
+
+.garden-gallery.is-opening figure {
+  animation: garden-gallery-card-reveal 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--gallery-reveal-delay, 0ms);
+}
+
+@keyframes garden-gallery-card-reveal {
+  from {
+    opacity: 0.72;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .garden-gallery figure::after {
@@ -650,8 +689,16 @@
   }
 
   .garden-gallery {
-    column-gap: 9px;
     max-height: clamp(420px, 115vw, 720px);
+  }
+
+  .garden-gallery:not(.is-layout-ready) {
+    column-gap: 9px;
+  }
+
+  .garden-gallery-columns,
+  .garden-gallery-column {
+    gap: 9px;
   }
 
   .garden-gallery figure,
@@ -661,8 +708,14 @@
     margin-bottom: 9px;
   }
 
+  .garden-gallery.is-layout-ready figure,
+  .garden-gallery.is-layout-ready figure:first-child,
+  .garden-gallery.is-layout-ready figure:nth-child(n + 2) {
+    margin-bottom: 0;
+  }
+
   .garden-gallery-toggle {
-    bottom: 18px;
+    bottom: 28px;
   }
 
   .garden-video-grid,
@@ -735,6 +788,10 @@
   .garden-hero-primary,
   .garden-other-card img {
     transition: none;
+  }
+
+  .garden-gallery.is-opening figure {
+    animation: none;
   }
 
   .garden-card:hover,
