@@ -187,11 +187,6 @@
   padding: clamp(76px, 9vw, 116px) clamp(14px, 4vw, 58px);
 }
 
-.garden-story {
-  max-width: 760px;
-}
-
-.garden-story h2,
 .garden-media-heading h2,
 .garden-other-heading h2 {
   color: #1f1b17;
@@ -201,16 +196,12 @@
   margin: 0;
 }
 
-.garden-story__copy > p:last-child {
-  color: #526048;
-  font-size: 1.08rem;
-  line-height: 1.75;
-  margin: 24px 0 0;
-  max-width: 650px;
-}
-
 .garden-media-section {
   margin-top: clamp(88px, 11vw, 144px);
+}
+
+.garden-detail-content > .garden-media-section:first-child {
+  margin-top: 0;
 }
 
 .garden-media-heading {
