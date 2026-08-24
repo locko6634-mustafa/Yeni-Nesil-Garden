@@ -48,6 +48,13 @@ test("Hayal Bahçe galerisi beş mekan ve altı çift fotoğrafını kullanır",
   assert.equal(imagePaths.filter((match) => match[1] === "cift").length, 6);
 });
 
+test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanır", async () => {
+  const content = await readFile(path.join(rootDir, "hayal-bahce.html"), "utf8");
+
+  assert.doesNotMatch(content, /\.\/media\/images\//);
+  assert.ok(content.match(/https:\/\/yesilnesilthegarden\.com\/media\/images\//g)?.length >= 20);
+});
+
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
 
