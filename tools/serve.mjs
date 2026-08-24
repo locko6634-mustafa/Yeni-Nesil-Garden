@@ -8,7 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 export const DEFAULT_HOST = "127.0.0.1";
-const publicDirectories = new Set(["assets"]);
+const publicDirectoryRoots = new Map([
+  ["assets", path.resolve(rootDir, "assets")],
+  ["media", path.resolve(rootDir, "storage", "public-media")]
+]);
 const publicRootFiles = new Set([
   "index.html",
   "styles.css",
@@ -78,9 +81,13 @@ function resolvePublicPath(rawUrl) {
     return { filePath: path.resolve(rootDir, rootFile), boundaryPath: rootDir, rootFile: true };
   }
 
-  if (!publicDirectories.has(segments[0])) return null;
-  const boundaryPath = path.resolve(rootDir, segments[0]);
-  return { filePath: path.resolve(rootDir, ...segments), boundaryPath, rootFile: false };
+  const boundaryPath = publicDirectoryRoots.get(segments[0]);
+  if (!boundaryPath) return null;
+  return {
+    filePath: path.resolve(boundaryPath, ...segments.slice(1)),
+    boundaryPath,
+    rootFile: false
+  };
 }
 
 async function serveRequest(req, res) {

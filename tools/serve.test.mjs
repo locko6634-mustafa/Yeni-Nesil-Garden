@@ -1,0 +1,59 @@
+import assert from "node:assert/strict";
+import { readFile, stat } from "node:fs/promises";
+import path from "node:path";
+import test from "node:test";
+import { fileURLToPath } from "node:url";
+
+import { createStaticServer, DEFAULT_HOST } from "./serve.mjs";
+
+const toolsDir = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.resolve(toolsDir, "..");
+const mediaRoot = path.join(rootDir, "storage", "public-media");
+const sourceFiles = [
+  "index.html",
+  "hayal-bahce.html",
+  "kale-bahce.html",
+  "masal-bahce.html",
+  "ruya-bahce.html",
+  "sitemap.xml"
+];
+
+test("tüm medya URL'leri public-media altındaki gerçek dosyalara karşılık gelir", async () => {
+  const mediaPathPattern = /(?:https:\/\/yesilnesilthegarden\.com\/|\.\/)?media\/([\w./-]+\.(?:gif|ico|jpe?g|png|svg|webp))/gi;
+  const referencedPaths = new Set();
+
+  for (const sourceFile of sourceFiles) {
+    const content = await readFile(path.join(rootDir, sourceFile), "utf8");
+    for (const match of content.matchAll(mediaPathPattern)) referencedPaths.add(match[1]);
+  }
+
+  assert.ok(referencedPaths.size > 0, "Kaynak dosyalarda medya URL'si bulunamadı.");
+
+  for (const referencedPath of referencedPaths) {
+    const mediaFile = path.resolve(mediaRoot, ...referencedPath.split("/"));
+    assert.equal(path.relative(mediaRoot, mediaFile).startsWith(".."), false);
+    assert.equal((await stat(mediaFile)).isFile(), true, `Eksik medya: ${referencedPath}`);
+  }
+});
+
+test("yerel sunucu /media yolunu sunar ve eski görsel yolunu reddeder", async (t) => {
+  const server = createStaticServer();
+  await new Promise((resolve) => server.listen(0, DEFAULT_HOST, resolve));
+  t.after(() => new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve()))));
+
+  const address = server.address();
+  assert.ok(address && typeof address === "object");
+  const origin = `http://${DEFAULT_HOST}:${address.port}`;
+
+  const [mediaResponse, fontResponse, legacyResponse] = await Promise.all([
+    fetch(`${origin}/media/images/favicon-32.png`),
+    fetch(`${origin}/assets/fonts/jost-latin.woff2`),
+    fetch(`${origin}/assets/favicon-32.png`)
+  ]);
+
+  assert.equal(mediaResponse.status, 200);
+  assert.equal(mediaResponse.headers.get("content-type"), "image/png");
+  assert.equal(fontResponse.status, 200);
+  assert.equal(fontResponse.headers.get("content-type"), "font/woff2");
+  assert.equal(legacyResponse.status, 404);
+});

@@ -10,7 +10,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY index.html hayal-bahce.html kale-bahce.html masal-bahce.html ruya-bahce.html /usr/share/nginx/html/
 COPY styles.css garden-pages.css script.js robots.txt sitemap.xml /usr/share/nginx/html/
-COPY assets /usr/share/nginx/html/assets
+COPY assets/fonts /usr/share/nginx/html/assets/fonts
 
 RUN chown -R nginx:nginx \
       /etc/nginx/conf.d \
