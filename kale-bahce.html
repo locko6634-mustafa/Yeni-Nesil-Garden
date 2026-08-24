@@ -17,6 +17,7 @@
     <link rel="preload" as="image" href="./media/images/gardens/kale-bahce-thumb.webp">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./css/garden-pages.css">
+    <script src="./script.js" defer></script>
     <title>Kale Bahçe | Yeşil Nesil Garden</title>
   </head>
   <body class="garden-detail-page">
@@ -62,12 +63,16 @@
             <div class="garden-media-heading">
               <div><p class="eyebrow">Fotoğraf galerisi</p><h2 id="gallery-title">Kale Bahçe'den kareler</h2></div>
             </div>
-            <div class="garden-gallery">
+            <div class="garden-gallery" id="kale-gallery">
               <figure><img src="./media/images/gardens/kale-bahce-thumb.webp" alt="Kale Bahçe genel masa düzeni" width="980" height="653" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-dugun.webp" alt="Kır düğünü masa ve dekorasyon örneği" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-nikah-seremonisi.webp" alt="Açık hava nikâh seremonisi örneği" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/couples/couple-2.webp" alt="Açık hava davetinde çift" width="480" height="480" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/gardens/hayal-bahce-thumb.webp" alt="Yeşil davet alanından atmosfer karesi" width="880" height="660" loading="lazy" decoding="async"></figure>
+              <button class="garden-gallery-toggle" type="button" aria-expanded="false" aria-controls="kale-gallery">
+                <span>Tümünü Gör</span>
+                <span aria-hidden="true">↓</span>
+              </button>
             </div>
           </section>
 

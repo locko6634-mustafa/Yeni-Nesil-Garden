@@ -17,6 +17,7 @@
     <link rel="preload" as="image" href="./media/images/gardens/ruya-bahce-thumb.webp">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./css/garden-pages.css">
+    <script src="./script.js" defer></script>
     <title>Rüya Bahçe | Yeşil Nesil Garden</title>
   </head>
   <body class="garden-detail-page">
@@ -62,12 +63,16 @@
             <div class="garden-media-heading">
               <div><p class="eyebrow">Fotoğraf galerisi</p><h2 id="gallery-title">Rüya Bahçe'den kareler</h2></div>
             </div>
-            <div class="garden-gallery">
+            <div class="garden-gallery" id="ruya-gallery">
               <figure><img src="./media/images/gardens/ruya-bahce-thumb.webp" alt="Rüya Bahçe gece masa düzeni" width="980" height="653" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-kina.webp" alt="Sıcak ışıklarla hazırlanan gece daveti" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/couples/couple-4.webp" alt="Bahçede akşam kutlamasına katılan çift" width="480" height="480" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-dugun.webp" alt="Açık hava düğün dekorasyonu örneği" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/gardens/masal-bahce-thumb.webp" alt="Bahçe davet alanından atmosfer karesi" width="980" height="653" loading="lazy" decoding="async"></figure>
+              <button class="garden-gallery-toggle" type="button" aria-expanded="false" aria-controls="ruya-gallery">
+                <span>Tümünü Gör</span>
+                <span aria-hidden="true">↓</span>
+              </button>
             </div>
           </section>
 

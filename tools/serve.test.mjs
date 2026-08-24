@@ -36,6 +36,20 @@ test("tüm medya URL'leri public-media altındaki gerçek dosyalara karşılık 
   }
 });
 
+test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
+  const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
+
+  for (const gardenPage of gardenPages) {
+    const content = await readFile(path.join(rootDir, gardenPage), "utf8");
+    const galleryId = content.match(/<div class="garden-gallery" id="([^"]+)">/)?.[1];
+
+    assert.ok(galleryId, `${gardenPage}: galeri kimliği eksik.`);
+    assert.match(content, new RegExp(`class="garden-gallery-toggle"[^>]+aria-expanded="false"[^>]+aria-controls="${galleryId}"`));
+    assert.match(content, /<span>Tümünü Gör<\/span>/);
+    assert.match(content, /<script src="\.\/script\.js" defer><\/script>/);
+  }
+});
+
 test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları reddeder", async (t) => {
   const server = createStaticServer();
   await new Promise((resolve) => server.listen(0, DEFAULT_HOST, resolve));

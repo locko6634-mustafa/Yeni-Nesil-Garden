@@ -17,6 +17,7 @@
     <link rel="preload" as="image" href="./media/images/gardens/masal-bahce-thumb.webp">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./css/garden-pages.css">
+    <script src="./script.js" defer></script>
     <title>Masal Bahçe | Yeşil Nesil Garden</title>
   </head>
   <body class="garden-detail-page">
@@ -62,12 +63,16 @@
             <div class="garden-media-heading">
               <div><p class="eyebrow">Fotoğraf galerisi</p><h2 id="gallery-title">Masal Bahçe'den kareler</h2></div>
             </div>
-            <div class="garden-gallery">
+            <div class="garden-gallery" id="masal-gallery">
               <figure><img src="./media/images/gardens/masal-bahce-thumb.webp" alt="Masal Bahçe genel görünümü" width="980" height="653" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-nisan.webp" alt="Bahçede romantik nişan dekorasyonu" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-nikah-seremonisi.webp" alt="Bahçede açık hava seremonisi" width="980" height="680" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/couples/couple-3.webp" alt="Bahçe atmosferinde kutlama yapan çift" width="480" height="480" loading="lazy" decoding="async"></figure>
               <figure><img src="./media/images/services/service-kina.webp" alt="Bahçede sıcak ışıklı davet düzeni" width="980" height="680" loading="lazy" decoding="async"></figure>
+              <button class="garden-gallery-toggle" type="button" aria-expanded="false" aria-controls="masal-gallery">
+                <span>Tümünü Gör</span>
+                <span aria-hidden="true">↓</span>
+              </button>
             </div>
           </section>
 
