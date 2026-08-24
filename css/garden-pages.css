@@ -102,10 +102,6 @@
 }
 
 .garden-detail-hero__layout {
-  align-items: end;
-  display: grid;
-  gap: clamp(28px, 5vw, 64px);
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 270px);
   margin-top: auto;
   width: 100%;
 }
@@ -185,41 +181,6 @@
   outline-offset: 4px;
 }
 
-.garden-hero-meta {
-  backdrop-filter: blur(18px);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 22px;
-  list-style: none;
-  margin: 0;
-  padding: 6px 18px;
-}
-
-.garden-hero-meta li {
-  display: grid;
-  gap: 2px;
-  padding: 16px 0;
-}
-
-.garden-hero-meta li + li {
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.garden-hero-meta span {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.garden-hero-meta strong {
-  color: white;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 1.18rem;
-  line-height: 1.2;
-}
-
 .garden-detail-content {
   margin: 0 auto;
   max-width: 1180px;
@@ -227,10 +188,7 @@
 }
 
 .garden-story {
-  align-items: start;
-  display: grid;
-  gap: clamp(40px, 7vw, 86px);
-  grid-template-columns: minmax(0, 1.05fr) minmax(350px, 0.95fr);
+  max-width: 760px;
 }
 
 .garden-story h2,
@@ -249,39 +207,6 @@
   line-height: 1.75;
   margin: 24px 0 0;
   max-width: 650px;
-}
-
-.garden-facts {
-  display: grid;
-  gap: 12px;
-  margin: 0;
-}
-
-.garden-facts div {
-  background: rgba(255, 255, 255, 0.66);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  display: grid;
-  gap: 8px;
-  min-height: 112px;
-  padding: 20px 22px;
-}
-
-.garden-facts dt {
-  color: #6c765f;
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.garden-facts dd {
-  color: var(--deep);
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.18rem, 2vw, 1.42rem);
-  font-weight: 700;
-  line-height: 1.25;
-  margin: 0;
 }
 
 .garden-media-section {
@@ -614,30 +539,6 @@
 }
 
 @media (max-width: 920px) {
-  .garden-detail-hero__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .garden-hero-meta {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 0 16px;
-  }
-
-  .garden-hero-meta li {
-    padding: 14px;
-  }
-
-  .garden-hero-meta li + li {
-    border-left: 1px solid rgba(255, 255, 255, 0.18);
-    border-top: 0;
-  }
-
-  .garden-story {
-    align-items: start;
-    grid-template-columns: 1fr;
-  }
-
   .garden-gallery {
     grid-auto-rows: 220px;
   }
@@ -705,18 +606,6 @@
   .garden-hero-primary,
   .garden-hero-link {
     font-size: 0.88rem;
-  }
-
-  .garden-hero-meta {
-    border-radius: 18px;
-  }
-
-  .garden-hero-meta li {
-    padding: 12px 8px;
-  }
-
-  .garden-hero-meta strong {
-    font-size: 0.98rem;
   }
 
   .garden-media-heading,
@@ -817,13 +706,6 @@
     border-radius: 16px;
   }
 
-  .garden-hero-meta span {
-    font-size: 0.58rem;
-  }
-
-  .garden-hero-meta strong {
-    font-size: 0.84rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
