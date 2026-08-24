@@ -433,6 +433,41 @@
   text-underline-offset: 5px;
 }
 
+.garden-card {
+  display: block;
+  padding: 0;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.garden-card-hitarea {
+  display: grid;
+  gap: 16px;
+  min-height: 100%;
+  padding: 10px;
+}
+
+.garden-card:hover,
+.garden-card:focus-within {
+  border-color: rgba(111, 167, 43, 0.42);
+  box-shadow: 0 22px 52px rgba(31, 53, 24, 0.16);
+  transform: translateY(-4px);
+}
+
+.garden-card-hitarea:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
+
+.garden-card-hitarea:hover .garden-card-link > span,
+.garden-card-hitarea:focus-visible .garden-card-link > span {
+  transform: translateX(4px);
+}
+
+.garden-card-link > span {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
 @media (max-width: 920px) {
   .garden-story {
     align-items: start;
@@ -565,11 +600,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .garden-card,
+  .garden-card-link > span,
   .garden-gallery img,
   .garden-other-card img {
     transition: none;
   }
 
+  .garden-card:hover,
+  .garden-card:focus-within,
   .garden-gallery figure:hover img,
   .garden-other-card:hover img {
     transform: none;
