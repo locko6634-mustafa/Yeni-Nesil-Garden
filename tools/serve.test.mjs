@@ -36,6 +36,18 @@ test("tüm medya URL'leri public-media altındaki gerçek dosyalara karşılık 
   }
 });
 
+test("Hayal Bahçe galerisi beş mekan ve altı çift fotoğrafını kullanır", async () => {
+  const content = await readFile(path.join(rootDir, "hayal-bahce.html"), "utf8");
+  const gallery = content.match(/<div class="garden-gallery" id="hayal-gallery">([\s\S]*?)<\/div>/)?.[1];
+
+  assert.ok(gallery, "Hayal Bahçe galerisi bulunamadı.");
+
+  const imagePaths = [...gallery.matchAll(/media\/images\/gardens\/hayal-bahce\/(mekan|cift)-\d{2}\.webp/g)];
+  assert.equal(imagePaths.length, 11);
+  assert.equal(imagePaths.filter((match) => match[1] === "mekan").length, 5);
+  assert.equal(imagePaths.filter((match) => match[1] === "cift").length, 6);
+});
+
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
 
