@@ -47,8 +47,10 @@ jobs:
           test -f compose.production.yaml
           test -f deploy/Dockerfile
           test -f deploy/nginx.conf
-          test -d assets
+          test -d assets/fonts
+          test -d storage/public-media/images
           node --check script.js
+          node --test tools/serve.test.mjs
 
       - name: Validate production routes
         shell: bash
@@ -75,6 +77,7 @@ jobs:
             --rm \
             --name "$container_name" \
             --publish 127.0.0.1:18080:8080 \
+            --mount "type=bind,source=$PWD/storage/public-media,target=/srv/yesil-nesil-garden-media,readonly" \
             "$image_name"
 
           for attempt in {1..20}; do
@@ -90,6 +93,11 @@ jobs:
           for route in / /hayal-bahce /kale-bahce /masal-bahce /ruya-bahce; do
             curl --fail --silent --show-error "http://127.0.0.1:18080$route" >/dev/null
           done
+
+          curl --fail --silent --show-error http://127.0.0.1:18080/media/images/favicon-32.png >/dev/null
+
+          legacy_media_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/assets/favicon-32.png)"
+          test "$legacy_media_status" = "404"
 
           redirect_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/hayal-bahce.html)"
           test "$redirect_status" = "301"
