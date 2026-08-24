@@ -10,12 +10,12 @@ const rootDir = path.resolve(__dirname, "..");
 export const DEFAULT_HOST = "127.0.0.1";
 const publicDirectoryRoots = new Map([
   ["assets", path.resolve(rootDir, "assets")],
+  ["css", path.resolve(rootDir, "css")],
   ["media", path.resolve(rootDir, "storage", "public-media")]
 ]);
 const publicRootFiles = new Set([
   "index.html",
   "styles.css",
-  "garden-pages.css",
   "script.js",
   "robots.txt",
   "sitemap.xml",

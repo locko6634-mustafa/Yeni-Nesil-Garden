@@ -36,7 +36,7 @@ test("tüm medya URL'leri public-media altındaki gerçek dosyalara karşılık 
   }
 });
 
-test("yerel sunucu /media yolunu sunar ve eski görsel yolunu reddeder", async (t) => {
+test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları reddeder", async (t) => {
   const server = createStaticServer();
   await new Promise((resolve) => server.listen(0, DEFAULT_HOST, resolve));
   t.after(() => new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve()))));
@@ -45,15 +45,21 @@ test("yerel sunucu /media yolunu sunar ve eski görsel yolunu reddeder", async (
   assert.ok(address && typeof address === "object");
   const origin = `http://${DEFAULT_HOST}:${address.port}`;
 
-  const [mediaResponse, fontResponse, legacyResponse] = await Promise.all([
+  const [mediaResponse, fontResponse, cssResponse, legacyMediaResponse, legacyCssResponse] = await Promise.all([
     fetch(`${origin}/media/images/favicon-32.png`),
     fetch(`${origin}/assets/fonts/jost-latin.woff2`),
-    fetch(`${origin}/assets/favicon-32.png`)
+    fetch(`${origin}/css/garden-pages.css`),
+    fetch(`${origin}/assets/favicon-32.png`),
+    fetch(`${origin}/garden-pages.css`)
   ]);
 
   assert.equal(mediaResponse.status, 200);
   assert.equal(mediaResponse.headers.get("content-type"), "image/png");
   assert.equal(fontResponse.status, 200);
   assert.equal(fontResponse.headers.get("content-type"), "font/woff2");
-  assert.equal(legacyResponse.status, 404);
+  assert.equal(cssResponse.status, 200);
+  assert.equal(cssResponse.headers.get("content-type"), "text/css; charset=utf-8");
+  assert.equal(cssResponse.headers.get("cache-control"), "no-cache");
+  assert.equal(legacyMediaResponse.status, 404);
+  assert.equal(legacyCssResponse.status, 404);
 });

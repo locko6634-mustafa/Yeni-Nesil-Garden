@@ -42,7 +42,7 @@ jobs:
           test -f masal-bahce.html
           test -f ruya-bahce.html
           test -f styles.css
-          test -f garden-pages.css
+          test -f css/garden-pages.css
           test -f script.js
           test -f compose.production.yaml
           test -f deploy/Dockerfile
@@ -94,7 +94,13 @@ jobs:
             curl --fail --silent --show-error "http://127.0.0.1:18080$route" >/dev/null
           done
 
+          curl --fail --silent --show-error http://127.0.0.1:18080/css/garden-pages.css >/dev/null
+          curl --fail --silent --show-error --head http://127.0.0.1:18080/css/garden-pages.css | grep --ignore-case '^Cache-Control: no-cache'
+
           curl --fail --silent --show-error http://127.0.0.1:18080/media/images/favicon-32.png >/dev/null
+
+          legacy_css_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/garden-pages.css)"
+          test "$legacy_css_status" = "404"
 
           legacy_media_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/assets/favicon-32.png)"
           test "$legacy_media_status" = "404"
