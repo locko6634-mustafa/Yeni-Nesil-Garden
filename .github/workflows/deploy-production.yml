@@ -37,7 +37,12 @@ jobs:
         run: |
           set -euo pipefail
           test -f index.html
+          test -f hayal-bahce.html
+          test -f kale-bahce.html
+          test -f masal-bahce.html
+          test -f ruya-bahce.html
           test -f styles.css
+          test -f garden-pages.css
           test -f script.js
           test -f compose.production.yaml
           test -f deploy/Dockerfile

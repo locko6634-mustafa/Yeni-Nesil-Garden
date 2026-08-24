@@ -9,7 +9,24 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 export const DEFAULT_HOST = "127.0.0.1";
 const publicDirectories = new Set(["assets"]);
-const publicRootFiles = new Set(["index.html", "styles.css", "script.js", "robots.txt", "sitemap.xml"]);
+const publicRootFiles = new Set([
+  "index.html",
+  "styles.css",
+  "garden-pages.css",
+  "script.js",
+  "robots.txt",
+  "sitemap.xml",
+  "hayal-bahce.html",
+  "kale-bahce.html",
+  "masal-bahce.html",
+  "ruya-bahce.html"
+]);
+const cleanPageRoutes = new Map([
+  ["hayal-bahce", "hayal-bahce.html"],
+  ["kale-bahce", "kale-bahce.html"],
+  ["masal-bahce", "masal-bahce.html"],
+  ["ruya-bahce", "ruya-bahce.html"]
+]);
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -56,8 +73,9 @@ function resolvePublicPath(rawUrl) {
   if (segments.length === 0 || segments.some((segment) => segment.startsWith("."))) return null;
 
   if (segments.length === 1) {
-    if (!publicRootFiles.has(segments[0])) return null;
-    return { filePath: path.resolve(rootDir, segments[0]), boundaryPath: rootDir, rootFile: true };
+    const rootFile = cleanPageRoutes.get(segments[0]) ?? segments[0];
+    if (!publicRootFiles.has(rootFile)) return null;
+    return { filePath: path.resolve(rootDir, rootFile), boundaryPath: rootDir, rootFile: true };
   }
 
   if (!publicDirectories.has(segments[0])) return null;
