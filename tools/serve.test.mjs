@@ -55,6 +55,15 @@ test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanı
   assert.ok(content.match(/https:\/\/yesilnesilthegarden\.com\/media\/images\//g)?.length >= 20);
 });
 
+test("mobil galeri ilk görünümde üç fotoğrafı mozaik olarak gösterir", async () => {
+  const content = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const mobileRules = content.match(/@media \(max-width: 720px\) \{([\s\S]*?)@media \(max-width: 390px\)/)?.[1];
+
+  assert.ok(mobileRules);
+  assert.match(mobileRules, /"a a"\s+"a a"\s+"b c"/);
+  assert.match(mobileRules, /max-height:\s*clamp\(348px, calc\(93vw \+ 18px\), 693px\)/);
+});
+
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
 
