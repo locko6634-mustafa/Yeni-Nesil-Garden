@@ -348,86 +348,6 @@
   z-index: 2;
 }
 
-.garden-journey {
-  background: var(--deep);
-  border-radius: 34px;
-  color: white;
-  overflow: hidden;
-  padding: clamp(28px, 5vw, 58px);
-  position: relative;
-}
-
-.garden-journey::before {
-  background: radial-gradient(circle, rgba(168, 190, 141, 0.24), transparent 68%);
-  content: "";
-  height: 420px;
-  pointer-events: none;
-  position: absolute;
-  right: -170px;
-  top: -220px;
-  width: 420px;
-}
-
-.garden-journey .garden-media-heading {
-  position: relative;
-}
-
-.garden-journey .eyebrow {
-  color: #d9bc8e;
-}
-
-.garden-journey .garden-media-heading h2 {
-  color: white;
-  max-width: 700px;
-}
-
-.garden-journey .garden-media-heading > p {
-  color: rgba(255, 255, 255, 0.68);
-}
-
-.garden-journey-list {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-.garden-journey-list li {
-  display: grid;
-  gap: 34px;
-  grid-template-rows: auto 1fr;
-  padding: 28px 28px 6px 0;
-}
-
-.garden-journey-list li + li {
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding-left: 28px;
-}
-
-.garden-journey-list > li > span {
-  color: #d9bc8e;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
-
-.garden-journey-list h3 {
-  color: white;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  line-height: 1.05;
-  margin: 0;
-}
-
-.garden-journey-list p {
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.6;
-  margin: 12px 0 0;
-}
-
 .garden-other {
   background: rgba(255, 255, 255, 0.5);
   border-block: 1px solid var(--line);
@@ -710,29 +630,6 @@
     min-height: 360px;
   }
 
-  .garden-journey {
-    border-radius: 26px;
-    margin-left: -2px;
-    margin-right: -2px;
-  }
-
-  .garden-journey-list {
-    grid-template-columns: 1fr;
-  }
-
-  .garden-journey-list li {
-    gap: 16px;
-    grid-template-columns: 34px 1fr;
-    grid-template-rows: auto;
-    padding: 24px 0;
-  }
-
-  .garden-journey-list li + li {
-    border-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-left: 0;
-  }
-
   .garden-other-card {
     min-height: 240px;
   }
@@ -748,7 +645,7 @@
   }
 
   .garden-detail-page .mobile-bottom-nav {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
