@@ -59,7 +59,7 @@ test("diğer bahçe galerileri ayıklanmış mekan ve çeşitli çift fotoğrafl
   const galleries = [
     { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 6, coupleCount: 7, removed: ["mekan-05"] },
     { file: "kale-bahce.html", id: "kale-gallery", slug: "kale-bahce", venueCount: 6, coupleCount: 8, removed: ["mekan-03", "mekan-04"] },
-    { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 11, coupleCount: 7, removed: ["mekan-03"] }
+    { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 8, coupleCount: 6, removed: ["mekan-03", "mekan-05", "mekan-10", "mekan-12", "cift-06"] }
   ];
 
   for (const { file, id, slug, venueCount, coupleCount, removed } of galleries) {
@@ -96,10 +96,12 @@ test("tüm bahçe sayfaları ortak asimetrik galeri düzenini kullanır", async 
   }
 });
 
-test("Rüya Bahçe galerisi birebir tekrar fotoğrafını içermez", async () => {
+test("Rüya Bahçe galerisi tekrar fotoğraflarını içermez", async () => {
   const content = await readFile(path.join(rootDir, "ruya-bahce.html"), "utf8");
 
-  assert.doesNotMatch(content, /ruya-bahce\/mekan-03\.webp/);
+  for (const removedImage of ["mekan-03", "mekan-05", "mekan-10", "mekan-12", "cift-06"]) {
+    assert.doesNotMatch(content, new RegExp(`ruya-bahce/${removedImage}\\.webp`));
+  }
 });
 
 test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", async () => {
