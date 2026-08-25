@@ -58,6 +58,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 112px;
 }
 
 body {
@@ -81,6 +82,12 @@ a {
 
 main {
   overflow: hidden;
+}
+
+.site-header {
+  min-height: 80px;
+  position: relative;
+  z-index: 60;
 }
 
 .hero {
@@ -113,19 +120,22 @@ main {
 .nav {
   align-items: center;
   backdrop-filter: blur(28px) saturate(180%);
-  background: rgba(255, 255, 255, 0.56);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: linear-gradient(135deg, rgba(22, 40, 18, 0.96), rgba(42, 66, 33, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 22px;
-  box-shadow: 0 12px 38px rgba(31, 53, 24, 0.12);
+  box-shadow: 0 16px 44px rgba(17, 31, 13, 0.22);
   display: flex;
   gap: 18px;
   justify-content: space-between;
-  margin: 0 auto;
+  left: 50%;
+  margin: 0;
   max-width: 1180px;
   padding: 10px 12px;
-  position: sticky;
-  top: 12px;
-  z-index: 5;
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  z-index: 80;
 }
 
 .brand {
@@ -146,7 +156,7 @@ main {
 }
 
 .brand span {
-  color: var(--deep);
+  color: var(--ivory);
   font-size: 0.94rem;
   font-weight: 900;
   letter-spacing: 0;
@@ -156,8 +166,8 @@ main {
 
 .nav-links {
   align-items: center;
-  background: rgba(255, 255, 255, 0.34);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
   display: flex;
   gap: 4px;
@@ -166,15 +176,17 @@ main {
 
 .nav-links a {
   border-radius: 14px;
-  color: rgba(31, 53, 24, 0.82);
+  color: rgba(250, 248, 241, 0.86);
   font-size: 0.92rem;
   font-weight: 800;
   min-height: 38px;
   padding: 10px 13px;
 }
 
-.nav-links a:hover {
-  background: rgba(255, 255, 255, 0.72);
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
 }
 
 .mobile-bottom-nav {
@@ -1685,9 +1697,18 @@ blockquote {
 }
 
 @media (max-width: 720px) {
+  html {
+    scroll-padding-top: 16px;
+  }
+
   body {
     background: linear-gradient(150deg, rgba(245, 246, 239, 0.98), rgba(232, 242, 220, 0.92)), #f5f6ef;
     padding-bottom: calc(62px + env(safe-area-inset-bottom));
+  }
+
+  .site-header {
+    min-height: 0;
+    padding: max(16px, env(safe-area-inset-top)) 12px 0;
   }
 
   .hero {
@@ -1699,9 +1720,13 @@ blockquote {
     border-radius: 24px;
     flex-direction: column;
     gap: 10px;
+    left: auto;
+    margin: 0 auto;
     padding: 10px;
     position: relative;
     top: auto;
+    transform: none;
+    width: 100%;
   }
 
   .brand {
@@ -1726,8 +1751,8 @@ blockquote {
   .mobile-bottom-nav {
     align-items: center;
     backdrop-filter: blur(20px) saturate(150%);
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.62);
+    background: linear-gradient(135deg, rgba(22, 40, 18, 0.96), rgba(42, 66, 33, 0.92));
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 18px;
     bottom: calc(8px + env(safe-area-inset-bottom));
     box-shadow: 0 10px 24px rgba(31, 53, 24, 0.12);
@@ -1745,7 +1770,7 @@ blockquote {
   .mobile-bottom-nav a {
     align-items: center;
     border-radius: 16px;
-    color: rgba(31, 53, 24, 0.84);
+    color: rgba(250, 248, 241, 0.88);
     display: flex;
     font-size: 0.62rem;
     font-weight: 800;

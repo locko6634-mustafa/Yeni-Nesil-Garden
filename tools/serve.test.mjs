@@ -162,7 +162,9 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
 
 test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağlantısı kullanır", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
+  const baseStyles = await readFile(path.join(rootDir, "styles.css"), "utf8");
   const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const detailNavRule = styles.match(/\.garden-detail-header \.nav\s*\{([^}]*)\}/)?.[1];
 
   for (const gardenPage of gardenPages) {
     const content = await readFile(path.join(rootDir, gardenPage), "utf8");
@@ -181,6 +183,19 @@ test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağl
 
   assert.match(styles, /\.garden-detail-header \.nav\s*\{[\s\S]*?linear-gradient[\s\S]*?max-width:\s*1180px/);
   assert.match(styles, /\.garden-detail-page \.mobile-bottom-nav\s*\{[\s\S]*?repeat\(5,/);
+  assert.match(baseStyles, /\.nav\s*\{[\s\S]*?linear-gradient[\s\S]*?position:\s*fixed;[\s\S]*?z-index:\s*80;/);
+  assert.match(baseStyles, /\.brand span\s*\{[\s\S]*?color:\s*var\(--ivory\)/);
+  assert.match(baseStyles, /\.mobile-bottom-nav\s*\{[\s\S]*?linear-gradient/);
+  assert.match(baseStyles, /html\s*\{[\s\S]*?scroll-padding-top:\s*112px/);
+  assert.ok(detailNavRule, "Bahçe detay header CSS kuralı eksik.");
+  assert.doesNotMatch(detailNavRule, /position:\s*relative/);
+
+  const homeContent = await readFile(path.join(rootDir, "index.html"), "utf8");
+  assert.match(homeContent, /<header class="site-header">[\s\S]*?<nav class="nav"[\s\S]*?<\/header>\s*<main>/);
+  assert.doesNotMatch(homeContent, /<section class="hero"[^>]*>[\s\S]{0,80}<nav class="nav"/);
+  assert.match(baseStyles, /\.site-header\s*\{[^}]*z-index:\s*60;/);
+  assert.match(baseStyles, /@media \(max-width:\s*720px\)[\s\S]*?\.nav\s*\{[^}]*position:\s*relative;[^}]*transform:\s*none;/);
+  assert.match(baseStyles, /@media \(max-width:\s*720px\)\s*\{[\s\S]*?scroll-padding-top:\s*16px/);
 });
 
 test("bahçe galerisi görselleri oranı bozulmadan erişilebilir tam ekran görüntülenir", async () => {
