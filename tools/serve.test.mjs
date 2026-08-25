@@ -57,7 +57,7 @@ test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanı
 
 test("diğer bahçe galerileri ayıklanmış mekan ve çeşitli çift fotoğraflarını sunucudan kullanır", async () => {
   const galleries = [
-    { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 6, coupleCount: 7, removed: ["mekan-05"] },
+    { file: "masal-bahce.html", id: "masal-gallery", slug: "masal-bahce", venueCount: 5, coupleCount: 7, removed: ["mekan-01", "mekan-05"] },
     { file: "kale-bahce.html", id: "kale-gallery", slug: "kale-bahce", venueCount: 6, coupleCount: 8, removed: ["mekan-03", "mekan-04"] },
     { file: "ruya-bahce.html", id: "ruya-gallery", slug: "ruya-bahce", venueCount: 8, coupleCount: 6, removed: ["mekan-03", "mekan-05", "mekan-10", "mekan-12", "cift-06"] }
   ];
