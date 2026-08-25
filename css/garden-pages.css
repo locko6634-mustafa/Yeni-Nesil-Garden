@@ -289,6 +289,14 @@
   opacity: 0;
 }
 
+.garden-gallery.has-no-overflow {
+  max-height: none;
+}
+
+.garden-gallery.has-no-overflow::after {
+  opacity: 0;
+}
+
 .garden-gallery figure {
   background: #dfe5d5;
   border-radius: 26px;
@@ -430,6 +438,10 @@
   transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
   white-space: nowrap;
   z-index: 2;
+}
+
+.garden-gallery-toggle[hidden] {
+  display: none;
 }
 
 .garden-gallery-toggle:hover {

@@ -49,6 +49,7 @@ galleryToggleButtons.forEach((button) => {
   }
 
   const figures = Array.from(gallery.children).filter((element) => element.tagName === "FIGURE");
+  const hasMoreImages = figures.length > 5;
   const columnsContainer = document.createElement("div");
   const columns = [document.createElement("div"), document.createElement("div")];
   const estimatedColumnHeights = [0, 0];
@@ -72,6 +73,8 @@ galleryToggleButtons.forEach((button) => {
 
   gallery.insertBefore(columnsContainer, button);
   gallery.classList.add("is-layout-ready");
+  gallery.classList.toggle("has-no-overflow", !hasMoreImages);
+  button.hidden = !hasMoreImages;
 
   const syncExpandedHeight = () => {
     gallery.style.setProperty("--gallery-expanded-height", `${Math.ceil(columnsContainer.scrollHeight)}px`);

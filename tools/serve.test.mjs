@@ -46,6 +46,7 @@ test("Hayal Bahçe galerisi yalnız beş mekan fotoğrafını kullanır", async 
   assert.equal(imagePaths.length, 5);
   assert.equal(imagePaths.filter((match) => match[1] === "mekan").length, 5);
   assert.equal(imagePaths.filter((match) => match[1] === "cift").length, 0);
+  assert.match(gallery, /class="garden-gallery-toggle"[^>]+hidden/);
 });
 
 test("Hayal Bahçe sayfasındaki tüm görseller üretim medya URL'sini kullanır", async () => {
@@ -158,6 +159,13 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
     assert.match(content, /<span>Tümünü Gör<\/span>/);
     assert.match(content, /<script src="\.\/script\.js" defer><\/script>/);
   }
+
+  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+
+  assert.match(script, /button\.hidden = !hasMoreImages/);
+  assert.match(script, /gallery\.classList\.toggle\("has-no-overflow", !hasMoreImages\)/);
+  assert.match(styles, /\.garden-gallery-toggle\[hidden\]\s*\{[\s\S]*?display:\s*none/);
 });
 
 test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağlantısı kullanır", async () => {
