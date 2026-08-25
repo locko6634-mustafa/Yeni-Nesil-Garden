@@ -98,9 +98,12 @@ test("bahçe videoları oynatma isteğine kadar MP4 kaynağını yüklemez", asy
   assert.match(ruyaContent, /class="garden-video-empty"/);
 
   const script = await readFile(path.join(rootDir, "script.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
   assert.match(script, /dataset\.videoSrc/);
   assert.match(script, /video\.src\s*=/);
   assert.match(script, /await video\.play\(\)/);
+  assert.match(styles, /\.garden-video-card\s*\{[\s\S]*?aspect-ratio:\s*9\s*\/\s*16;/);
+  assert.match(styles, /\.garden-video-card\s*\{[\s\S]*?max-width:\s*420px;/);
 });
 
 test("üretim sunucusu aynı kaynaktaki videoları range desteğiyle sunar", async () => {
