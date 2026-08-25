@@ -30,6 +30,14 @@ const cleanPageRoutes = new Map([
   ["masal-bahce", "masal-bahce.html"],
   ["ruya-bahce", "ruya-bahce.html"]
 ]);
+const canonicalRedirectRoutes = new Map([
+  ["/index", "/"],
+  ["/index.html", "/"],
+  ...[...cleanPageRoutes.keys()].flatMap((slug) => [
+    [`/${slug}.html`, `/${slug}`],
+    [`/${slug}/`, `/${slug}`]
+  ])
+]);
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -41,6 +49,7 @@ const mimeTypes = {
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",
+  ".mp4": "video/mp4",
   ".txt": "text/plain; charset=utf-8",
   ".xml": "application/xml; charset=utf-8",
   ".woff": "font/woff",
@@ -50,6 +59,15 @@ const mimeTypes = {
 function notFound(res) {
   res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
   res.end("404 Not Found");
+}
+
+function permanentRedirect(res, location) {
+  res.writeHead(301, {
+    "Location": location,
+    "Cache-Control": "no-cache",
+    "X-Content-Type-Options": "nosniff"
+  });
+  res.end();
 }
 
 function isInside(basePath, candidatePath) {
@@ -62,15 +80,21 @@ function isInside(basePath, candidatePath) {
 }
 
 function resolvePublicPath(rawUrl) {
+  let parsedUrl;
   let pathname;
   try {
-    pathname = decodeURIComponent(new URL(rawUrl, "http://localhost").pathname);
+    parsedUrl = new URL(rawUrl, "http://localhost");
+    pathname = decodeURIComponent(parsedUrl.pathname);
   } catch {
     return null;
   }
 
+  const redirectPath = canonicalRedirectRoutes.get(pathname);
+  if (redirectPath) return { redirectLocation: `${redirectPath}${parsedUrl.search}` };
+
   if (pathname === "/") pathname = "/index.html";
   if (pathname.includes("\\") || pathname.includes("\0")) return null;
+  if (pathname.length > 1 && pathname.endsWith("/")) return null;
 
   const segments = pathname.split("/").filter(Boolean);
   if (segments.length === 0 || segments.some((segment) => segment.startsWith("."))) return null;
@@ -93,6 +117,7 @@ function resolvePublicPath(rawUrl) {
 async function serveRequest(req, res) {
   const target = resolvePublicPath(req.url ?? "/");
   if (!target) return notFound(res);
+  if (target.redirectLocation) return permanentRedirect(res, target.redirectLocation);
 
   try {
     const [realBoundaryPath, realFilePath] = await Promise.all([

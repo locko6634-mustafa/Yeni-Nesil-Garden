@@ -2,12 +2,11 @@
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
 >
   <url>
     <loc>https://yesilnesilthegarden.com/</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-08-26</lastmod>
     <image:image>
       <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce-hero-1600.webp</image:loc>
     </image:image>
@@ -26,38 +25,126 @@
   </url>
   <url>
     <loc>https://yesilnesilthegarden.com/hayal-bahce</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-08-26</lastmod>
     <image:image>
       <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce-hero-1600.webp</image:loc>
     </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/mekan-01.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/mekan-02.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/mekan-03.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/mekan-04.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/mekan-05.webp</image:loc>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/video-01-poster.webp</video:thumbnail_loc>
+      <video:title>Hayal Bahçe düğün hikâyesi videosu</video:title>
+      <video:description>Hayal Bahçe düğün hikâyesi videosu.</video:description>
+      <video:content_loc>https://yesilnesilthegarden.com/media/videos/hayal-bahce/video-01.mp4</video:content_loc>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://yesilnesilthegarden.com/media/images/gardens/hayal-bahce/video-02-poster.webp</video:thumbnail_loc>
+      <video:title>Hayal Bahçe davet gecesi videosu</video:title>
+      <video:description>Hayal Bahçe davet gecesi videosu.</video:description>
+      <video:content_loc>https://yesilnesilthegarden.com/media/videos/hayal-bahce/video-02.mp4</video:content_loc>
+    </video:video>
   </url>
   <url>
     <loc>https://yesilnesilthegarden.com/kale-bahce</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-08-26</lastmod>
     <image:image>
       <image:loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce-thumb.webp</image:loc>
     </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/mekan-01.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/mekan-02.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/mekan-05.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/mekan-07.webp</image:loc>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/video-01-poster.webp</video:thumbnail_loc>
+      <video:title>Kale Bahçe düğün hikâyesi videosu</video:title>
+      <video:description>Kale Bahçe düğün hikâyesi videosu.</video:description>
+      <video:content_loc>https://yesilnesilthegarden.com/media/videos/kale-bahce/video-01.mp4</video:content_loc>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://yesilnesilthegarden.com/media/images/gardens/kale-bahce/video-02-poster.webp</video:thumbnail_loc>
+      <video:title>Kale Bahçe davet gecesi videosu</video:title>
+      <video:description>Kale Bahçe davet gecesi videosu.</video:description>
+      <video:content_loc>https://yesilnesilthegarden.com/media/videos/kale-bahce/video-02.mp4</video:content_loc>
+    </video:video>
   </url>
   <url>
     <loc>https://yesilnesilthegarden.com/masal-bahce</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-08-26</lastmod>
     <image:image>
       <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce-thumb.webp</image:loc>
     </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/mekan-02.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/mekan-03.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/mekan-04.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/mekan-06.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/mekan-07.webp</image:loc>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://yesilnesilthegarden.com/media/images/gardens/masal-bahce/video-01-poster.webp</video:thumbnail_loc>
+      <video:title>Masal Bahçe düğün hikâyesi videosu</video:title>
+      <video:description>Masal Bahçe düğün hikâyesi videosu.</video:description>
+      <video:content_loc>https://yesilnesilthegarden.com/media/videos/masal-bahce/video-01.mp4</video:content_loc>
+    </video:video>
   </url>
   <url>
     <loc>https://yesilnesilthegarden.com/ruya-bahce</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-08-26</lastmod>
     <image:image>
       <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce-thumb.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-01.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-02.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-04.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-06.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-07.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-08.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-09.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://yesilnesilthegarden.com/media/images/gardens/ruya-bahce/mekan-11.webp</image:loc>
     </image:image>
   </url>
 </urlset>

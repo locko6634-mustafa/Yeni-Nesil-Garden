@@ -1,5 +1,7 @@
+# Genel tarayıcı erişimi; yalnız altyapı sağlık kontrolü hariçtir.
 User-agent: *
 Allow: /
 Disallow: /healthz
 
+# Kanonik XML site haritası.
 Sitemap: https://yesilnesilthegarden.com/sitemap.xml

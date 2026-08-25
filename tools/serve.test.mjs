@@ -17,6 +17,109 @@ const sourceFiles = [
   "ruya-bahce.html",
   "sitemap.xml"
 ];
+const siteOrigin = "https://yesilnesilthegarden.com";
+const indexablePages = [
+  { file: "index.html", route: "/" },
+  { file: "hayal-bahce.html", route: "/hayal-bahce" },
+  { file: "kale-bahce.html", route: "/kale-bahce" },
+  { file: "masal-bahce.html", route: "/masal-bahce" },
+  { file: "ruya-bahce.html", route: "/ruya-bahce" }
+];
+
+function getAttributeContent(content, selector) {
+  const metaTag = [...content.matchAll(/<meta\b[^>]*>/g)]
+    .map((match) => match[0])
+    .find((tag) => tag.includes(selector));
+  return metaTag?.match(/\bcontent="([^"]+)"/)?.[1];
+}
+
+test("indekslenebilir sayfalar benzersiz ve yerel arama niyetine uygun SEO sözleşmesi kullanır", async () => {
+  const titles = new Set();
+  const descriptions = new Set();
+  const canonicals = new Set();
+
+  for (const { file, route } of indexablePages) {
+    const content = await readFile(path.join(rootDir, file), "utf8");
+    const title = content.match(/<title>([^<]+)<\/title>/)?.[1];
+    const description = getAttributeContent(content, 'name="description"');
+    const robots = getAttributeContent(content, 'name="robots"');
+    const canonical = content.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
+    const ogUrl = getAttributeContent(content, 'property="og:url"');
+    const jsonLdBlocks = [...content.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map((match) => JSON.parse(match[1]));
+
+    assert.ok(title, `${file}: title eksik.`);
+    assert.ok(description, `${file}: description eksik.`);
+    assert.match(title, /Polonezköy/);
+    assert.match(description, /Polonezköy/);
+    assert.equal(canonical, `${siteOrigin}${route}`);
+    assert.equal(ogUrl, canonical);
+    assert.match(robots ?? "", /\bindex\b/);
+    assert.match(robots ?? "", /\bfollow\b/);
+    assert.match(robots ?? "", /max-image-preview:large/);
+    assert.equal(getAttributeContent(content, 'property="og:locale"'), "tr_TR");
+    assert.equal(getAttributeContent(content, 'name="twitter:card"'), "summary_large_image");
+    assert.ok(getAttributeContent(content, 'property="og:image:alt"'), `${file}: og:image:alt eksik.`);
+    assert.ok(getAttributeContent(content, 'name="twitter:image:alt"'), `${file}: twitter:image:alt eksik.`);
+    assert.ok(jsonLdBlocks.length > 0, `${file}: JSON-LD eksik.`);
+
+    titles.add(title);
+    descriptions.add(description);
+    canonicals.add(canonical);
+
+    if (file.endsWith("-bahce.html")) {
+      const graph = jsonLdBlocks.flatMap((block) => block["@graph"] ?? [block]);
+      const intro = content.match(/<p class="garden-detail-intro">([^<]+)<\/p>/)?.[1];
+      assert.ok(graph.some((node) => node["@type"] === "WebPage"), `${file}: WebPage şeması eksik.`);
+      assert.ok(graph.some((node) => node["@type"] === "BreadcrumbList"), `${file}: BreadcrumbList şeması eksik.`);
+      assert.ok(graph.some((node) => node["@type"] === "EventVenue"), `${file}: EventVenue şeması eksik.`);
+      assert.match(intro ?? "", /Polonezköy/);
+      assert.match(intro ?? "", /kır düğün|açık hava davet/i);
+      assert.doesNotMatch(content, /class="garden-overview"/);
+      assert.doesNotMatch(content, /href="\.\/index\.html/);
+    }
+  }
+
+  assert.equal(titles.size, indexablePages.length, "Title değerleri benzersiz olmalı.");
+  assert.equal(descriptions.size, indexablePages.length, "Meta description değerleri benzersiz olmalı.");
+  assert.equal(canonicals.size, indexablePages.length, "Canonical değerleri benzersiz olmalı.");
+});
+
+test("robots ve sitemap yalnız kanonik, güncel ve taranabilir URL sözleşmesini yayınlar", async () => {
+  const robots = await readFile(path.join(rootDir, "robots.txt"), "utf8");
+  const sitemap = await readFile(path.join(rootDir, "sitemap.xml"), "utf8");
+  const expectedUrls = indexablePages.map(({ route }) => `${siteOrigin}${route}`);
+  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/yesilnesilthegarden\.com\/?[^<]*)<\/loc>/g)]
+    .map((match) => match[1]);
+  const pageUrls = sitemapUrls.filter((url) => expectedUrls.includes(url));
+  const lastModifiedValues = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)]
+    .map((match) => match[1]);
+  const currentDateParts = Object.fromEntries(
+    new Intl.DateTimeFormat("en", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "Europe/Istanbul"
+    }).formatToParts(new Date()).map(({ type, value }) => [type, value])
+  );
+  const currentLocalDate = `${currentDateParts.year}-${currentDateParts.month}-${currentDateParts.day}`;
+
+  assert.match(robots, /^User-agent: \*$/m);
+  assert.match(robots, /^Allow: \/$/m);
+  assert.match(robots, new RegExp(`^Sitemap: ${siteOrigin.replaceAll(".", "\\.")}\/sitemap\\.xml$`, "m"));
+  assert.doesNotMatch(robots, /\b(?:Crawl-delay|Noindex)\b/i);
+  assert.deepEqual(pageUrls, expectedUrls);
+  assert.equal(new Set(pageUrls).size, expectedUrls.length);
+  assert.equal(lastModifiedValues.length, expectedUrls.length);
+  for (const value of lastModifiedValues) {
+    assert.match(value, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(value <= currentLocalDate, `Gelecek lastmod tarihi: ${value}`);
+  }
+  assert.doesNotMatch(sitemap, /<(?:changefreq|priority)>/);
+  assert.equal(sitemap.match(/<video:video>/g)?.length, 5);
+  assert.equal(sitemap.match(/<video:thumbnail_loc>/g)?.length, 5);
+  assert.equal(sitemap.match(/<video:content_loc>/g)?.length, 5);
+});
 
 test("tüm medya URL'leri public-media altındaki gerçek dosyalara karşılık gelir", async () => {
   const mediaPathPattern = /(?:https:\/\/yesilnesilthegarden\.com\/|\.\/)?media\/([\w./-]+\.(?:gif|ico|jpe?g|png|svg|webp))/gi;
@@ -225,7 +328,16 @@ test("bahçe galerisi görselleri oranı bozulmadan erişilebilir tam ekran gör
   assert.match(styles, /\.garden-gallery-open:focus-visible/);
 });
 
-test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları reddeder", async (t) => {
+test("üretim sunucusu kanonik URL, UTF-8 ve görsel cache sözleşmesini açıkça tanımlar", async () => {
+  const nginxConfig = await readFile(path.join(rootDir, "deploy/nginx.conf"), "utf8");
+
+  assert.match(nginxConfig, /charset\s+utf-8;/);
+  assert.match(nginxConfig, /location = \/index\s*\{[\s\S]*?return 301 https:\/\/yesilnesilthegarden\.com\/;/);
+  assert.match(nginxConfig, /location ~ \^\/\(hayal-bahce\|kale-bahce\|masal-bahce\|ruya-bahce\)\/\$/);
+  assert.match(nginxConfig, /location \^~ \/media\/images\/\s*\{[\s\S]*?expires 30d;/);
+});
+
+test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar", async (t) => {
   const server = createStaticServer();
   await new Promise((resolve) => server.listen(0, DEFAULT_HOST, resolve));
   t.after(() => new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve()))));
@@ -234,10 +346,12 @@ test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları r
   assert.ok(address && typeof address === "object");
   const origin = `http://${DEFAULT_HOST}:${address.port}`;
 
-  const [mediaResponse, fontResponse, cssResponse, legacyMediaResponse, legacyCssResponse] = await Promise.all([
+  const [mediaResponse, fontResponse, cssResponse, robotsResponse, sitemapResponse, legacyMediaResponse, legacyCssResponse] = await Promise.all([
     fetch(`${origin}/media/images/favicon-32.png`),
     fetch(`${origin}/assets/fonts/jost-latin.woff2`),
     fetch(`${origin}/css/garden-pages.css`),
+    fetch(`${origin}/robots.txt`),
+    fetch(`${origin}/sitemap.xml`),
     fetch(`${origin}/assets/favicon-32.png`),
     fetch(`${origin}/garden-pages.css`)
   ]);
@@ -249,6 +363,28 @@ test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları r
   assert.equal(cssResponse.status, 200);
   assert.equal(cssResponse.headers.get("content-type"), "text/css; charset=utf-8");
   assert.equal(cssResponse.headers.get("cache-control"), "no-cache");
+  assert.equal(robotsResponse.status, 200);
+  assert.equal(robotsResponse.headers.get("content-type"), "text/plain; charset=utf-8");
+  assert.equal(sitemapResponse.status, 200);
+  assert.equal(sitemapResponse.headers.get("content-type"), "application/xml; charset=utf-8");
   assert.equal(legacyMediaResponse.status, 404);
   assert.equal(legacyCssResponse.status, 404);
+
+  const canonicalRedirects = [
+    ["/index", "/"],
+    ["/index.html", "/"],
+    ...["hayal-bahce", "kale-bahce", "masal-bahce", "ruya-bahce"].flatMap((slug) => [
+      [`/${slug}.html`, `/${slug}`],
+      [`/${slug}/`, `/${slug}`]
+    ])
+  ];
+
+  for (const [requestPath, expectedLocation] of canonicalRedirects) {
+    const response = await fetch(`${origin}${requestPath}`, { redirect: "manual" });
+    assert.equal(response.status, 301, `${requestPath}: kalıcı yönlendirme bekleniyor.`);
+    assert.equal(response.headers.get("location"), expectedLocation);
+  }
+
+  const unknownResponse = await fetch(`${origin}/bilinmeyen-sayfa/`, { redirect: "manual" });
+  assert.equal(unknownResponse.status, 404);
 });
