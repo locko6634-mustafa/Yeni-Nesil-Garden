@@ -365,17 +365,25 @@
 .garden-video-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 420px));
+  justify-content: center;
 }
 
 .garden-video-card {
+  aspect-ratio: 9 / 16;
   background: #152311;
   border-radius: 30px;
   box-shadow: var(--shadow);
+  justify-self: center;
   margin: 0;
-  min-height: 390px;
+  max-width: 420px;
   overflow: hidden;
   position: relative;
+  width: 100%;
+}
+
+.garden-video-card:only-child {
+  grid-column: 1 / -1;
 }
 
 .garden-video-card::after {
@@ -782,13 +790,35 @@
     bottom: 28px;
   }
 
-  .garden-video-grid,
+  .garden-video-grid {
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .garden-other-grid {
     grid-template-columns: 1fr;
   }
 
   .garden-video-card {
-    min-height: 360px;
+    border-radius: 18px;
+  }
+
+  .garden-video-card figcaption {
+    padding: 14px;
+  }
+
+  .garden-video-card strong {
+    font-size: clamp(1rem, 4.5vw, 1.35rem);
+  }
+
+  .garden-video-card small {
+    font-size: 0.64rem;
+  }
+
+  .garden-video-play {
+    font-size: 1.1rem;
+    height: 52px;
+    width: 52px;
   }
 
   .garden-other-card {

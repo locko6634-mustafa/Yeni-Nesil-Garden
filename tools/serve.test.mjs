@@ -102,6 +102,9 @@ test("bahçe videoları oynatma isteğine kadar MP4 kaynağını yüklemez", asy
   assert.match(script, /dataset\.videoSrc/);
   assert.match(script, /video\.src\s*=/);
   assert.match(script, /await video\.play\(\)/);
+  assert.match(styles, /\.garden-video-card\s*\{[\s\S]*?aspect-ratio:\s*9\s*\/\s*16;/);
+  assert.match(styles, /\.garden-video-card:only-child\s*\{[\s\S]*?grid-column:\s*1\s*\/\s*-1;/);
+  assert.match(styles, /@media \(max-width:\s*720px\)[\s\S]*?\.garden-video-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);
   assert.match(styles, /\.garden-video-card video:fullscreen,[\s\S]*?object-fit:\s*contain;/);
   assert.match(styles, /\.garden-video-card video:-webkit-full-screen/);
 });
