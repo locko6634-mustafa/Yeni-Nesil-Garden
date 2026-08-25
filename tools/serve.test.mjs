@@ -160,6 +160,29 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
   }
 });
 
+test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağlantısı kullanır", async () => {
+  const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
+  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+
+  for (const gardenPage of gardenPages) {
+    const content = await readFile(path.join(rootDir, gardenPage), "utf8");
+    const desktopNav = content.match(/<div class="nav-links">([\s\S]*?)<\/div>/)?.[1];
+    const mobileNav = content.match(/<nav class="mobile-bottom-nav"[\s\S]*?<\/nav>/)?.[0];
+
+    assert.ok(desktopNav, `${gardenPage}: masaüstü detay navigasyonu eksik.`);
+    assert.match(desktopNav, /href="#galeri"/);
+    assert.match(desktopNav, /href="#videolar"/);
+    assert.match(desktopNav, /href="#diger-bahceler"/);
+    assert.match(desktopNav, /href="#iletisim"/);
+    assert.doesNotMatch(desktopNav, /#hizmetler|#paketler|#menu/);
+    assert.match(content, /class="garden-other" id="diger-bahceler"/);
+    assert.match(mobileNav, /href="#diger-bahceler">Diğer Bahçeler<\/a>/);
+  }
+
+  assert.match(styles, /\.garden-detail-header \.nav\s*\{[\s\S]*?linear-gradient[\s\S]*?max-width:\s*1180px/);
+  assert.match(styles, /\.garden-detail-page \.mobile-bottom-nav\s*\{[\s\S]*?repeat\(5,/);
+});
+
 test("bahçe galerisi görselleri oranı bozulmadan erişilebilir tam ekran görüntülenir", async () => {
   const script = await readFile(path.join(rootDir, "script.js"), "utf8");
   const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");

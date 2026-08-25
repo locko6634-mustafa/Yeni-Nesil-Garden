@@ -33,10 +33,31 @@
 }
 
 .garden-detail-header .nav {
-  background: rgba(255, 255, 255, 0.76);
-  border-color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(22, 40, 18, 0.96), rgba(42, 66, 33, 0.92));
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 44px rgba(17, 31, 13, 0.2);
+  max-width: 1180px;
   position: relative;
   top: auto;
+}
+
+.garden-detail-header .brand span {
+  color: var(--ivory);
+}
+
+.garden-detail-header .nav-links {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.garden-detail-header .nav-links a {
+  color: rgba(250, 248, 241, 0.86);
+}
+
+.garden-detail-header .nav-links a:hover,
+.garden-detail-header .nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
 }
 
 .garden-detail-hero {
@@ -784,7 +805,14 @@
   }
 
   .garden-detail-header .nav {
+    background: rgba(255, 255, 255, 0.76);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 12px 38px rgba(31, 53, 24, 0.12);
     flex-direction: row;
+  }
+
+  .garden-detail-header .brand span {
+    color: var(--deep);
   }
 
   .garden-detail-hero {
@@ -905,7 +933,11 @@
   }
 
   .garden-detail-page .mobile-bottom-nav {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .garden-detail-page .mobile-bottom-nav a {
+    line-height: 1.12;
   }
 }
 
