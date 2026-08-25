@@ -160,6 +160,21 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
   }
 });
 
+test("bahçe galerisi görselleri oranı bozulmadan erişilebilir tam ekran görüntülenir", async () => {
+  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+
+  assert.match(script, /querySelectorAll\("\.garden-gallery figure > img"\)/);
+  assert.match(script, /lightbox\.showModal\(\)/);
+  assert.match(script, /image\.currentSrc \|\| image\.src/);
+  assert.match(script, /trigger\.setAttribute\("aria-label"/);
+  assert.match(script, /event\.target === lightbox/);
+  assert.match(script, /activeTrigger\?\.focus\(\)/);
+  assert.match(styles, /\.garden-lightbox\s*\{[\s\S]*?height:\s*100dvh;[\s\S]*?width:\s*100vw;/);
+  assert.match(styles, /\.garden-lightbox__image\s*\{[\s\S]*?height:\s*auto;[\s\S]*?object-fit:\s*contain;[\s\S]*?width:\s*auto;/);
+  assert.match(styles, /\.garden-gallery-open:focus-visible/);
+});
+
 test("yerel sunucu güncel statik yolları no-cache ile sunar ve eski yolları reddeder", async (t) => {
   const server = createStaticServer();
   await new Promise((resolve) => server.listen(0, DEFAULT_HOST, resolve));
