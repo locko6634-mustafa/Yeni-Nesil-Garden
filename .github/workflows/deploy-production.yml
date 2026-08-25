@@ -159,6 +159,7 @@ jobs:
             --exclude='.git/' \
             --exclude='.github/' \
             --exclude='.agents/' \
+            --exclude='storage/public-media/videos/' \
             --exclude='run_server.bat' \
             --exclude='sunucu_baslat.ps1' \
             --exclude='tools/' \

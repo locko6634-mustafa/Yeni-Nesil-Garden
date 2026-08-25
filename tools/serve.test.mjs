@@ -71,10 +71,46 @@ test("diğer bahçe galerileri ayıklanmış mekan ve çeşitli çift fotoğrafl
     assert.equal(gallery.match(new RegExp(`media/images/gardens/${slug}/cift-\\d{2}\\.webp`, "g"))?.length, coupleCount);
     for (const removedImage of removed) assert.doesNotMatch(gallery, new RegExp(`${slug}/${removedImage}\\.webp`));
     assert.doesNotMatch(content, /\.\/media\/images\//);
-    assert.match(content, /class="garden-video-grid"/);
-    assert.equal(content.match(/Video yakında/g)?.length, 2);
-    assert.doesNotMatch(content, /<(?:video|iframe)\b/);
   }
+});
+
+test("bahçe videoları oynatma isteğine kadar MP4 kaynağını yüklemez", async () => {
+  const videoPages = [
+    { file: "hayal-bahce.html", slug: "hayal-bahce", count: 2 },
+    { file: "masal-bahce.html", slug: "masal-bahce", count: 1 },
+    { file: "kale-bahce.html", slug: "kale-bahce", count: 2 }
+  ];
+
+  for (const { file, slug, count } of videoPages) {
+    const content = await readFile(path.join(rootDir, file), "utf8");
+
+    assert.equal(content.match(/class="garden-video-card"/g)?.length, count, `${file}: video kartı sayısı`);
+    assert.equal(content.match(/<video\b/g)?.length, count, `${file}: video etiketi sayısı`);
+    assert.equal(content.match(/preload="none"/g)?.length, count, `${file}: preload kapalı olmalı`);
+    assert.equal(content.match(/class="garden-video-play"/g)?.length, count, `${file}: erişilebilir oynat düğmesi`);
+    assert.equal(content.match(new RegExp(`data-video-src="https://yesilnesilthegarden\\.com/media/videos/${slug}/video-\\d{2}\\.mp4"`, "g"))?.length, count);
+    assert.equal(content.match(new RegExp(`poster="https://yesilnesilthegarden\\.com/media/images/gardens/${slug}/video-\\d{2}-poster\\.webp"`, "g"))?.length, count);
+    assert.doesNotMatch(content, /<video\b[^>]*\ssrc=/, `${file}: MP4 URL'si ilk HTML yükünde video src olmamalı`);
+  }
+
+  const ruyaContent = await readFile(path.join(rootDir, "ruya-bahce.html"), "utf8");
+  assert.doesNotMatch(ruyaContent, /data-video-src=|<video\b/);
+  assert.match(ruyaContent, /class="garden-video-empty"/);
+
+  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
+  assert.match(script, /dataset\.videoSrc/);
+  assert.match(script, /video\.src\s*=/);
+  assert.match(script, /await video\.play\(\)/);
+});
+
+test("üretim sunucusu aynı kaynaktaki videoları range desteğiyle sunar", async () => {
+  const nginxConfig = await readFile(path.join(rootDir, "deploy/nginx.conf"), "utf8");
+  const deployWorkflow = await readFile(path.join(rootDir, ".github/workflows/deploy-production.yml"), "utf8");
+
+  assert.match(nginxConfig, /media-src 'self'/);
+  assert.match(nginxConfig, /location \^~ \/media\/videos\//);
+  assert.match(nginxConfig, /accept_ranges on;/);
+  assert.match(deployWorkflow, /--exclude='storage\/public-media\/videos\/'/);
 });
 
 test("tüm bahçe sayfaları ortak asimetrik galeri düzenini kullanır", async () => {

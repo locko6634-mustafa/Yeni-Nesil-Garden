@@ -382,17 +382,31 @@
   background: linear-gradient(0deg, rgba(8, 17, 7, 0.84), rgba(8, 17, 7, 0.04) 68%);
   content: "";
   inset: 0;
+  pointer-events: none;
   position: absolute;
+  transition: opacity 220ms ease;
+  z-index: 1;
 }
 
-.garden-video-card img {
+.garden-video-card video {
   display: block;
   height: 100%;
   inset: 0;
   object-fit: cover;
   opacity: 0.86;
   position: absolute;
+  transition: opacity 220ms ease;
   width: 100%;
+}
+
+.garden-video-card.is-playing::after,
+.garden-video-card.is-playing figcaption {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.garden-video-card.is-playing video {
+  opacity: 1;
 }
 
 .garden-video-card figcaption {
@@ -404,6 +418,7 @@
   padding: 26px;
   position: absolute;
   right: 0;
+  transition: opacity 220ms ease, visibility 220ms ease;
   z-index: 2;
 }
 
@@ -428,6 +443,7 @@
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 50%;
   color: white;
+  cursor: pointer;
   display: flex;
   font-size: 1.5rem;
   height: 72px;
@@ -436,9 +452,46 @@
   padding-left: 5px;
   position: absolute;
   top: 46%;
+  transition: background-color 180ms ease, transform 180ms ease;
   transform: translate(-50%, -50%);
   width: 72px;
   z-index: 2;
+}
+
+.garden-video-play:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.garden-video-play:focus-visible {
+  outline: 3px solid #e8c68f;
+  outline-offset: 4px;
+}
+
+.garden-video-play:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.garden-video-play[hidden] {
+  display: none;
+}
+
+.garden-video-empty {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: center;
+  min-height: 190px;
+  padding: 32px;
+  text-align: center;
+}
+
+.garden-video-empty p {
+  margin: 0;
 }
 
 .garden-other {
@@ -786,6 +839,10 @@
   .garden-gallery-toggle,
   .garden-gallery-toggle [aria-hidden="true"],
   .garden-hero-primary,
+  .garden-video-card::after,
+  .garden-video-card figcaption,
+  .garden-video-card video,
+  .garden-video-play,
   .garden-other-card img {
     transition: none;
   }
