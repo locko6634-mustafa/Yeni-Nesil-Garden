@@ -132,13 +132,6 @@
   max-width: 760px;
 }
 
-.garden-detail-hero .eyebrow {
-  color: #dcebc7;
-  letter-spacing: 0.12em;
-  margin: 0 0 14px;
-  text-transform: uppercase;
-}
-
 .garden-detail-hero h1 {
   color: white;
   font-size: clamp(4rem, 8vw, 7.2rem);
@@ -810,9 +803,9 @@
   }
 
   .garden-detail-hero {
-    border-radius: 24px;
-    margin: 18px 12px 0;
-    min-height: clamp(540px, 72svh, 590px);
+    border-radius: 22px;
+    margin: 14px 12px 0;
+    min-height: clamp(490px, 64svh, 530px);
   }
 
   .garden-detail-hero::after {
@@ -820,12 +813,12 @@
   }
 
   .garden-detail-hero__content {
-    min-height: clamp(540px, 72svh, 590px);
-    padding: 20px;
+    min-height: clamp(490px, 64svh, 530px);
+    padding: 18px;
   }
 
   .garden-detail-hero h1 {
-    font-size: clamp(2.85rem, 13vw, 3.9rem);
+    font-size: clamp(2.65rem, 12vw, 3.5rem);
     max-width: 6ch;
   }
 
@@ -836,15 +829,15 @@
   }
 
   .garden-detail-intro {
-    font-size: 0.9rem;
-    line-height: 1.48;
-    margin-top: 16px;
-    padding-left: 14px;
+    font-size: 0.86rem;
+    line-height: 1.44;
+    margin-top: 14px;
+    padding-left: 12px;
   }
 
   .garden-hero-actions {
     gap: 8px 16px;
-    margin-top: 16px;
+    margin-top: 14px;
   }
 
   .garden-hero-primary,
@@ -956,7 +949,7 @@
 @media (max-width: 390px) {
   .garden-detail-hero,
   .garden-detail-hero__content {
-    min-height: 560px;
+    min-height: 510px;
   }
 
   .garden-detail-hero__content {
@@ -964,7 +957,7 @@
   }
 
   .garden-detail-hero h1 {
-    font-size: 2.7rem;
+    font-size: 2.55rem;
   }
 
   .garden-hero-actions {
