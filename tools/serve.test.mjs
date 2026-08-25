@@ -109,7 +109,7 @@ test("üretim sunucusu aynı kaynaktaki videoları range desteğiyle sunar", asy
 
   assert.match(nginxConfig, /media-src 'self'/);
   assert.match(nginxConfig, /location \^~ \/media\/videos\//);
-  assert.match(nginxConfig, /accept_ranges on;/);
+  assert.doesNotMatch(nginxConfig, /max_ranges\s+0;/);
   assert.match(deployWorkflow, /--exclude='storage\/public-media\/videos\/'/);
 });
 
