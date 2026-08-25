@@ -165,6 +165,10 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
 
   assert.match(script, /button\.hidden = !hasMoreImages/);
   assert.match(script, /gallery\.classList\.toggle\("has-no-overflow", !hasMoreImages\)/);
+  assert.match(script, /const fullWidthFigure = !hasMoreImages && figures\.length % 2 === 1/);
+  assert.match(script, /columnsContainer\.append\(fullWidthFigure\)/);
+  assert.match(styles, /\.garden-gallery-full-width\s*\{[\s\S]*?grid-column:\s*1\s*\/\s*-1/);
+  assert.match(styles, /\.garden-gallery\.has-no-overflow \.garden-gallery-columns\s*\{[\s\S]*?padding-bottom:\s*0/);
   assert.match(styles, /\.garden-gallery-toggle\[hidden\]\s*\{[\s\S]*?display:\s*none/);
 });
 

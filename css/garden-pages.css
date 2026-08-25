@@ -268,6 +268,10 @@
   min-width: 0;
 }
 
+.garden-gallery-full-width {
+  grid-column: 1 / -1;
+}
+
 .garden-gallery::after {
   background: linear-gradient(0deg, rgba(13, 25, 10, 0.4) 0%, rgba(13, 25, 10, 0.12) 58%, transparent 100%);
   bottom: 0;
@@ -295,6 +299,10 @@
 
 .garden-gallery.has-no-overflow::after {
   opacity: 0;
+}
+
+.garden-gallery.has-no-overflow .garden-gallery-columns {
+  padding-bottom: 0;
 }
 
 .garden-gallery figure {

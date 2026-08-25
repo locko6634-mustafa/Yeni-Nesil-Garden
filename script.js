@@ -50,6 +50,7 @@ galleryToggleButtons.forEach((button) => {
 
   const figures = Array.from(gallery.children).filter((element) => element.tagName === "FIGURE");
   const hasMoreImages = figures.length > 5;
+  const fullWidthFigure = !hasMoreImages && figures.length % 2 === 1 ? figures.at(-1) : null;
   const columnsContainer = document.createElement("div");
   const columns = [document.createElement("div"), document.createElement("div")];
   const estimatedColumnHeights = [0, 0];
@@ -61,6 +62,12 @@ galleryToggleButtons.forEach((button) => {
   });
 
   figures.forEach((figure, index) => {
+    if (figure === fullWidthFigure) {
+      figure.classList.add("garden-gallery-full-width");
+      figure.style.setProperty("--gallery-reveal-delay", `${Math.min(index * 24, 192)}ms`);
+      return;
+    }
+
     const image = figure.querySelector("img");
     const imageWidth = Number(image?.getAttribute("width")) || 1;
     const imageHeight = Number(image?.getAttribute("height")) || imageWidth;
@@ -70,6 +77,10 @@ galleryToggleButtons.forEach((button) => {
     columns[targetColumn].append(figure);
     estimatedColumnHeights[targetColumn] += imageHeight / imageWidth;
   });
+
+  if (fullWidthFigure) {
+    columnsContainer.append(fullWidthFigure);
+  }
 
   gallery.insertBefore(columnsContainer, button);
   gallery.classList.add("is-layout-ready");
