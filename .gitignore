@@ -38,3 +38,5 @@ temp/
 # Büyük, yerel medya dosyaları
 /incoming-videos/
 /storage/public-media/videos/
+qr-code-instagram.svg
+qr-code-website.svg
