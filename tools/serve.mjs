@@ -16,8 +16,6 @@ const publicDirectoryRoots = new Map([
 ]);
 const publicRootFiles = new Set([
   "index.html",
-  "styles.css",
-  "script.js",
   "robots.txt",
   "sitemap.xml",
   "hayal-bahce.html",

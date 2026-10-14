@@ -277,7 +277,7 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
 
 test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağlantısı kullanır", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
-  const baseStyles = await readFile(path.join(rootDir, "styles.css"), "utf8");
+  const baseStyles = await readFile(path.join(rootDir, "css/home/site.css"), "utf8");
   const styles = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
   const detailNavRule = styles.match(/\.garden-detail-header \.nav\s*\{([^}]*)\}/)?.[1];
 
@@ -349,7 +349,7 @@ test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar"
   const [
     mediaResponse,
     fontResponse,
-    cssResponse,
+    legacyGardenPagesCssResponse,
     robotsResponse,
     sitemapResponse,
     legacyMediaResponse,
@@ -358,7 +358,9 @@ test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar"
     homeSiteCssResponse,
     gardenPagesCssResponse,
     homeAppJsResponse,
-    gardenAppJsResponse
+    gardenAppJsResponse,
+    legacyStylesResponse,
+    legacyScriptResponse
   ] = await Promise.all([
     fetch(`${origin}/media/images/favicon-32.png`),
     fetch(`${origin}/assets/fonts/jost-latin.woff2`),
@@ -371,22 +373,24 @@ test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar"
     fetch(`${origin}/css/home/site.css`),
     fetch(`${origin}/css/garden-pages/garden-pages.css`),
     fetch(`${origin}/js/home/app.js`),
-    fetch(`${origin}/js/garden-pages/app.js`)
+    fetch(`${origin}/js/garden-pages/app.js`),
+    fetch(`${origin}/styles.css`),
+    fetch(`${origin}/script.js`)
   ]);
 
   assert.equal(mediaResponse.status, 200);
   assert.equal(mediaResponse.headers.get("content-type"), "image/png");
   assert.equal(fontResponse.status, 200);
   assert.equal(fontResponse.headers.get("content-type"), "font/woff2");
-  assert.equal(cssResponse.status, 200);
-  assert.equal(cssResponse.headers.get("content-type"), "text/css; charset=utf-8");
-  assert.equal(cssResponse.headers.get("cache-control"), "no-cache");
+  assert.equal(legacyGardenPagesCssResponse.status, 404);
   assert.equal(robotsResponse.status, 200);
   assert.equal(robotsResponse.headers.get("content-type"), "text/plain; charset=utf-8");
   assert.equal(sitemapResponse.status, 200);
   assert.equal(sitemapResponse.headers.get("content-type"), "application/xml; charset=utf-8");
   assert.equal(legacyMediaResponse.status, 404);
   assert.equal(legacyCssResponse.status, 404);
+  assert.equal(legacyStylesResponse.status, 404);
+  assert.equal(legacyScriptResponse.status, 404);
   assert.equal(sharedFontsResponse.status, 200);
   assert.equal(sharedFontsResponse.headers.get("content-type"), "text/css; charset=utf-8");
   assert.equal(homeSiteCssResponse.status, 200);

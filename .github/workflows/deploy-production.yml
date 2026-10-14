@@ -41,15 +41,17 @@ jobs:
           test -f kale-bahce.html
           test -f masal-bahce.html
           test -f ruya-bahce.html
-          test -f styles.css
-          test -f css/garden-pages.css
-          test -f script.js
+          test -f css/home/site.css
+          test -f css/garden-pages/garden-pages.css
+          test -f js/home/app.js
+          test -f js/garden-pages/app.js
           test -f compose.production.yaml
           test -f deploy/Dockerfile
           test -f deploy/nginx.conf
           test -d assets/fonts
           test -d storage/public-media/images
-          node --check script.js
+          node --check js/home/app.js
+          node --check js/garden-pages/app.js
           node --test tools/serve.test.mjs
 
       - name: Validate production routes
@@ -94,8 +96,8 @@ jobs:
             curl --fail --silent --show-error "http://127.0.0.1:18080$route" >/dev/null
           done
 
-          curl --fail --silent --show-error http://127.0.0.1:18080/css/garden-pages.css >/dev/null
-          curl --fail --silent --show-error --head http://127.0.0.1:18080/css/garden-pages.css | grep --ignore-case '^Cache-Control: no-cache'
+          curl --fail --silent --show-error http://127.0.0.1:18080/css/garden-pages/garden-pages.css >/dev/null
+          curl --fail --silent --show-error --head http://127.0.0.1:18080/css/garden-pages/garden-pages.css | grep --ignore-case '^Cache-Control: no-cache'
 
           curl --fail --silent --show-error http://127.0.0.1:18080/media/images/favicon-32.png >/dev/null
 
