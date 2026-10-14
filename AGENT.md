@@ -5,8 +5,7 @@ Bu dosya proje kökünün tamamı için geçerlidir. Daha alt bir dizinde `AGENT
 ## Proje Yapısı
 
 - Proje, framework ve paket yöneticisi gerektirmeyen çok sayfalı bir Vanilla HTML5, CSS ve JavaScript sitesidir.
-- Ana sayfa `index.html`; bahçe detayları kökteki `*-bahce.html` dosyalarıdır.
-- Ortak stiller `styles.css`, detay sayfası stilleri `css/garden-pages.css`, ortak davranışlar `script.js` içindedir.
+- Ortak stiller `css/shared/fonts.css` ve derlenen `css/home/site.css` (kaynak modüller `css/home/*.css` altında; derleme `npm run build:css` veya `node tools/build-home-css.mjs`), detay sayfası stilleri `css/garden-pages/garden-pages.css`, davranışlar ES modülleri olarak `js/home/app.js` ve `js/garden-pages/app.js` içindedir.
 - Yerel statik sunucu `tools/serve.mjs`; üretim sunucusu `deploy/nginx.conf` ve `deploy/Dockerfile` ile tanımlanır.
 - Sürüm kontrolündeki görseller ve fontlar sırasıyla `storage/public-media/images/` ve `assets/fonts/` altında tutulur.
 - Büyük ham videolar `incoming-videos/`, yayın videoları `storage/public-media/videos/` altında yerel kalır ve Git'e eklenmez.
@@ -25,7 +24,7 @@ Bu dosya proje kökünün tamamı için geçerlidir. Daha alt bir dizinde `AGENT
 
 ## Çalıştırma ve Doğrulama
 
-- Bağımsız yerel sunucuyu Windows'ta `powershell -ExecutionPolicy Bypass -File .\sunucu_baslat.ps1` ile başlat.
+- Bağımsız yerel sunucuyu Linux'ta `bash ./sunucu_baslat.sh` veya `sh ./run_server.sh`, Windows'ta `powershell -ExecutionPolicy Bypass -File .\sunucu_baslat.ps1` ile başlat.
 - Testleri `node --test tools/serve.test.mjs` ile çalıştır.
 - Değişen HTML/CSS/JS davranışını masaüstü ve mobil görünümde kontrol et; tarayıcı konsolu, başarısız istek ve erişilebilirlik sorunlarını hata kabul et.
 - Üretim yapılandırması değiştiyse ayrıca `docker compose -f compose.production.yaml config -q` çalıştır ve mümkünse imajı oluşturup healthcheck'i doğrula.

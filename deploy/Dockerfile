@@ -11,6 +11,7 @@ COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY index.html hayal-bahce.html kale-bahce.html masal-bahce.html ruya-bahce.html /usr/share/nginx/html/
 COPY styles.css script.js robots.txt sitemap.xml /usr/share/nginx/html/
 COPY css /usr/share/nginx/html/css
+COPY js /usr/share/nginx/html/js
 COPY assets/fonts /usr/share/nginx/html/assets/fonts
 
 RUN chown -R nginx:nginx \

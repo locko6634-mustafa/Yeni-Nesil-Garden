@@ -1,0 +1,51 @@
+.gardens-heading {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1040px;
+  text-align: center;
+}
+
+.gardens-heading h2 {
+  color: #1f1b17;
+  font-size: clamp(2.2rem, 5.6vw, 4rem);
+  line-height: 1;
+}
+
+.garden-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.garden-card {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(31, 53, 24, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 16px 38px rgba(31, 53, 24, 0.09);
+  display: grid;
+  gap: 16px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.garden-card .image-slot {
+  border-radius: 18px;
+  min-height: 190px;
+}
+
+.garden-card div:last-child {
+  padding: 0 10px 12px;
+}
+
+.mood {
+  color: var(--deep);
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.garden-card p,
+.service-card p,
+.contact-copy p {
+  color: #526048;
+  line-height: 1.55;
+}

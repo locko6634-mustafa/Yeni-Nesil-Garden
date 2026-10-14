@@ -1,0 +1,126 @@
+@media (min-width: 1081px) {
+  .satisfaction-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+
+  .testimonial-card {
+    min-width: 0;
+  }
+}
+
+.review-heading {
+  margin: 0 auto 30px;
+  max-width: 760px;
+  text-align: center;
+}
+
+.review-heading h2 {
+  color: #1f1b17;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1.02;
+  margin-bottom: 18px;
+}
+
+.review-heading h2 span {
+  color: var(--rose);
+}
+
+.review-heading > p {
+  color: rgba(18, 26, 16, 0.58);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 650px;
+}
+
+.review-heading a {
+  border-bottom: 1px solid rgba(184, 111, 96, 0.28);
+  color: var(--rose);
+  display: inline-flex;
+  font-weight: 900;
+  margin-top: 4px;
+  padding-bottom: 7px;
+}
+
+.testimonial-card {
+  background: #fff;
+  border: 1px solid rgba(31, 53, 24, 0.1);
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(31, 53, 24, 0.08);
+  display: grid;
+  flex: 0 0 min(430px, 82vw);
+  gap: 18px;
+  min-height: 220px;
+  padding: 24px;
+  scroll-snap-align: center;
+}
+
+.review-card-head {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.couple-photo {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(111, 167, 43, 0.82), rgba(195, 155, 95, 0.7)),
+    #dfe8d4;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 12px 24px rgba(31, 53, 24, 0.14);
+  display: flex;
+  height: 64px;
+  justify-content: center;
+  overflow: hidden;
+  width: 64px;
+}
+
+.couple-photo span {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.couple-photo img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.garden-tag {
+  color: var(--green);
+  font-size: 0.68rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+blockquote {
+  color: var(--deep);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.couple-name {
+  color: #1f1b17;
+  font-size: 1rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.stars {
+  color: var(--rose);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  margin-bottom: 0;
+}

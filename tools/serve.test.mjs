@@ -201,8 +201,8 @@ test("bahçe videoları oynatma isteğine kadar MP4 kaynağını yüklemez", asy
   assert.doesNotMatch(ruyaContent, /data-video-src=|<video\b/);
   assert.match(ruyaContent, /class="garden-video-empty"/);
 
-  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
-  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const script = await readFile(path.join(rootDir, "js/garden-pages/video.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
   assert.match(script, /dataset\.videoSrc/);
   assert.match(script, /video\.src\s*=/);
   assert.match(script, /await video\.play\(\)/);
@@ -224,8 +224,8 @@ test("üretim sunucusu aynı kaynaktaki videoları range desteğiyle sunar", asy
 });
 
 test("tüm bahçe sayfaları ortak asimetrik galeri düzenini kullanır", async () => {
-  const content = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
-  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
+  const content = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
+  const script = await readFile(path.join(rootDir, "js/garden-pages/gallery.js"), "utf8");
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
 
   assert.match(content, /\.garden-gallery-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2/);
@@ -260,11 +260,11 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
     assert.ok(galleryId, `${gardenPage}: galeri kimliği eksik.`);
     assert.match(content, new RegExp(`class="garden-gallery-toggle"[^>]+aria-expanded="false"[^>]+aria-controls="${galleryId}"`));
     assert.match(content, /<span>Tümünü Gör<\/span>/);
-    assert.match(content, /<script src="\.\/script\.js" defer><\/script>/);
+    assert.match(content, /<script type="module" src="js\/garden-pages\/app\.js"><\/script>/);
   }
 
-  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
-  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const script = await readFile(path.join(rootDir, "js/garden-pages/gallery.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
 
   assert.match(script, /button\.hidden = !hasMoreImages/);
   assert.match(script, /gallery\.classList\.toggle\("has-no-overflow", !hasMoreImages\)/);
@@ -278,7 +278,7 @@ test("bahçe galerilerinde erişilebilir tümünü gör kontrolü bulunur", asyn
 test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağlantısı kullanır", async () => {
   const gardenPages = sourceFiles.filter((sourceFile) => sourceFile.endsWith("-bahce.html"));
   const baseStyles = await readFile(path.join(rootDir, "styles.css"), "utf8");
-  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
   const detailNavRule = styles.match(/\.garden-detail-header \.nav\s*\{([^}]*)\}/)?.[1];
 
   for (const gardenPage of gardenPages) {
@@ -314,8 +314,8 @@ test("bahçe sayfaları uyumlu detay navigasyonu ve mobil diğer bahçeler bağl
 });
 
 test("bahçe galerisi görselleri oranı bozulmadan erişilebilir tam ekran görüntülenir", async () => {
-  const script = await readFile(path.join(rootDir, "script.js"), "utf8");
-  const styles = await readFile(path.join(rootDir, "css/garden-pages.css"), "utf8");
+  const script = await readFile(path.join(rootDir, "js/garden-pages/lightbox.js"), "utf8");
+  const styles = await readFile(path.join(rootDir, "css/garden-pages/garden-pages.css"), "utf8");
 
   assert.match(script, /querySelectorAll\("\.garden-gallery figure > img"\)/);
   assert.match(script, /lightbox\.showModal\(\)/);
@@ -346,14 +346,32 @@ test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar"
   assert.ok(address && typeof address === "object");
   const origin = `http://${DEFAULT_HOST}:${address.port}`;
 
-  const [mediaResponse, fontResponse, cssResponse, robotsResponse, sitemapResponse, legacyMediaResponse, legacyCssResponse] = await Promise.all([
+  const [
+    mediaResponse,
+    fontResponse,
+    cssResponse,
+    robotsResponse,
+    sitemapResponse,
+    legacyMediaResponse,
+    legacyCssResponse,
+    sharedFontsResponse,
+    homeSiteCssResponse,
+    gardenPagesCssResponse,
+    homeAppJsResponse,
+    gardenAppJsResponse
+  ] = await Promise.all([
     fetch(`${origin}/media/images/favicon-32.png`),
     fetch(`${origin}/assets/fonts/jost-latin.woff2`),
     fetch(`${origin}/css/garden-pages.css`),
     fetch(`${origin}/robots.txt`),
     fetch(`${origin}/sitemap.xml`),
     fetch(`${origin}/assets/favicon-32.png`),
-    fetch(`${origin}/garden-pages.css`)
+    fetch(`${origin}/garden-pages.css`),
+    fetch(`${origin}/css/shared/fonts.css`),
+    fetch(`${origin}/css/home/site.css`),
+    fetch(`${origin}/css/garden-pages/garden-pages.css`),
+    fetch(`${origin}/js/home/app.js`),
+    fetch(`${origin}/js/garden-pages/app.js`)
   ]);
 
   assert.equal(mediaResponse.status, 200);
@@ -369,6 +387,16 @@ test("yerel sunucu üretimle uyumlu kanonik yolları ve SEO dosyalarını sunar"
   assert.equal(sitemapResponse.headers.get("content-type"), "application/xml; charset=utf-8");
   assert.equal(legacyMediaResponse.status, 404);
   assert.equal(legacyCssResponse.status, 404);
+  assert.equal(sharedFontsResponse.status, 200);
+  assert.equal(sharedFontsResponse.headers.get("content-type"), "text/css; charset=utf-8");
+  assert.equal(homeSiteCssResponse.status, 200);
+  assert.equal(homeSiteCssResponse.headers.get("content-type"), "text/css; charset=utf-8");
+  assert.equal(gardenPagesCssResponse.status, 200);
+  assert.equal(gardenPagesCssResponse.headers.get("content-type"), "text/css; charset=utf-8");
+  assert.equal(homeAppJsResponse.status, 200);
+  assert.equal(homeAppJsResponse.headers.get("content-type"), "text/javascript; charset=utf-8");
+  assert.equal(gardenAppJsResponse.status, 200);
+  assert.equal(gardenAppJsResponse.headers.get("content-type"), "text/javascript; charset=utf-8");
 
   const canonicalRedirects = [
     ["/index", "/"],

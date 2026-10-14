@@ -1,0 +1,12 @@
+{
+  "name": "yesil-nesil-garden-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Yeşil Nesil The Garden frontend",
+  "scripts": {
+    "build": "npm run build:css",
+    "build:css": "node tools/build-home-css.mjs",
+    "test": "node --test tools/serve.test.mjs"
+  }
+}

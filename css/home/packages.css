@@ -1,0 +1,219 @@
+.packages {
+  max-width: none;
+}
+
+.packages .section-heading,
+.package-grid {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1180px;
+}
+
+.packages-heading {
+  margin-bottom: 34px;
+  text-align: center;
+}
+
+.packages-heading h2 {
+  color: #1f1b17;
+  font-size: clamp(2.35rem, 5.8vw, 4.05rem);
+  line-height: 1;
+}
+
+.packages .section-heading p:not(.eyebrow) {
+  color: #526048;
+  font-size: 1rem;
+  line-height: 1.55;
+  max-width: 640px;
+}
+
+.package-tabs {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1180px;
+}
+
+.package-tabs > input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.package-switch {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(31, 53, 24, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 14px 32px rgba(31, 53, 24, 0.08);
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 18px;
+  padding: 6px;
+}
+
+.package-switch label {
+  border-radius: 999px;
+  color: rgba(31, 53, 24, 0.62);
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 900;
+  min-height: 44px;
+  padding: 12px 14px;
+  text-align: center;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+#photo-packages:checked ~ .package-switch label[for="photo-packages"],
+#henna-packages:checked ~ .package-switch label[for="henna-packages"] {
+  background: var(--deep);
+  box-shadow: 0 10px 22px rgba(31, 53, 24, 0.2);
+  color: #fff;
+}
+
+.package-track {
+  display: grid;
+  overflow: hidden;
+  position: relative;
+}
+
+.package-grid {
+  align-content: start;
+  align-self: start;
+  display: grid;
+  gap: 12px;
+  grid-area: 1 / 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(28px);
+  transition: opacity 220ms ease, transform 220ms ease;
+  visibility: hidden;
+  width: 100%;
+}
+
+.photo-grid {
+  transform: translateX(-28px);
+}
+
+#photo-packages:checked ~ .package-track .photo-grid,
+#henna-packages:checked ~ .package-track .henna-grid {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.package-card {
+  align-self: stretch;
+  background: #fff;
+  border: 1px solid rgba(31, 53, 24, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(31, 53, 24, 0.07);
+  display: grid;
+  gap: 0;
+  grid-template-columns: 170px minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.package-cover {
+  aspect-ratio: auto;
+  min-height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.package-cover::after {
+  background: linear-gradient(180deg, rgba(18, 26, 16, 0) 38%, rgba(18, 26, 16, 0.36) 100%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.package-cover img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.package-cover span {
+  background: rgba(184, 111, 96, 0.94);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.56rem;
+  font-weight: 900;
+  left: 10px;
+  letter-spacing: 0;
+  padding: 6px 8px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 10px;
+  z-index: 1;
+}
+
+.package-body {
+  padding: 16px 17px;
+}
+
+.package-type {
+  color: var(--rose);
+  font-size: 0.62rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.package-body h3 {
+  font-size: 1.18rem;
+  margin-bottom: 7px;
+}
+
+.package-body > p:not(.package-type) {
+  color: #526048;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-bottom: 11px;
+}
+
+.package-body ul {
+  display: grid;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.package-body li {
+  color: var(--deep);
+  display: grid;
+  font-size: 0.76rem;
+  font-weight: 700;
+  gap: 9px;
+  grid-template-columns: auto 1fr;
+  line-height: 1.35;
+}
+
+.package-body li::before {
+  background: var(--green);
+  border-radius: 999px;
+  content: "";
+  height: 7px;
+  margin-top: 6px;
+  width: 7px;
+}
+
+.package-body a {
+  border-top: 1px solid rgba(31, 53, 24, 0.1);
+  color: var(--rose);
+  display: block;
+  font-weight: 900;
+  font-size: 0.88rem;
+  padding-top: 12px;
+}
+
+.package-more {
+  display: none;
+}

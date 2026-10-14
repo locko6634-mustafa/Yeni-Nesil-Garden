@@ -1,0 +1,128 @@
+.menu-list {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--deep);
+  display: grid;
+  gap: 12px;
+  overflow: visible;
+}
+
+.menu-row {
+  backdrop-filter: blur(24px) saturate(150%);
+  background: rgba(255, 253, 247, 0.82);
+  border: 1px solid rgba(31, 53, 24, 0.12);
+  border-radius: 22px;
+  box-shadow: 0 14px 32px rgba(31, 53, 24, 0.08);
+  display: block;
+  overflow: hidden;
+}
+
+.menu-row:last-child {
+  border-bottom: 1px solid rgba(31, 53, 24, 0.12);
+}
+
+.menu-row summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 64px 1fr auto;
+  list-style: none;
+  min-height: 92px;
+  padding: 14px 18px;
+}
+
+.menu-row summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-row summary > img {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(31, 53, 24, 0.12);
+  display: block;
+  height: 64px;
+  object-fit: cover;
+  width: 64px;
+}
+
+.menu-row summary span {
+  color: #073f24;
+  display: grid;
+  font-size: 1.52rem;
+  font-weight: 800;
+  gap: 5px;
+  letter-spacing: 0;
+  line-height: 1.06;
+}
+
+.menu-row summary small {
+  color: var(--rose);
+  font-family: var(--font-jost), Arial, Helvetica, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.menu-row summary b {
+  align-items: center;
+  background: rgba(184, 111, 96, 0.11);
+  border-radius: 999px;
+  color: var(--rose);
+  display: flex;
+  font-size: 1.55rem;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 180ms ease;
+  width: 36px;
+}
+
+.menu-row[open] summary b {
+  transform: rotate(45deg);
+}
+
+.menu-row ul {
+  color: #526048;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: -2px 22px 24px 96px;
+  padding: 0;
+}
+
+.menu-row li {
+  align-items: start;
+  display: grid;
+  font-size: 0.95rem;
+  gap: 3px 10px;
+  grid-template-columns: auto 1fr;
+}
+
+.menu-row li::before {
+  background: var(--rose);
+  border-radius: 999px;
+  content: "";
+  height: 7px;
+  margin-top: 8px;
+  width: 7px;
+}
+
+.menu-row li strong {
+  color: var(--deep);
+  font-size: 0.98rem;
+  font-weight: 900;
+}
+
+.menu-row li em {
+  color: rgba(31, 53, 24, 0.62);
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+  grid-column: 2;
+  line-height: 1.42;
+}
