@@ -1,119 +1,100 @@
+/* BÖLÜM 04: ASİMETRİK BENTO HİZMET VİTRİNİ */
+
 .services {
-  max-width: 1180px;
+  max-width: 1380px;
 }
 
-.services-heading,
-.menu-heading {
-  margin-bottom: 44px;
-  margin-inline: auto;
-  text-align: center;
-}
-
-.services-heading h2,
-.menu-heading h2 {
-  color: var(--deep);
-  font-size: clamp(2.55rem, 6vw, 4.25rem);
-  line-height: 1;
-}
-
+.services-bento,
 .services-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  perspective: 1200px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
 .service-card {
-  backdrop-filter: blur(18px);
-  background: linear-gradient(165deg, rgba(255, 253, 247, 0.96), rgba(232, 242, 220, 0.68));
-  border: 1px solid rgba(31, 53, 24, 0.13);
-  border-radius: 28px;
-  box-shadow:
-    0 20px 46px rgba(31, 53, 24, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  display: grid;
-  grid-template-rows: auto 1fr;
+  border: 1px solid rgba(31, 53, 24, 0.16);
+  border-radius: 34px;
+  box-shadow: 0 24px 60px rgba(18, 26, 16, 0.14);
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  grid-column: span 5;
   isolation: isolate;
+  justify-content: flex-end;
+  min-height: 440px;
   overflow: hidden;
-  padding: 10px;
+  padding: 32px;
   position: relative;
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition:
-    transform 460ms var(--ease-out-expo),
-    box-shadow 460ms var(--ease-out-expo),
+    transform 480ms var(--ease-out-expo),
+    box-shadow 480ms var(--ease-out-expo),
     border-color 360ms ease;
 }
 
-.service-card::before {
-  background: radial-gradient(
-    320px circle at var(--spot-x, 50%) var(--spot-y, 0%),
-    rgba(111, 167, 43, 0.22),
-    rgba(195, 155, 95, 0.12) 48%,
-    transparent 76%
-  );
-  content: "";
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: opacity 360ms ease;
-  z-index: 0;
-}
-
-.service-card:hover::before {
-  opacity: 1;
+.service-card--wide {
+  grid-column: span 7;
 }
 
 .service-card:hover {
-  border-color: rgba(111, 167, 43, 0.48);
-  box-shadow:
-    0 30px 64px rgba(31, 53, 24, 0.18),
-    0 0 28px rgba(111, 167, 43, 0.16);
+  border-color: var(--gold);
+  box-shadow: 0 34px 80px rgba(18, 26, 16, 0.26);
 }
 
 .service-image {
   border: 0;
-  border-radius: 20px;
-  min-height: 236px;
-  z-index: 1;
+  border-radius: 0;
+  height: 100%;
+  inset: 0;
+  min-height: 0;
+  position: absolute;
+  width: 100%;
+  z-index: -2;
+}
+
+.service-card::after {
+  background:
+    linear-gradient(180deg, rgba(18, 26, 16, 0.08) 0%, rgba(18, 26, 16, 0.32) 45%, rgba(18, 26, 16, 0.92) 100%);
+  content: "";
+  inset: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .service-card:hover .service-image img {
-  filter: saturate(1.1);
+  filter: saturate(1.12);
   transform: scale(1.08);
 }
 
-.service-card .photo-slot::after {
-  background: linear-gradient(180deg, transparent 50%, rgba(18, 26, 16, 0.42) 100%);
-  display: block;
-}
-
 .service-content {
-  display: flex;
-  flex-direction: column;
-  min-height: 168px;
-  padding: 20px 16px 16px;
+  backdrop-filter: blur(18px) saturate(160%);
+  background: rgba(18, 26, 16, 0.56);
+  border: 1px solid rgba(255, 253, 247, 0.2);
+  border-radius: 24px;
+  display: grid;
+  gap: 8px;
+  padding: 24px 26px;
   position: relative;
   z-index: 1;
 }
 
-.service-content h3 {
-  color: var(--deep);
-  font-size: 1.48rem;
-  margin-bottom: 10px;
-  transition: color 260ms ease;
+.service-index {
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.service-card:hover .service-content h3 {
-  color: var(--rose);
+.service-content h3 {
+  color: var(--ivory);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  margin: 0;
 }
 
 .service-content p {
-  display: -webkit-box;
+  color: rgba(255, 253, 247, 0.84);
   font-size: 0.98rem;
-  line-height: 1.52;
-  margin-bottom: 8px;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  line-height: 1.56;
+  margin: 0;
 }

@@ -1,36 +1,12 @@
+/* BÖLÜM 03: EDİTORYAL PAKET VİTRİNİ */
+
 .packages {
-  max-width: none;
-}
-
-.packages .section-heading,
-.package-grid {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1180px;
-}
-
-.packages-heading {
-  margin-bottom: 38px;
-  text-align: center;
-}
-
-.packages-heading h2 {
-  color: var(--deep);
-  font-size: clamp(2.35rem, 5.8vw, 4.05rem);
-  line-height: 1;
-}
-
-.packages .section-heading p:not(.eyebrow) {
-  color: #526048;
-  font-size: 1rem;
-  line-height: 1.55;
-  max-width: 640px;
+  max-width: 1380px;
 }
 
 .package-tabs {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1180px;
+  margin: 0 auto;
+  max-width: 1380px;
 }
 
 .package-tabs > input {
@@ -40,62 +16,50 @@
 }
 
 .package-switch {
-  backdrop-filter: blur(22px) saturate(160%);
-  background: rgba(255, 253, 247, 0.84);
-  border: 1px solid rgba(31, 53, 24, 0.14);
+  backdrop-filter: blur(22px);
+  background: var(--ivory);
+  border: 1px solid rgba(31, 53, 24, 0.16);
   border-radius: 999px;
-  box-shadow:
-    0 18px 40px rgba(31, 53, 24, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 48px rgba(31, 53, 24, 0.1);
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(2, 1fr);
-  margin: 0 auto 26px;
-  max-width: 540px;
-  padding: 7px;
-  position: relative;
+  margin: 0 auto 38px;
+  max-width: 620px;
+  padding: 8px;
 }
 
 .package-switch label {
   align-items: center;
   border-radius: 999px;
-  color: rgba(31, 53, 24, 0.68);
+  color: rgba(31, 53, 24, 0.72);
   cursor: pointer;
   display: flex;
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   font-weight: 900;
   justify-content: center;
-  letter-spacing: 0.03em;
-  min-height: 48px;
-  padding: 12px 18px;
-  position: relative;
+  letter-spacing: 0.04em;
+  min-height: 52px;
+  padding: 12px 20px;
   text-align: center;
+  text-transform: uppercase;
   transition:
     background 360ms var(--ease-out-expo),
     color 360ms var(--ease-out-expo),
-    box-shadow 360ms var(--ease-out-expo),
-    transform 360ms var(--ease-spring);
-  z-index: 1;
-}
-
-.package-switch label:hover {
-  color: var(--deep);
+    box-shadow 360ms var(--ease-out-expo);
 }
 
 #photo-packages:checked ~ .package-switch label[for="photo-packages"],
 #henna-packages:checked ~ .package-switch label[for="henna-packages"] {
   background: linear-gradient(135deg, var(--deep) 0%, #2a471f 65%, var(--gold) 180%);
-  box-shadow:
-    0 14px 30px rgba(31, 53, 24, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  box-shadow: 0 14px 32px rgba(31, 53, 24, 0.28);
   color: var(--ivory);
-  transform: scale(1.01);
 }
 
 .package-track {
   display: grid;
   overflow: hidden;
-  padding: 8px 4px 20px;
+  padding: 10px 4px 24px;
   position: relative;
 }
 
@@ -103,22 +67,18 @@
   align-content: start;
   align-self: start;
   display: grid;
-  gap: 20px;
+  gap: 28px;
   grid-area: 1 / 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  transform: translateY(24px) scale(0.97);
+  transform: translateY(28px) scale(0.97);
   transition:
-    opacity 480ms var(--ease-out-expo),
-    transform 480ms var(--ease-out-expo);
+    opacity 520ms var(--ease-out-expo),
+    transform 520ms var(--ease-out-expo);
   visibility: hidden;
   width: 100%;
-}
-
-.photo-grid {
-  transform: translateY(24px) scale(0.97);
 }
 
 #photo-packages:checked ~ .package-track .photo-grid,
@@ -132,63 +92,41 @@
 
 .package-card {
   align-self: stretch;
-  backdrop-filter: blur(20px);
-  background: linear-gradient(155deg, rgba(255, 253, 247, 0.96), rgba(232, 242, 220, 0.72));
+  background: var(--ivory);
   border: 1px solid rgba(31, 53, 24, 0.14);
-  border-radius: 26px;
-  box-shadow:
-    0 20px 46px rgba(31, 53, 24, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  border-radius: 34px;
+  box-shadow: 0 24px 60px rgba(31, 53, 24, 0.1);
   display: grid;
-  gap: 0;
-  grid-template-columns: 196px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   isolation: isolate;
   overflow: hidden;
   position: relative;
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition:
-    transform 450ms var(--ease-out-expo),
-    box-shadow 450ms var(--ease-out-expo),
+    transform 460ms var(--ease-out-expo),
+    box-shadow 460ms var(--ease-out-expo),
     border-color 360ms ease;
 }
 
-.package-card::before {
-  background: radial-gradient(
-    380px circle at var(--spot-x, 50%) var(--spot-y, 0%),
-    rgba(195, 155, 95, 0.22),
-    rgba(184, 111, 96, 0.08) 50%,
-    transparent 78%
-  );
-  content: "";
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: opacity 360ms ease;
-  z-index: 0;
-}
-
-.package-card:hover::before {
-  opacity: 1;
+.package-card--featured {
+  background: linear-gradient(155deg, #1b2f15 0%, var(--deep) 100%);
+  border-color: rgba(195, 155, 95, 0.5);
+  color: var(--ivory);
 }
 
 .package-card:hover {
-  border-color: rgba(195, 155, 95, 0.52);
-  box-shadow:
-    0 28px 64px rgba(31, 53, 24, 0.18),
-    0 0 28px rgba(195, 155, 95, 0.18);
+  border-color: var(--gold);
+  box-shadow: 0 32px 76px rgba(31, 53, 24, 0.2);
 }
 
 .package-cover {
-  aspect-ratio: auto;
   min-height: 100%;
   overflow: hidden;
   position: relative;
-  z-index: 1;
 }
 
 .package-cover::after {
-  background: linear-gradient(180deg, rgba(18, 26, 16, 0) 38%, rgba(18, 26, 16, 0.45) 100%);
+  background: linear-gradient(180deg, rgba(18, 26, 16, 0.1) 0%, rgba(18, 26, 16, 0.55) 100%);
   content: "";
   inset: 0;
   position: absolute;
@@ -198,8 +136,7 @@
   display: block;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  transition: transform 780ms var(--ease-out-expo);
+  transition: transform 820ms var(--ease-out-expo);
   width: 100%;
 }
 
@@ -208,55 +145,64 @@
 }
 
 .package-cover span {
-  background: rgba(184, 111, 96, 0.94);
+  backdrop-filter: blur(12px);
+  background: rgba(18, 26, 16, 0.76);
+  border: 1px solid rgba(195, 155, 95, 0.55);
   border-radius: 999px;
-  color: #fff;
-  font-size: 0.56rem;
+  color: var(--gold);
+  font-size: 0.62rem;
   font-weight: 900;
-  left: 10px;
-  letter-spacing: 0;
-  padding: 6px 8px;
+  left: 16px;
+  letter-spacing: 0.12em;
+  padding: 7px 12px;
   position: absolute;
   text-transform: uppercase;
-  top: 10px;
-  z-index: 1;
+  top: 16px;
+  z-index: 2;
 }
 
 .package-body {
-  padding: 22px 24px;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
 }
 
 .package-type {
-  background: rgba(184, 111, 96, 0.12);
-  border: 1px solid rgba(184, 111, 96, 0.24);
-  border-radius: 999px;
   color: var(--rose);
-  display: inline-block;
-  font-size: 0.64rem;
+  font-size: 0.7rem;
   font-weight: 900;
-  letter-spacing: 0.12em;
-  margin-bottom: 10px;
-  padding: 5px 11px;
+  letter-spacing: 0.16em;
+  margin-bottom: 8px;
   text-transform: uppercase;
 }
 
+.package-card--featured .package-type {
+  color: var(--gold);
+}
+
 .package-body h3 {
-  font-size: 1.38rem;
+  font-size: 1.75rem;
   margin-bottom: 12px;
 }
 
+.package-card--featured .package-body h3 {
+  color: var(--ivory);
+}
+
 .package-body > p:not(.package-type) {
-  color: #526048;
-  font-size: 0.86rem;
-  line-height: 1.48;
-  margin-bottom: 12px;
+  color: #4a5b41;
+  font-size: 0.92rem;
+  line-height: 1.56;
+  margin-bottom: 18px;
+}
+
+.package-card--featured .package-body > p:not(.package-type) {
+  color: rgba(255, 253, 247, 0.78);
 }
 
 .package-body ul {
   display: grid;
-  gap: 8px;
+  gap: 9px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -265,30 +211,25 @@
 .package-body li {
   color: var(--deep);
   display: grid;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 700;
   gap: 10px;
   grid-template-columns: auto 1fr;
-  line-height: 1.4;
+  line-height: 1.42;
+}
+
+.package-card--featured .package-body li {
+  color: rgba(255, 253, 247, 0.92);
 }
 
 .package-body li::before {
   background: linear-gradient(135deg, var(--green), var(--gold));
-  border-radius: 999px;
+  border-radius: 50%;
   box-shadow: 0 0 8px rgba(111, 167, 43, 0.45);
   content: "";
   height: 8px;
   margin-top: 6px;
   width: 8px;
-}
-
-.package-body a {
-  border-top: 1px solid rgba(31, 53, 24, 0.1);
-  color: var(--rose);
-  display: block;
-  font-size: 0.88rem;
-  font-weight: 900;
-  padding-top: 12px;
 }
 
 .package-more {

@@ -6,6 +6,9 @@ export function initVisualSpectacle() {
 
   initScrollProgress();
   initAmbientAtmosphere(prefersReducedMotion);
+  initHeroCinemaSwitcher(prefersReducedMotion);
+  initVenuesAccordion();
+  initGastronomyPreview();
   initTypographyChoreography(prefersReducedMotion);
   initScrollReveals(prefersReducedMotion);
   initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer);
@@ -33,6 +36,103 @@ function initScrollProgress() {
   updateProgress();
   window.addEventListener("scroll", updateProgress, { passive: true });
   window.addEventListener("resize", updateProgress, { passive: true });
+}
+
+function initHeroCinemaSwitcher(prefersReducedMotion) {
+  const slides = Array.from(document.querySelectorAll("[data-hero-slide]"));
+  const triggers = Array.from(document.querySelectorAll("[data-slide-trigger]"));
+
+  if (slides.length === 0 || triggers.length === 0) {
+    return;
+  }
+
+  let currentIndex = 0;
+  let timerId = 0;
+
+  const activateSlide = (index) => {
+    currentIndex = index % slides.length;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === currentIndex);
+    });
+    triggers.forEach((btn, i) => {
+      btn.classList.toggle("is-active", i === currentIndex);
+    });
+  };
+
+  const startAutoPlay = () => {
+    if (prefersReducedMotion) return;
+    window.clearInterval(timerId);
+    timerId = window.setInterval(() => {
+      activateSlide((currentIndex + 1) % slides.length);
+    }, 5200);
+  };
+
+  triggers.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      activateSlide(index);
+      startAutoPlay();
+    });
+    btn.addEventListener("pointerenter", () => {
+      activateSlide(index);
+      startAutoPlay();
+    });
+  });
+
+  startAutoPlay();
+}
+
+function initVenuesAccordion() {
+  const panels = Array.from(document.querySelectorAll("[data-venue-panel]"));
+  if (panels.length === 0) {
+    return;
+  }
+
+  panels.forEach((panel) => {
+    const setActive = () => {
+      panels.forEach((p) => p.classList.toggle("is-active", p === panel));
+    };
+    panel.addEventListener("pointerenter", setActive);
+    panel.addEventListener("focus", setActive);
+  });
+}
+
+function initGastronomyPreview() {
+  const previewImg = document.getElementById("gastronomy-active-img");
+  const previewCat = document.getElementById("gastronomy-active-cat");
+  const previewTitle = document.getElementById("gastronomy-active-title");
+  const menuRows = Array.from(document.querySelectorAll(".menu-row[data-menu-img]"));
+
+  if (!previewImg || !previewCat || !previewTitle || menuRows.length === 0) {
+    return;
+  }
+
+  const updatePreview = (row) => {
+    const nextSrc = row.getAttribute("data-menu-img");
+    const nextCat = row.getAttribute("data-menu-cat");
+    const nextTitle = row.getAttribute("data-menu-title");
+
+    if (nextSrc && previewImg.getAttribute("src") !== nextSrc) {
+      previewImg.style.opacity = "0.35";
+      previewImg.style.transform = "scale(1.06)";
+      window.setTimeout(() => {
+        previewImg.setAttribute("src", nextSrc);
+        previewImg.style.opacity = "1";
+        previewImg.style.transform = "scale(1)";
+      }, 150);
+    }
+
+    if (nextCat) previewCat.textContent = nextCat;
+    if (nextTitle) previewTitle.textContent = nextTitle;
+  };
+
+  menuRows.forEach((row) => {
+    row.addEventListener("pointerenter", () => updatePreview(row));
+    row.addEventListener("toggle", () => {
+      if (row.open) {
+        updatePreview(row);
+      }
+    });
+  });
 }
 
 function initAmbientAtmosphere(prefersReducedMotion) {
@@ -159,7 +259,7 @@ function initTypographyChoreography(prefersReducedMotion) {
     return;
   }
 
-  const heroHeading = document.querySelector(".hero-overlay h1, .garden-detail-hero h1");
+  const heroHeading = document.querySelector(".cinema-title, .garden-detail-hero h1");
   if (heroHeading && !heroHeading.dataset.choreographed) {
     heroHeading.dataset.choreographed = "true";
     heroHeading.classList.add("spectacle-hero-title");
@@ -168,19 +268,21 @@ function initTypographyChoreography(prefersReducedMotion) {
 
 function initScrollReveals(prefersReducedMotion) {
   const revealSelectors = [
-    ".hero-showcase",
+    ".cinema-hero__stage",
     ".garden-detail-hero",
-    ".section-heading",
+    ".editorial-header",
     ".garden-media-heading",
     ".garden-other-heading",
     ".review-heading",
     ".faq-heading",
     ".contact-heading",
-    ".garden-card",
+    ".venue-panel",
+    ".gastronomy-preview",
     ".service-card",
     ".package-switch",
     ".package-card",
     ".menu-row",
+    ".couples-filmstrip__item",
     ".testimonial-card",
     ".faq-item",
     ".contact-map",
@@ -235,13 +337,12 @@ function initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer) 
   }
 
   const interactiveCards = document.querySelectorAll(
-    ".garden-card, .service-card, .package-card, .testimonial-card, .contact-channel, .garden-other-card, .garden-video-card, .menu-row, .faq-item"
+    ".service-card, .package-card, .testimonial-card, .contact-channel, .garden-other-card, .garden-video-card"
   );
 
   interactiveCards.forEach((card) => {
     card.classList.add("spectacle-interactive-card");
-
-    const maxTilt = card.matches(".menu-row, .faq-item") ? 1.8 : 5.5;
+    const maxTilt = 4.5;
 
     card.addEventListener("pointermove", (event) => {
       const rect = card.getBoundingClientRect();
@@ -274,7 +375,7 @@ function initMagneticElements(prefersReducedMotion, isCoarsePointer) {
   }
 
   const magneticTargets = document.querySelectorAll(
-    ".button, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
+    ".btn-luxe, .button, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
   );
 
   magneticTargets.forEach((el) => {
@@ -284,8 +385,8 @@ function initMagneticElements(prefersReducedMotion, isCoarsePointer) {
       const rect = el.getBoundingClientRect();
       const offsetX = event.clientX - (rect.left + rect.width / 2);
       const offsetY = event.clientY - (rect.top + rect.height / 2);
-      el.style.setProperty("--mag-x", `${(offsetX * 0.22).toFixed(1)}px`);
-      el.style.setProperty("--mag-y", `${(offsetY * 0.28).toFixed(1)}px`);
+      el.style.setProperty("--mag-x", `${(offsetX * 0.2).toFixed(1)}px`);
+      el.style.setProperty("--mag-y", `${(offsetY * 0.25).toFixed(1)}px`);
     });
 
     el.addEventListener("pointerleave", () => {
@@ -300,10 +401,10 @@ function initParallaxHero(prefersReducedMotion) {
     return;
   }
 
-  const heroContainer = document.querySelector(".hero-showcase, .garden-detail-hero");
-  const heroImage = heroContainer?.querySelector("img");
+  const heroContainer = document.querySelector(".cinema-hero, .garden-detail-hero");
+  const heroImages = heroContainer?.querySelectorAll(".cinema-hero__bg-img, picture img, :scope > img");
 
-  if (!heroContainer || !heroImage) {
+  if (!heroContainer || !heroImages || heroImages.length === 0) {
     return;
   }
 
@@ -314,9 +415,9 @@ function initParallaxHero(prefersReducedMotion) {
     }
     const progress = Math.min(Math.max(-rect.top / Math.max(rect.height, 1), -0.3), 1);
     const translateY = (progress * 44).toFixed(1);
-    const scale = (1.06 + Math.max(progress, 0) * 0.06).toFixed(3);
-    heroImage.style.setProperty("--hero-parallax-y", `${translateY}px`);
-    heroImage.style.setProperty("--hero-parallax-scale", scale);
+    heroImages.forEach((img) => {
+      img.style.setProperty("--hero-parallax-y", `${translateY}px`);
+    });
   };
 
   updateParallax();
@@ -328,16 +429,13 @@ function initParallaxHero(prefersReducedMotion) {
       const rect = heroContainer.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * -14;
       const ny = ((e.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * -10;
-      heroImage.style.setProperty("--hero-pan-x", `${nx.toFixed(1)}px`);
-      heroImage.style.setProperty("--hero-pan-y", `${ny.toFixed(1)}px`);
+      heroImages.forEach((img) => {
+        img.style.setProperty("--hero-pan-x", `${nx.toFixed(1)}px`);
+        img.style.setProperty("--hero-pan-y", `${ny.toFixed(1)}px`);
+      });
     },
     { passive: true }
   );
-
-  heroContainer.addEventListener("pointerleave", () => {
-    heroImage.style.setProperty("--hero-pan-x", "0px");
-    heroImage.style.setProperty("--hero-pan-y", "0px");
-  });
 }
 
 function initAnimatedNumbers(prefersReducedMotion) {

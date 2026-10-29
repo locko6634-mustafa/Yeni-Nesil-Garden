@@ -7,7 +7,7 @@
       name="description"
       content="Beykoz'un Polonezköy bölgesindeki Yeşil Nesil Garden, dört bahçesiyle kır düğünü, kına, nişan ve nikah organizasyonlarına ev sahipliği yapar."
     >
-    <meta name="theme-color" content="#f5f6ef">
+    <meta name="theme-color" content="#1f3518">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="tr_TR">
@@ -38,9 +38,10 @@
       as="image"
       href="./media/images/gardens/hayal-bahce-hero-1600.webp"
       imagesrcset="./media/images/gardens/hayal-bahce-hero-960.webp 960w, ./media/images/gardens/hayal-bahce-hero-1600.webp 1600w"
-      imagesizes="(max-width: 760px) 100vw, 1180px"
+      imagesizes="100vw"
       type="image/webp"
       fetchpriority="high"
+    >
     <link rel="stylesheet" href="css/shared/fonts.css">
     <link rel="stylesheet" href="css/home/site.css">
     <script type="module" src="js/home/app.js"></script>
@@ -112,7 +113,7 @@
       }
     </script>
   </head>
-  <body>
+  <body class="editorial-app">
     <header class="site-header">
       <nav class="nav" aria-label="Ana navigasyon">
         <a class="brand" href="#anasayfa" aria-label="Yeşil Nesil The Garden">
@@ -127,214 +128,410 @@
           <a href="#yorumlar">Yorumlar</a>
           <a href="#iletisim">İletişim</a>
         </div>
+        <a class="nav-cta" href="https://wa.me/905392211313?text=Merhaba%2C%20Ye%C5%9Fil%20Nesil%20The%20Garden%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">
+          <span>Keşif Randevusu</span>
+          <i aria-hidden="true">↗</i>
+        </a>
       </nav>
     </header>
 
     <main>
-      <section class="hero" id="anasayfa">
-        <div class="hero-showcase">
+      <!-- SINEMATIK TAM EKRAN HERO SAHNESI -->
+      <section class="cinema-hero" id="anasayfa">
+        <div class="cinema-hero__backdrop">
           <img
+            class="cinema-hero__bg-img is-active"
+            data-hero-slide="0"
             src="./media/images/gardens/hayal-bahce-hero-1600.webp"
             srcset="./media/images/gardens/hayal-bahce-hero-960.webp 960w, ./media/images/gardens/hayal-bahce-hero-1600.webp 1600w"
-            sizes="(max-width: 760px) 100vw, 1180px"
+            sizes="100vw"
             alt="Yeşil Nesil Garden Hayal Bahçe kır düğünü alanı"
             width="1600"
             height="1200"
             fetchpriority="high"
             decoding="async"
           >
-          <div class="hero-overlay">
-            <p class="eyebrow">Polonezköy Hayal Ormanları</p>
-            <h1>Yeşil Nesil The Garden</h1>
-            <p class="lead">
-              Yeşil Nesil Garden, İstanbul'un merkezine yakın ve Kavacık'a yalnızca 10 dakika mesafede; doğanın eşliğinde
-              dört farklı konseptte kır düğünü bahçesiyle hayalinizdeki davete ev sahipliği yapıyor.
+          <img
+            class="cinema-hero__bg-img"
+            data-hero-slide="1"
+            src="./media/images/gardens/kale-bahce-thumb.webp"
+            alt="Yeşil Nesil Garden Kale Bahçe davet alanı"
+            width="980"
+            height="653"
+            loading="lazy"
+            decoding="async"
+          >
+          <img
+            class="cinema-hero__bg-img"
+            data-hero-slide="2"
+            src="./media/images/gardens/masal-bahce-thumb.webp"
+            alt="Yeşil Nesil Garden Masal Bahçe davet alanı"
+            width="980"
+            height="653"
+            loading="lazy"
+            decoding="async"
+          >
+          <img
+            class="cinema-hero__bg-img"
+            data-hero-slide="3"
+            src="./media/images/gardens/ruya-bahce-thumb.webp"
+            alt="Yeşil Nesil Garden Rüya Bahçe gece atmosferi"
+            width="1600"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          >
+          <div class="cinema-hero__vignette"></div>
+        </div>
+
+        <div class="cinema-hero__stage">
+          <div class="cinema-hero__main">
+            <div class="cinema-badge">
+              <span class="cinema-badge__dot"></span>
+              <span>POLONEZKÖY HAYAL ORMANLARI · BEYKOZ / İSTANBUL</span>
+            </div>
+
+            <h1 class="cinema-title">
+              <span class="cinema-title__line">Doğanın Kalbinde</span>
+              <span class="cinema-title__line cinema-title__line--accent">Yeşil Nesil <em>The Garden</em></span>
+            </h1>
+
+            <p class="cinema-lead">
+              İstanbul'un merkezine yakın, Kavacık'a yalnızca 10 dakika mesafede; asırlık ağaçların ve yıldızların altında dört farklı konsept bahçeyle hayalinizdeki kır düğünü, kına, nişan ve nikah davetlerine ev sahipliği yapıyoruz.
             </p>
-            <div class="hero-actions">
-              <a class="button primary" href="#bahceler">Bahçeleri incele</a>
-              <a class="button secondary" href="#iletisim">Rezervasyon al</a>
+
+            <div class="cinema-actions">
+              <a class="btn-luxe btn-luxe--gold" href="#bahceler">
+                <span>Dört Bahçeyi Keşfet</span>
+                <b aria-hidden="true">↓</b>
+              </a>
+              <a class="btn-luxe btn-luxe--glass" href="#iletisim">
+                <span>Tarih &amp; Teklif Al</span>
+                <b aria-hidden="true">→</b>
+              </a>
+            </div>
+          </div>
+
+          <div class="cinema-hero__Dock">
+            <div class="cinema-switcher" role="tablist" aria-label="Bahçe atmosferi önizleme">
+              <button class="cinema-switcher__item is-active" type="button" data-slide-trigger="0">
+                <small>01 · GÖL &amp; KORU</small>
+                <strong>Hayal Bahçe</strong>
+              </button>
+              <button class="cinema-switcher__item" type="button" data-slide-trigger="1">
+                <small>02 · KLASİK &amp; GÖRKEMLİ</small>
+                <strong>Kale Bahçe</strong>
+              </button>
+              <button class="cinema-switcher__item" type="button" data-slide-trigger="2">
+                <small>03 · ROMANTİK IŞIK</small>
+                <strong>Masal Bahçe</strong>
+              </button>
+              <button class="cinema-switcher__item" type="button" data-slide-trigger="3">
+                <small>04 · BOHEM GECE</small>
+                <strong>Rüya Bahçe</strong>
+              </button>
+            </div>
+
+            <div class="cinema-metrics">
+              <div class="cinema-metric">
+                <strong>4</strong>
+                <span>Özel Konsept Bahçe</span>
+              </div>
+              <div class="cinema-metric">
+                <strong>50–1500</strong>
+                <span>Kişilik Davet Kapasitesi</span>
+              </div>
+              <div class="cinema-metric">
+                <strong>500</strong>
+                <span>Araçlık Açık Otopark</span>
+              </div>
+              <div class="cinema-metric">
+                <strong>10 dk</strong>
+                <span>Kavacık'a Mesafe</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="bahceler">
-        <div class="section-heading gardens-heading">
-          <h2>Yeşil Nesil The Garden Mekanlar</h2>
+      <!-- SONSUZ AKAN BOTANIK SERIT (MARQUEE) -->
+      <div class="botanical-marquee" aria-hidden="true">
+        <div class="botanical-marquee__track">
+          <span>POLONEZKÖY KIR DÜĞÜNÜ</span><i>✦</i>
+          <span>HAYAL BAHÇE</span><i>✦</i>
+          <span>KALE BAHÇE</span><i>✦</i>
+          <span>MASAL BAHÇE</span><i>✦</i>
+          <span>RÜYA BAHÇE</span><i>✦</i>
+          <span>AÇIK HAVA NİKAH SEREMONİSİ</span><i>✦</i>
+          <span>VİP KINA ORGANİZASYONU</span><i>✦</i>
+          <span>GURME DAVET MENÜLERİ</span><i>✦</i>
+          <span>POLONEZKÖY KIR DÜĞÜNÜ</span><i>✦</i>
+          <span>HAYAL BAHÇE</span><i>✦</i>
+          <span>KALE BAHÇE</span><i>✦</i>
+          <span>MASAL BAHÇE</span><i>✦</i>
+          <span>RÜYA BAHÇE</span><i>✦</i>
+          <span>AÇIK HAVA NİKAH SEREMONİSİ</span><i>✦</i>
+          <span>VİP KINA ORGANİZASYONU</span><i>✦</i>
+          <span>GURME DAVET MENÜLERİ</span><i>✦</i>
         </div>
-        <div class="garden-grid">
-          <a class="garden-card" href="./hayal-bahce" aria-labelledby="hayal-bahce-title">
-              <div class="image-slot garden-image photo-slot">
-                <img src="./media/images/gardens/hayal-bahce-thumb.webp" alt="Yeşil Nesil Garden Hayal Bahçe açık hava düğün alanı" width="880" height="660" loading="lazy" decoding="async">
-              </div>
-              <div>
-                <h3 id="hayal-bahce-title">Hayal Bahçe</h3>
-                <p>Gölge, göl kenarı ve nikah düzeniyle büyük davet akışını rahat taşıyan ferah bahçe.</p>
-                <span class="garden-card-link">Bahçeyi keşfet <span aria-hidden="true">→</span></span>
-              </div>
+      </div>
+
+      <!-- 01 / BAHÇELER: İNTERAKTİF AKORDEON VİTRİN SAHNESİ -->
+      <section class="editorial-section venues-showcase" id="bahceler">
+        <div class="editorial-header">
+          <div class="editorial-header__meta">
+            <span class="chapter-tag">BÖLÜM 01 — MEKAN KOLEKSİYONU</span>
+            <h2>Dört Farklı Ruh,<br><span>Tek Bir Doğal Cennet</span></h2>
+          </div>
+          <p class="editorial-header__desc">
+            Her biri kendine özgü mimari dokuya, ışık karakterine ve davet akışına sahip dört kır bahçemizden hayalinize en yakın olanı seçin. Kartların üzerine gelerek atmosferi genişletin.
+          </p>
+        </div>
+
+        <div class="venues-accordion">
+          <a class="venue-panel is-active" href="./hayal-bahce" aria-labelledby="hayal-bahce-title" data-venue-panel>
+            <img src="./media/images/gardens/hayal-bahce-thumb.webp" alt="Yeşil Nesil Garden Hayal Bahçe açık hava düğün alanı" width="880" height="660" loading="lazy" decoding="async">
+            <div class="venue-panel__shade"></div>
+            <div class="venue-panel__top">
+              <span class="venue-panel__num">01</span>
+              <span class="venue-panel__pill">Göl Kenarı &amp; Gazebo</span>
+            </div>
+            <div class="venue-panel__content">
+              <p class="venue-panel__kicker">FERAH &amp; DOĞAL AKIM</p>
+              <h3 id="hayal-bahce-title">Hayal Bahçe</h3>
+              <p class="venue-panel__desc">Gölge, göl kenarı ve nikah düzeniyle büyük davet akışını rahat taşıyan ferah bahçe.</p>
+              <span class="venue-panel__cta">Bahçeyi ve Galeriyi Keşfet <i aria-hidden="true">→</i></span>
+            </div>
           </a>
-          <a class="garden-card" href="./kale-bahce" aria-labelledby="kale-bahce-title">
-              <div class="image-slot garden-image photo-slot">
-                <img src="./media/images/gardens/kale-bahce-thumb.webp" alt="Yeşil Nesil Garden Kale Bahçe düğün masa düzeni" width="980" height="653" loading="lazy" decoding="async">
-              </div>
-              <div>
-                <h3 id="kale-bahce-title">Kale Bahçe</h3>
-                <p>Klasik, aydınlık ve düzenli masa yerleşimiyle kalabalık kır düğünleri için güçlü atmosfer.</p>
-                <span class="garden-card-link">Bahçeyi keşfet <span aria-hidden="true">→</span></span>
-              </div>
+
+          <a class="venue-panel" href="./kale-bahce" aria-labelledby="kale-bahce-title" data-venue-panel>
+            <img src="./media/images/gardens/kale-bahce-thumb.webp" alt="Yeşil Nesil Garden Kale Bahçe düğün masa düzeni" width="980" height="653" loading="lazy" decoding="async">
+            <div class="venue-panel__shade"></div>
+            <div class="venue-panel__top">
+              <span class="venue-panel__num">02</span>
+              <span class="venue-panel__pill">Klasik &amp; Görkemli</span>
+            </div>
+            <div class="venue-panel__content">
+              <p class="venue-panel__kicker">GÜÇLÜ MASA DÜZENİ</p>
+              <h3 id="kale-bahce-title">Kale Bahçe</h3>
+              <p class="venue-panel__desc">Klasik, aydınlık ve düzenli masa yerleşimiyle kalabalık kır düğünleri için güçlü atmosfer.</p>
+              <span class="venue-panel__cta">Bahçeyi ve Galeriyi Keşfet <i aria-hidden="true">→</i></span>
+            </div>
           </a>
-          <a class="garden-card" href="./masal-bahce" aria-labelledby="masal-bahce-title">
-              <div class="image-slot garden-image photo-slot">
-                <img src="./media/images/gardens/masal-bahce-thumb.webp" alt="Yeşil Nesil Garden Masal Bahçe davet alanı" width="980" height="653" loading="lazy" decoding="async">
-              </div>
-              <div>
-                <h3 id="masal-bahce-title">Masal Bahçe</h3>
-                <p>Sıcak gün ışığı, yeşil doku ve süslemeli alanlarıyla masalsı bir kutlama hissi.</p>
-                <span class="garden-card-link">Bahçeyi keşfet <span aria-hidden="true">→</span></span>
-              </div>
+
+          <a class="venue-panel" href="./masal-bahce" aria-labelledby="masal-bahce-title" data-venue-panel>
+            <img src="./media/images/gardens/masal-bahce-thumb.webp" alt="Yeşil Nesil Garden Masal Bahçe davet alanı" width="980" height="653" loading="lazy" decoding="async">
+            <div class="venue-panel__shade"></div>
+            <div class="venue-panel__top">
+              <span class="venue-panel__num">03</span>
+              <span class="venue-panel__pill">Sıcak Gün Işığı</span>
+            </div>
+            <div class="venue-panel__content">
+              <p class="venue-panel__kicker">MASALSI KUTLAMA</p>
+              <h3 id="masal-bahce-title">Masal Bahçe</h3>
+              <p class="venue-panel__desc">Sıcak gün ışığı, yeşil doku ve süslemeli alanlarıyla masalsı bir kutlama hissi.</p>
+              <span class="venue-panel__cta">Bahçeyi ve Galeriyi Keşfet <i aria-hidden="true">→</i></span>
+            </div>
           </a>
-          <a class="garden-card" href="./ruya-bahce" aria-labelledby="ruya-bahce-title">
-              <div class="image-slot garden-image photo-slot">
-                <img src="./media/images/gardens/ruya-bahce-thumb.webp" alt="Yeşil Nesil Garden Rüya Bahçe gece düğünü düzeni" width="1600" height="900" loading="lazy" decoding="async">
-              </div>
-              <div>
-                <h3 id="ruya-bahce-title">Rüya Bahçe</h3>
-                <p>Sıcak aydınlatma, ahşap masalar ve altın sandalye detaylarıyla samimi davet atmosferi.</p>
-                <span class="garden-card-link">Bahçeyi keşfet <span aria-hidden="true">→</span></span>
-              </div>
+
+          <a class="venue-panel" href="./ruya-bahce" aria-labelledby="ruya-bahce-title" data-venue-panel>
+            <img src="./media/images/gardens/ruya-bahce-thumb.webp" alt="Yeşil Nesil Garden Rüya Bahçe gece düğünü düzeni" width="1600" height="900" loading="lazy" decoding="async">
+            <div class="venue-panel__shade"></div>
+            <div class="venue-panel__top">
+              <span class="venue-panel__num">04</span>
+              <span class="venue-panel__pill">Ahşap &amp; Altın Detaylar</span>
+            </div>
+            <div class="venue-panel__content">
+              <p class="venue-panel__kicker">SAMİMİ GECE RUHU</p>
+              <h3 id="ruya-bahce-title">Rüya Bahçe</h3>
+              <p class="venue-panel__desc">Sıcak aydınlatma, ahşap masalar ve altın sandalye detaylarıyla samimi davet atmosferi.</p>
+              <span class="venue-panel__cta">Bahçeyi ve Galeriyi Keşfet <i aria-hidden="true">→</i></span>
+            </div>
           </a>
         </div>
       </section>
 
-      <section class="section" id="menu">
-        <div class="section-heading menu-heading">
-          <h2>Menülerimiz</h2>
-        </div>
-        <div class="menu-list">
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/kokteyl.webp" alt="Yeşil Nesil Garden kokteyl düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Kokteyl</small>KOKTEYL MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Limon Dip Soslu Kurudite</strong><em>Salatalık ve taze havuç dilimleri.</em></li>
-              <li><strong>Cips – Çerez Tabağı</strong><em>Kokteyl akışına uygun masa ikramı.</em></li>
-              <li><strong>İkram Tabağı (Kişiye Özel)</strong><em>Su böreği, mini poğaça, mini pizza, pembe sultan, makarna salatası, yaprak sarma ve çiğ köfte.</em></li>
-              <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
-              <li><strong>Meyve İkramı</strong><em>Mevsim meyveleri.</em></li>
-              <li><strong>İçecek</strong><em>Soft İçecek</em></li>
-            </ul>
-          </details>
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/beyaz-et.webp" alt="Yeşil Nesil Garden beyaz et düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Ana yemek</small>BEYAZ ET MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
-              <li><strong>Ana Yemek</strong><em>Özel Yeşil Nesil soslu piliç sote, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
-              <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
-              <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
-              <li><strong>İçecek</strong><em>Soft İçecek</em></li>
-            </ul>
-          </details>
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/kirmizi-et.webp" alt="Yeşil Nesil Garden kırmızı et düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Ana yemek</small>KIRMIZI ET MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
-              <li><strong>Ana Yemek</strong><em>Taze baharatlarla marine edilmiş çoban kavurma, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
-              <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
-              <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
-              <li><strong>İçecek</strong><em>Soft İçecek</em></li>
-            </ul>
-          </details>
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/beyaz-et-set.webp" alt="Yeşil Nesil Garden beyaz et set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Set menü</small>BEYAZ ET SET MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Ordövr Tabağı</strong><em>Haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, yeşillik eşliğinde cevizli çiğ köfte, salatalık ve domates.</em></li>
-              <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
-              <li><strong>Ana Yemek</strong><em>Özel Yeşil Nesil soslu piliç sote, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
-              <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
-              <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
-              <li><strong>İçecek</strong><em>Soft İçecek</em></li>
-            </ul>
-          </details>
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/kirmizi-et-set.webp" alt="Yeşil Nesil Garden kırmızı et set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Set menü</small>KIRMIZI ET SET MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Ordövr Tabağı</strong><em>Haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, yeşillik eşliğinde cevizli çiğ köfte, salatalık ve domates.</em></li>
-              <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
-              <li><strong>Ana Yemek</strong><em>Taze baharatlarla marine edilmiş çoban kavurma, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
-              <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
-              <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
-              <li><strong>İçecek</strong><em>Soft İçecek</em></li>
-            </ul>
-          </details>
-          <details class="menu-row">
-            <summary>
-              <img src="./media/images/menu/kirmizi-et-set.webp" alt="Yeşil Nesil Garden hünkar beğendi set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
-              <span><small>Set menü</small>HÜNKAR BEĞENDİ SET MENÜ</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <ul>
-              <li><strong>Ordövr Tabağı</strong><em>Zeytinyağlı enginar, haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, humus ve pembe sultan.</em></li>
-              <li><strong>Ara Sıcak</strong><em>Su böreği</em></li>
-              <li><strong>Ana Yemek</strong><em>Hünkâr beğendi, tereyağlı pirinç pilavı, patlıcan graten, garnitür ve kişiye özel mevsim salatası.</em></li>
-              <li><strong>Pasta</strong><em>Kalpli dondurmalı pasta</em></li>
-              <li><strong>Meyve</strong><em>Mevsim meyveleri</em></li>
-              <li><strong>İçecek</strong><em>Soft içecek</em></li>
-            </ul>
-          </details>
+      <!-- 02 / MENÜLER: İNTERAKTİF GURME GASTRONOMİ SAHNESİ -->
+      <section class="editorial-section gastronomy-section" id="menu">
+        <div class="gastronomy-shell">
+          <div class="editorial-header editorial-header--light">
+            <div class="editorial-header__meta">
+              <span class="chapter-tag chapter-tag--gold">BÖLÜM 02 — DAVET GASTRONOMİSİ</span>
+              <h2>Şefin Seçkisiyle<br><span>Menülerimiz</span></h2>
+            </div>
+            <p class="editorial-header__desc">
+              Kokteyl karşılamadan zengin ordövr tabağına, taş fırın dokunuşlu ara sıcaklardan özel soslu ana yemeklere uzanan 6 farklı davet menüsü.
+            </p>
+          </div>
+
+          <div class="gastronomy-stage">
+            <aside class="gastronomy-preview" aria-hidden="true">
+              <div class="gastronomy-preview__frame">
+                <img
+                  id="gastronomy-active-img"
+                  src="./media/images/menu/kokteyl.webp"
+                  alt="Seçili menü sunumu"
+                  width="512"
+                  height="512"
+                  loading="lazy"
+                  decoding="async"
+                >
+                <div class="gastronomy-preview__badge">
+                  <small id="gastronomy-active-cat">Kokteyl</small>
+                  <strong id="gastronomy-active-title">KOKTEYL MENÜ</strong>
+                </div>
+              </div>
+              <div class="gastronomy-preview__note">
+                <span>✦ Tüm menülerimizde taze mevsim ürünleri ve kişiye özel servis standardı uygulanır.</span>
+              </div>
+            </aside>
+
+            <div class="menu-list">
+              <details class="menu-row" open data-menu-img="./media/images/menu/kokteyl.webp" data-menu-cat="Kokteyl" data-menu-title="KOKTEYL MENÜ">
+                <summary>
+                  <img src="./media/images/menu/kokteyl.webp" alt="Yeşil Nesil Garden kokteyl düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>01 · Kokteyl</small>KOKTEYL MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Limon Dip Soslu Kurudite</strong><em>Salatalık ve taze havuç dilimleri.</em></li>
+                  <li><strong>Cips – Çerez Tabağı</strong><em>Kokteyl akışına uygun masa ikramı.</em></li>
+                  <li><strong>İkram Tabağı (Kişiye Özel)</strong><em>Su böreği, mini poğaça, mini pizza, pembe sultan, makarna salatası, yaprak sarma ve çiğ köfte.</em></li>
+                  <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
+                  <li><strong>Meyve İkramı</strong><em>Mevsim meyveleri.</em></li>
+                  <li><strong>İçecek</strong><em>Soft İçecek</em></li>
+                </ul>
+              </details>
+
+              <details class="menu-row" data-menu-img="./media/images/menu/beyaz-et.webp" data-menu-cat="Ana yemek" data-menu-title="BEYAZ ET MENÜ">
+                <summary>
+                  <img src="./media/images/menu/beyaz-et.webp" alt="Yeşil Nesil Garden beyaz et düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>02 · Ana yemek</small>BEYAZ ET MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
+                  <li><strong>Ana Yemek</strong><em>Özel Yeşil Nesil soslu piliç sote, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
+                  <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
+                  <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
+                  <li><strong>İçecek</strong><em>Soft İçecek</em></li>
+                </ul>
+              </details>
+
+              <details class="menu-row" data-menu-img="./media/images/menu/kirmizi-et.webp" data-menu-cat="Ana yemek" data-menu-title="KIRMIZI ET MENÜ">
+                <summary>
+                  <img src="./media/images/menu/kirmizi-et.webp" alt="Yeşil Nesil Garden kırmızı et düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>03 · Ana yemek</small>KIRMIZI ET MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
+                  <li><strong>Ana Yemek</strong><em>Taze baharatlarla marine edilmiş çoban kavurma, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
+                  <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
+                  <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
+                  <li><strong>İçecek</strong><em>Soft İçecek</em></li>
+                </ul>
+              </details>
+
+              <details class="menu-row" data-menu-img="./media/images/menu/beyaz-et-set.webp" data-menu-cat="Set menü" data-menu-title="BEYAZ ET SET MENÜ">
+                <summary>
+                  <img src="./media/images/menu/beyaz-et-set.webp" alt="Yeşil Nesil Garden beyaz et set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>04 · Set menü</small>BEYAZ ET SET MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Ordövr Tabağı</strong><em>Haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, yeşillik eşliğinde cevizli çiğ köfte, salatalık ve domates.</em></li>
+                  <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
+                  <li><strong>Ana Yemek</strong><em>Özel Yeşil Nesil soslu piliç sote, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
+                  <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
+                  <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
+                  <li><strong>İçecek</strong><em>Soft İçecek</em></li>
+                </ul>
+              </details>
+
+              <details class="menu-row" data-menu-img="./media/images/menu/kirmizi-et-set.webp" data-menu-cat="Set menü" data-menu-title="KIRMIZI ET SET MENÜ">
+                <summary>
+                  <img src="./media/images/menu/kirmizi-et-set.webp" alt="Yeşil Nesil Garden kırmızı et set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>05 · Set menü</small>KIRMIZI ET SET MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Ordövr Tabağı</strong><em>Haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, yeşillik eşliğinde cevizli çiğ köfte, salatalık ve domates.</em></li>
+                  <li><strong>Ara Sıcak</strong><em>Su Böreği</em></li>
+                  <li><strong>Ana Yemek</strong><em>Taze baharatlarla marine edilmiş çoban kavurma, tereyağlı pirinç pilavı, patates püresi ve garnitür.</em></li>
+                  <li><strong>Pasta</strong><em>Frambuazlı Yaş Pasta</em></li>
+                  <li><strong>Meyve</strong><em>Mevsim Meyveleri</em></li>
+                  <li><strong>İçecek</strong><em>Soft İçecek</em></li>
+                </ul>
+              </details>
+
+              <details class="menu-row" data-menu-img="./media/images/menu/kirmizi-et-set.webp" data-menu-cat="Set menü" data-menu-title="HÜNKAR BEĞENDİ SET MENÜ">
+                <summary>
+                  <img src="./media/images/menu/kirmizi-et-set.webp" alt="Yeşil Nesil Garden hünkar beğendi set düğün menüsü" width="512" height="512" loading="lazy" decoding="async">
+                  <span><small>06 · İmza Set Menü</small>HÜNKAR BEĞENDİ SET MENÜ</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <ul>
+                  <li><strong>Ordövr Tabağı</strong><em>Zeytinyağlı enginar, haydari, şakşuka, havuç tarator, acılı ezme, Amerikan salatası, zeytinyağlı yaprak sarması, humus ve pembe sultan.</em></li>
+                  <li><strong>Ara Sıcak</strong><em>Su böreği</em></li>
+                  <li><strong>Ana Yemek</strong><em>Hünkâr beğendi, tereyağlı pirinç pilavı, patlıcan graten, garnitür ve kişiye özel mevsim salatası.</em></li>
+                  <li><strong>Pasta</strong><em>Kalpli dondurmalı pasta</em></li>
+                  <li><strong>Meyve</strong><em>Mevsim meyveleri</em></li>
+                  <li><strong>İçecek</strong><em>Soft içecek</em></li>
+                </ul>
+              </details>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section packages" id="paketler">
-        <div class="section-heading packages-heading">
-          <h2>Kına ve fotoğraf paketleri</h2>
+      <!-- 03 / PAKETLER: LÜKS DERGİ EDİTORYAL PAKET VİTRİNİ -->
+      <section class="editorial-section packages" id="paketler">
+        <div class="editorial-header">
+          <div class="editorial-header__meta">
+            <span class="chapter-tag">BÖLÜM 03 — ÖZEL KONSEPT PAKETLER</span>
+            <h2>Sinematik Çekim &amp;<br><span>Görkemli Kına Paketleri</span></h2>
+          </div>
+          <p class="editorial-header__desc">
+            En değerli anlarınızı ölümsüzleştiren profesyonel prodüksiyon paketlerimiz ve geleneksel ritüelleri modern sahne şovlarıyla buluşturan kına konseptlerimiz.
+          </p>
         </div>
+
         <div class="package-tabs">
           <input type="radio" name="package-tab" id="photo-packages" checked>
           <input type="radio" name="package-tab" id="henna-packages">
           <div class="package-switch" aria-label="Paket seçimi">
-            <label for="photo-packages">Fotoğraf Paketleri</label>
-            <label for="henna-packages">Kına Paketleri</label>
+            <label for="photo-packages">Fotoğraf &amp; Film Paketleri</label>
+            <label for="henna-packages">Kına Organizasyon Paketleri</label>
           </div>
+
           <div class="package-track">
             <div class="package-grid photo-grid">
               <article class="package-card">
                 <div class="package-cover">
                   <img src="./media/images/packages/fotograf-klasik.webp" alt="Yeşil Nesil Garden Classic düğün fotoğraf paketi" width="800" height="1200" loading="lazy" decoding="async">
+                  <span>STANDART PRODÜKSİYON</span>
                 </div>
                 <div class="package-body">
-                  <p class="package-type">Fotoğraf Paketi</p>
+                  <p class="package-type">Fotoğraf Paketi · 01</p>
                   <h3>Classic Paket</h3>
+                  <p>Düğün gününüzün temel akışını yüksek çözünürlüklü kayıt ve aile pozlarıyla güvenceye alan klasik çekim paketi.</p>
                   <ul>
                     <li>Aktüel Kamera (Full 1080p)</li>
                     <li>10 Poz Dijital Aile Pozu (Düğün Sonunda)</li>
                   </ul>
                 </div>
               </article>
-              <article class="package-card">
+
+              <article class="package-card package-card--featured">
                 <div class="package-cover">
                   <img src="./media/images/packages/fotograf-premium.webp" alt="Yeşil Nesil Garden Gold düğün fotoğraf paketi" width="800" height="1200" loading="lazy" decoding="async">
+                  <span>SİNEMATİK TAM PAKET</span>
                 </div>
                 <div class="package-body">
-                  <p class="package-type">Fotoğraf Paketi</p>
+                  <p class="package-type">Fotoğraf Paketi · 02</p>
                   <h3>Gold Paket</h3>
+                  <p>Drone çekiminden düğün hikayesi klibine ve çift ön çekimine kadar tüm günü sinematik bir filme dönüştüren kapsamlı paket.</p>
                   <ul>
                     <li>Aktüel Kamera (Full 1080p)</li>
                     <li>10 Poz Dijital Aile Pozu (Düğün Sonunda)</li>
@@ -346,13 +543,15 @@
                 </div>
               </article>
             </div>
+
             <div class="package-grid henna-grid">
               <article class="package-card">
                 <div class="package-cover">
                   <img src="./media/images/packages/kina-klasik.webp" alt="Yeşil Nesil Garden klasik kına gecesi paketi" width="768" height="768" loading="lazy" decoding="async">
+                  <span>GELENEKSEL RİTÜEL</span>
                 </div>
                 <div class="package-body">
-                  <p class="package-type">Kına Paketi</p>
+                  <p class="package-type">Kına Paketi · 01</p>
                   <h3>KLASİK PAKET</h3>
                   <ul class="package-feature-list" id="classic-henna-features">
                     <li>3 kişilik profesyonel dans ekibi</li>
@@ -388,12 +587,14 @@
                   </button>
                 </div>
               </article>
-              <article class="package-card">
+
+              <article class="package-card package-card--featured">
                 <div class="package-cover">
                   <img src="./media/images/packages/kina-premium.webp" alt="Yeşil Nesil Garden VİP kına gecesi paketi" width="768" height="768" loading="lazy" decoding="async">
+                  <span>SAHNE &amp; VİP KONSEPT</span>
                 </div>
                 <div class="package-body">
-                  <p class="package-type">Kına Paketi</p>
+                  <p class="package-type">Kına Paketi · 02</p>
                   <h3>VİP PAKET</h3>
                   <ul class="package-feature-list" id="vip-henna-features">
                     <li>İsme özel ayaklı karşılama aynası</li>
@@ -430,43 +631,58 @@
         </div>
       </section>
 
-      <section class="section services" id="hizmetler">
-        <div class="section-heading services-heading">
-          <h2>Hizmetlerimiz</h2>
+      <!-- 04 / HİZMETLER: ASİMETRİK BENTO GALERİ VİTRİNİ -->
+      <section class="editorial-section services" id="hizmetler">
+        <div class="editorial-header">
+          <div class="editorial-header__meta">
+            <span class="chapter-tag">BÖLÜM 04 — KUTLAMA SANATI</span>
+            <h2>Kusursuz Akışla<br><span>Hizmetlerimiz</span></h2>
+          </div>
+          <p class="editorial-header__desc">
+            Gelin-damat asistanlığından sahne-ışık tasarımına, masa çiçeklerinden yağmur korumalı dev şemsiye ve gazebo çözümlerine kadar her ayrıntıyı biz yönetiyoruz.
+          </p>
         </div>
-        <div class="services-grid">
-          <article class="service-card">
+
+        <div class="services-bento">
+          <article class="service-card service-card--wide">
             <div class="service-image image-slot photo-slot">
               <img src="./media/images/services/service-dugun.webp" alt="Yeşil Nesil Garden Polonezköy kır düğünü organizasyonu" width="1600" height="1200" loading="lazy" decoding="async">
             </div>
             <div class="service-content">
+              <span class="service-index">01 / KIR DÜĞÜNÜ</span>
               <h3>Düğün</h3>
               <p>Doğanın içinde, zarif masa düzeni ve güçlü organizasyon akışıyla unutulmaz kır düğünleri.</p>
             </div>
           </article>
+
           <article class="service-card">
             <div class="service-image image-slot photo-slot">
               <img src="./media/images/services/service-kina.webp" alt="Yeşil Nesil Garden bahçede kına gecesi organizasyonu" width="1536" height="1024" loading="lazy" decoding="async">
             </div>
             <div class="service-content">
+              <span class="service-index">02 / KINA GECESİ</span>
               <h3>Kına</h3>
               <p>Işık, müzik ve geleneksel dokuyu sıcak bir bahçe atmosferiyle buluşturan kına geceleri.</p>
             </div>
           </article>
+
           <article class="service-card">
             <div class="service-image image-slot photo-slot">
               <img src="./media/images/services/service-nisan.webp" alt="Yeşil Nesil Garden açık hava nişan organizasyonu" width="1200" height="1500" loading="lazy" decoding="async">
             </div>
             <div class="service-content">
+              <span class="service-index">03 / NİŞAN DAVETİ</span>
               <h3>Nişan</h3>
               <p>Romantik süslemeler, şık karşılama ve fotoğraf değeri yüksek nişan davetleri.</p>
             </div>
           </article>
-          <article class="service-card">
+
+          <article class="service-card service-card--wide">
             <div class="service-image image-slot photo-slot">
               <img src="./media/images/services/service-nikah-seremonisi.webp" alt="Yeşil Nesil Garden açık hava nikah seremonisi" width="1600" height="1079" loading="lazy" decoding="async">
             </div>
             <div class="service-content">
+              <span class="service-index">04 / AÇIK HAVA TÖRENİ</span>
               <h3>Nikah Seremonisi</h3>
               <p>Yeşil alan, nikah yolu ve zarif seremoni düzeninin bir arada olduğu açık hava törenleri.</p>
             </div>
@@ -474,77 +690,105 @@
         </div>
       </section>
 
-      <section class="section satisfaction" id="yorumlar">
-        <div class="review-heading">
-          <p class="eyebrow">Değerlendirmeler</p>
-          <h2>Google'da <span>214</span> değerlendirmede <span>4,4/5</span></h2>
-          <p>Güncel puan ve yorum sayısını Google Haritalar profilimizden inceleyebilirsiniz. Çiftlerin kendi deneyimlerinden kısa notlar.</p>
-          <a href="https://www.google.com/search?hl=tr-TR&amp;q=ye%C5%9Fil+nesil+the+garden+yorumlar%C4%B1" target="_blank" rel="noopener noreferrer">Yorumları Google'da gör →</a>
-        </div>
-        <div class="satisfaction-grid">
-          <div class="testimonial-card">
-            <div class="review-card-head">
-              <div class="couple-photo">
-                <img src="./media/images/couples/couple-review-1.webp" alt="Düğün gününde birlikte poz veren çift" width="480" height="480" loading="lazy" decoding="async">
-              </div>
-              <div><p class="couple-name">Buse Polat</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
-            </div>
-            <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Düğünümüzü Yeşil Nesil Garden Kır Düğün Salonu’nda yaptık ve iyi ki burayı tercih etmişiz diyoruz. Açıkçası düğün öncesinde her çift gibi bizim de birçok…</blockquote></div>
+      <!-- 05 / YORUMLAR & ÇİFTLER: DUYGUSAL HİKAYE & SOSYAL KANIT -->
+      <section class="editorial-section satisfaction" id="yorumlar">
+        <div class="satisfaction-shell">
+          <div class="review-heading">
+            <p class="eyebrow">BÖLÜM 05 — ÇİFTLERİMİZİN HİKAYELERİ</p>
+            <h2>Google'da <span>214</span> değerlendirmede <span>4,4/5</span></h2>
+            <p>Güncel puan ve yorum sayısını Google Haritalar profilimizden inceleyebilirsiniz. Çiftlerin kendi deneyimlerinden kısa notlar.</p>
+            <a href="https://www.google.com/search?hl=tr-TR&amp;q=ye%C5%9Fil+nesil+the+garden+yorumlar%C4%B1" target="_blank" rel="noopener noreferrer">Tüm Yorumları Google'da Gör →</a>
           </div>
-          <div class="testimonial-card">
-            <div class="review-card-head">
-              <div class="couple-photo">
-                <img src="./media/images/couples/couple-review-2.webp" alt="Düğünlerinde dans eden çift" width="480" height="480" loading="lazy" decoding="async">
-              </div>
-              <div><p class="couple-name">Seher Öztürk</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
-            </div>
-            <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Ablamın düğününü burada yaptık ve iyi ki de burayı tercih etmişiz. Baştan sona her şey o kadar güzel ve düzenliydi ki hiç stres yaşamadık. Ekip inanılmaz…</blockquote></div>
+
+          <!-- Çiftlerimizden Sinematik Kareler Şeridi -->
+          <div class="couples-filmstrip" aria-label="Yeşil Nesil Garden çiftlerinden kareler">
+            <figure class="couples-filmstrip__item">
+              <img src="./media/images/couples/couple-1.webp" alt="Yeşil Nesil Garden düğün çifti portresi" width="960" height="1200" loading="lazy" decoding="async">
+            </figure>
+            <figure class="couples-filmstrip__item">
+              <img src="./media/images/couples/couple-2.webp" alt="Yeşil Nesil Garden bahçede gelin ve damat" width="960" height="1200" loading="lazy" decoding="async">
+            </figure>
+            <figure class="couples-filmstrip__item">
+              <img src="./media/images/couples/couple-3.webp" alt="Yeşil Nesil Garden gece düğününde çift" width="960" height="1200" loading="lazy" decoding="async">
+            </figure>
+            <figure class="couples-filmstrip__item">
+              <img src="./media/images/couples/couple-4.webp" alt="Yeşil Nesil Garden nikah seremonisinde çift" width="960" height="1200" loading="lazy" decoding="async">
+            </figure>
           </div>
-          <div class="testimonial-card">
-            <div class="review-card-head">
-              <div class="couple-photo">
-                <img src="./media/images/couples/couple-review-3.webp" alt="Bahçede birlikte gülümseyen çift" width="480" height="480" loading="lazy" decoding="async">
+
+          <div class="satisfaction-grid">
+            <div class="testimonial-card">
+              <div class="review-card-head">
+                <div class="couple-photo">
+                  <img src="./media/images/couples/couple-review-1.webp" alt="Düğün gününde birlikte poz veren çift" width="480" height="480" loading="lazy" decoding="async">
+                </div>
+                <div><p class="couple-name">Buse Polat</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
               </div>
-              <div><p class="couple-name">Can Manay</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
+              <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Düğünümüzü Yeşil Nesil Garden Kır Düğün Salonu’nda yaptık ve iyi ki burayı tercih etmişiz diyoruz. Açıkçası düğün öncesinde her çift gibi bizim de birçok…</blockquote></div>
             </div>
-            <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Düğünümüz için Yeşil Nesil’i tercih ettiğimiz için çok mutluyuz. İlk görüşmeden organizasyonun son anına kadar gösterilen ilgi, samimiyet ve profesyonellik…</blockquote></div>
+            <div class="testimonial-card">
+              <div class="review-card-head">
+                <div class="couple-photo">
+                  <img src="./media/images/couples/couple-review-2.webp" alt="Düğünlerinde dans eden çift" width="480" height="480" loading="lazy" decoding="async">
+                </div>
+                <div><p class="couple-name">Seher Öztürk</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
+              </div>
+              <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Ablamın düğününü burada yaptık ve iyi ki de burayı tercih etmişiz. Baştan sona her şey o kadar güzel ve düzenliydi ki hiç stres yaşamadık. Ekip inanılmaz…</blockquote></div>
+            </div>
+            <div class="testimonial-card">
+              <div class="review-card-head">
+                <div class="couple-photo">
+                  <img src="./media/images/couples/couple-review-3.webp" alt="Bahçede birlikte gülümseyen çift" width="480" height="480" loading="lazy" decoding="async">
+                </div>
+                <div><p class="couple-name">Can Manay</p><p class="stars" aria-label="5 yıldız">★★★★★</p></div>
+              </div>
+              <div><p class="garden-tag">Google yorumu · 3 hafta önce</p><blockquote>Düğünümüz için Yeşil Nesil’i tercih ettiğimiz için çok mutluyuz. İlk görüşmeden organizasyonun son anına kadar gösterilen ilgi, samimiyet ve profesyonellik…</blockquote></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section faq" id="sorular">
-        <div class="faq-heading"><h2>Sık Sorulan Sorular</h2></div>
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary><span>Yağmur veya olumsuz hava koşullarında çözümünüz var mı?</span><b aria-hidden="true">+</b></summary>
-            <p>Kale Bahçe ve Masal Bahçe'de, bahçelerin toplam kapasitesini koruyabilecek büyüklükte dev şemsiyelerimiz bulunmaktadır. Hayal Bahçe'de ise her masanın üzerine gazebo şemsiye kurulumu yapılarak misafirlerimiz yağmurdan korunmaktadır.</p>
-          </details>
-          <details class="faq-item">
-            <summary><span>Misafirlerimizin kullanabileceği otopark bulunuyor mu?</span><b aria-hidden="true">+</b></summary>
-            <p>Evet. Tesisimizde 500 araç kapasiteli açık otopark bulunmaktadır.</p>
-          </details>
-          <details class="faq-item">
-            <summary><span>Düğün paketlerinizin içerisinde neler bulunuyor?</span><b aria-hidden="true">+</b></summary>
-            <p>Paketlerimiz; mekân kullanımı, masa ve sandalye düzeni, konsept süsleme, ikramlıklar ve organizasyon hizmetlerini kapsamaktadır. Paket içerikleri, çiftlerimizin ihtiyaçlarına göre özel olarak hazırlanabilmektedir.</p>
-          </details>
-          <details class="faq-item">
-            <summary><span>Düğün günümüzde bizimle ilgilenecek bir yetkili bulunuyor mu?</span><b aria-hidden="true">+</b></summary>
-            <p>Evet. Düğün gününüzde, programın başından sonuna kadar size eşlik edecek bir gelin-damat asistanınız bulunmaktadır.</p>
-          </details>
-          <details class="faq-item">
-            <summary><span>Kaç kişilik organizasyonlar düzenleyebiliyorsunuz?</span><b aria-hidden="true">+</b></summary>
-            <p>Tesisimizde dört farklı konsepte sahip bahçe bulunmaktadır. Bu bahçelerde 50 kişiden 1.500 kişiye kadar farklı kapasitelere uygun organizasyonlar düzenleyebilmekteyiz.</p>
-          </details>
+      <!-- 06 / SIK SORULAN SORULAR: EDİTORYAL KILAVUZ -->
+      <section class="editorial-section faq" id="sorular">
+        <div class="faq-shell">
+          <div class="faq-heading">
+            <span class="chapter-tag">BÖLÜM 06 — MERAK EDİLENLER</span>
+            <h2>Sık Sorulan Sorular</h2>
+            <p>Davet planlama sürecinizde aklınıza takılabilecek tüm teknik ve organizasyonel detaylar.</p>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary><span>Yağmur veya olumsuz hava koşullarında çözümünüz var mı?</span><b aria-hidden="true">+</b></summary>
+              <p>Kale Bahçe ve Masal Bahçe'de, bahçelerin toplam kapasitesini koruyabilecek büyüklükte dev şemsiyelerimiz bulunmaktadır. Hayal Bahçe'de ise her masanın üzerine gazebo şemsiye kurulumu yapılarak misafirlerimiz yağmurdan korunmaktadır.</p>
+            </details>
+            <details class="faq-item">
+              <summary><span>Misafirlerimizin kullanabileceği otopark bulunuyor mu?</span><b aria-hidden="true">+</b></summary>
+              <p>Evet. Tesisimizde 500 araç kapasiteli açık otopark bulunmaktadır.</p>
+            </details>
+            <details class="faq-item">
+              <summary><span>Düğün paketlerinizin içerisinde neler bulunuyor?</span><b aria-hidden="true">+</b></summary>
+              <p>Paketlerimiz; mekân kullanımı, masa ve sandalye düzeni, konsept süsleme, ikramlıklar ve organizasyon hizmetlerini kapsamaktadır. Paket içerikleri, çiftlerimizin ihtiyaçlarına göre özel olarak hazırlanabilmektedir.</p>
+            </details>
+            <details class="faq-item">
+              <summary><span>Düğün günümüzde bizimle ilgilenecek bir yetkili bulunuyor mu?</span><b aria-hidden="true">+</b></summary>
+              <p>Evet. Düğün gününüzde, programın başından sonuna kadar size eşlik edecek bir gelin-damat asistanınız bulunmaktadır.</p>
+            </details>
+            <details class="faq-item">
+              <summary><span>Kaç kişilik organizasyonlar düzenleyebiliyorsunuz?</span><b aria-hidden="true">+</b></summary>
+              <p>Tesisimizde dört farklı konsepte sahip bahçe bulunmaktadır. Bu bahçelerde 50 kişiden 1.500 kişiye kadar farklı kapasitelere uygun organizasyonlar düzenleyebilmekteyiz.</p>
+            </details>
+          </div>
         </div>
       </section>
 
-      <section class="section contact" id="iletisim">
+      <!-- 07 / İLETİŞİM & KEŞİF RANDEVUSU -->
+      <section class="editorial-section contact" id="iletisim">
         <div class="contact-heading">
           <div class="contact-copy">
-            <p class="eyebrow">İletişim</p>
+            <p class="eyebrow">BÖLÜM 07 — İLETİŞİM &amp; RANDEVU</p>
             <h2>Hayalinizdeki davet için görüşelim</h2>
           </div>
-          <p>Bahçelerimizi görmek, tarih uygunluğunu öğrenmek veya rezervasyon detaylarını konuşmak için bize dilediğiniz kanaldan ulaşın.</p>
+          <p>Bahçelerimizi yerinde görmek, kahvemizi içerken tarih uygunluğunu öğrenmek veya rezervasyon detaylarını konuşmak için bize dilediğiniz kanaldan ulaşın.</p>
         </div>
 
         <div class="contact-layout">
@@ -610,6 +854,25 @@
           </div>
         </div>
       </section>
+
+      <footer class="editorial-footer">
+        <div class="editorial-footer__inner">
+          <div class="editorial-footer__brand">
+            <img src="./media/images/yesil-nesil-logo-transparent.webp" alt="Yeşil Nesil Garden logosu" width="520" height="520" loading="lazy">
+            <div>
+              <strong>Yeşil Nesil The Garden</strong>
+              <p>Polonezköy Hayal Ormanları, Beykoz / İstanbul</p>
+            </div>
+          </div>
+          <div class="editorial-footer__links">
+            <a href="./hayal-bahce">Hayal Bahçe</a>
+            <a href="./kale-bahce">Kale Bahçe</a>
+            <a href="./masal-bahce">Masal Bahçe</a>
+            <a href="./ruya-bahce">Rüya Bahçe</a>
+          </div>
+          <p class="editorial-footer__copy">© 2026 Yeşil Nesil The Garden. Tüm hakları saklıdır.</p>
+        </div>
+      </footer>
 
       <nav class="mobile-bottom-nav" aria-label="Mobil navigasyon">
         <a href="#bahceler">Bahçeler</a>

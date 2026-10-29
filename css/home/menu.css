@@ -1,65 +1,119 @@
-.menu-list {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  color: var(--deep);
+/* BÖLÜM 02: GURME GASTRONOMİ SAHNESİ (SPLIT PREVIEW + ACCORDION) */
+
+.gastronomy-section {
+  max-width: none;
+  padding-inline: clamp(14px, 3vw, 44px);
+}
+
+.gastronomy-shell {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(195, 155, 95, 0.22), transparent 38rem),
+    radial-gradient(circle at 88% 85%, rgba(111, 167, 43, 0.18), transparent 40rem),
+    linear-gradient(145deg, #162611 0%, var(--deep) 55%, #192d14 100%);
+  border: 1px solid rgba(195, 155, 95, 0.28);
+  border-radius: 44px;
+  box-shadow: 0 40px 100px rgba(12, 22, 9, 0.34);
+  margin: 0 auto;
+  max-width: 1380px;
+  padding: clamp(44px, 6vw, 84px);
+  position: relative;
+}
+
+.gastronomy-stage {
+  align-items: start;
   display: grid;
-  gap: 16px;
-  overflow: visible;
+  gap: 38px;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
+}
+
+.gastronomy-preview {
+  position: sticky;
+  top: 124px;
+}
+
+.gastronomy-preview__frame {
+  aspect-ratio: 1 / 1;
+  border: 2px solid rgba(195, 155, 95, 0.45);
+  border-radius: 34px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.42);
+  overflow: hidden;
+  position: relative;
+}
+
+.gastronomy-preview__frame img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 680ms var(--ease-out-expo), opacity 320ms ease;
+  width: 100%;
+}
+
+.gastronomy-preview__frame::after {
+  background: linear-gradient(180deg, transparent 48%, rgba(12, 20, 9, 0.88) 100%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.gastronomy-preview__badge {
+  bottom: 24px;
+  color: var(--ivory);
+  display: grid;
+  gap: 4px;
+  left: 24px;
+  position: absolute;
+  right: 24px;
+  z-index: 2;
+}
+
+.gastronomy-preview__badge small {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.gastronomy-preview__badge strong {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.85rem;
+  line-height: 1.05;
+}
+
+.gastronomy-preview__note {
+  background: rgba(255, 253, 247, 0.06);
+  border: 1px solid rgba(255, 253, 247, 0.14);
+  border-radius: 20px;
+  color: rgba(255, 253, 247, 0.82);
+  font-size: 0.88rem;
+  margin-top: 16px;
+  padding: 16px 20px;
+}
+
+.menu-list {
+  display: grid;
+  gap: 14px;
 }
 
 .menu-row {
-  backdrop-filter: blur(26px) saturate(165%);
-  background: linear-gradient(145deg, rgba(255, 253, 247, 0.92), rgba(232, 242, 220, 0.72));
-  border: 1px solid rgba(31, 53, 24, 0.13);
-  border-radius: 26px;
-  box-shadow:
-    0 16px 38px rgba(31, 53, 24, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  display: block;
-  isolation: isolate;
+  backdrop-filter: blur(22px);
+  background: rgba(255, 253, 247, 0.07);
+  border: 1px solid rgba(255, 253, 247, 0.14);
+  border-radius: 24px;
+  color: var(--ivory);
   overflow: hidden;
-  position: relative;
-  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition:
-    border-color 360ms ease,
-    box-shadow 360ms var(--ease-out-expo),
-    transform 360ms var(--ease-out-expo),
-    background 360ms ease;
-}
-
-.menu-row::before {
-  background: radial-gradient(
-    420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(195, 155, 95, 0.2),
-    rgba(111, 167, 43, 0.08) 50%,
-    transparent 78%
-  );
-  content: "";
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: opacity 360ms ease;
-  z-index: 0;
-}
-
-.menu-row:hover::before,
-.menu-row[open]::before {
-  opacity: 1;
+    background-color 340ms ease,
+    border-color 340ms ease,
+    box-shadow 340ms ease,
+    transform 340ms var(--ease-out-expo);
 }
 
 .menu-row:hover,
 .menu-row[open] {
-  border-color: rgba(195, 155, 95, 0.52);
-  box-shadow:
-    0 24px 54px rgba(31, 53, 24, 0.14),
-    0 0 24px rgba(195, 155, 95, 0.14);
-}
-
-.menu-row:last-child {
-  border-bottom: 1px solid rgba(31, 53, 24, 0.13);
+  background: rgba(255, 253, 247, 0.12);
+  border-color: var(--gold);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
 }
 
 .menu-row summary {
@@ -67,12 +121,10 @@
   cursor: pointer;
   display: grid;
   gap: 18px;
-  grid-template-columns: 74px 1fr auto;
+  grid-template-columns: 68px 1fr auto;
   list-style: none;
-  min-height: 100px;
+  min-height: 94px;
   padding: 16px 22px;
-  position: relative;
-  z-index: 1;
 }
 
 .menu-row summary::-webkit-details-marker {
@@ -81,37 +133,34 @@
 
 .menu-row summary > img {
   aspect-ratio: 1;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  border-radius: 18px;
-  box-shadow: 0 12px 26px rgba(31, 53, 24, 0.16);
+  border: 1.5px solid rgba(195, 155, 95, 0.55);
+  border-radius: 16px;
   display: block;
-  height: 74px;
+  height: 68px;
   object-fit: cover;
-  transition: transform 520ms var(--ease-spring), box-shadow 360ms ease;
-  width: 74px;
+  transition: transform 420ms var(--ease-spring);
+  width: 68px;
 }
 
 .menu-row:hover summary > img,
 .menu-row[open] summary > img {
-  box-shadow: 0 16px 32px rgba(31, 53, 24, 0.24);
   transform: scale(1.08) rotate(-3deg);
 }
 
 .menu-row summary span {
-  color: var(--deep);
+  color: var(--ivory);
   display: grid;
   font-family: var(--font-display), Georgia, serif;
-  font-size: 1.56rem;
+  font-size: 1.44rem;
   font-weight: 800;
-  gap: 6px;
-  letter-spacing: -0.01em;
-  line-height: 1.06;
+  gap: 4px;
+  line-height: 1.08;
 }
 
 .menu-row summary small {
-  color: var(--rose);
+  color: var(--gold);
   font-family: var(--font-jost), Arial, Helvetica, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -119,46 +168,33 @@
 
 .menu-row summary b {
   align-items: center;
-  background: linear-gradient(135deg, rgba(184, 111, 96, 0.14), rgba(195, 155, 95, 0.22));
-  border: 1px solid rgba(184, 111, 96, 0.24);
-  border-radius: 999px;
-  color: var(--rose);
+  background: rgba(195, 155, 95, 0.18);
+  border: 1px solid rgba(195, 155, 95, 0.42);
+  border-radius: 50%;
+  color: var(--gold);
   display: flex;
-  font-size: 1.55rem;
-  font-weight: 500;
-  height: 44px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  height: 42px;
   justify-content: center;
-  line-height: 1;
-  transition:
-    transform 420ms var(--ease-spring),
-    background 320ms ease,
-    color 320ms ease;
-  width: 44px;
-}
-
-.menu-row:hover summary b {
-  background: var(--rose);
-  color: var(--ivory);
+  transition: transform 420ms var(--ease-spring), background-color 280ms ease, color 280ms ease;
+  width: 42px;
 }
 
 .menu-row[open] summary b {
-  background: var(--deep);
-  border-color: var(--deep);
-  color: var(--ivory);
+  background: var(--gold);
+  color: var(--deep);
   transform: rotate(135deg);
 }
 
 .menu-row ul {
-  animation: menu-content-reveal 440ms var(--ease-out-expo) both;
-  border-top: 1px solid rgba(31, 53, 24, 0.1);
-  color: #485840;
+  animation: menu-content-reveal 420ms var(--ease-out-expo) both;
+  border-top: 1px solid rgba(255, 253, 247, 0.12);
   display: grid;
-  gap: 14px;
+  gap: 12px;
   list-style: none;
-  margin: 0 24px 26px 114px;
+  margin: 0 24px 24px 108px;
   padding: 18px 0 0;
-  position: relative;
-  z-index: 1;
 }
 
 @keyframes menu-content-reveal {
@@ -175,32 +211,31 @@
 .menu-row li {
   align-items: start;
   display: grid;
-  font-size: 0.96rem;
-  gap: 4px 12px;
+  font-size: 0.94rem;
+  gap: 3px 12px;
   grid-template-columns: auto 1fr;
 }
 
 .menu-row li::before {
-  background: linear-gradient(135deg, var(--rose), var(--gold));
-  border-radius: 999px;
-  box-shadow: 0 0 8px rgba(184, 111, 96, 0.4);
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
   content: "";
-  height: 8px;
+  height: 7px;
   margin-top: 8px;
-  width: 8px;
+  width: 7px;
 }
 
 .menu-row li strong {
-  color: var(--deep);
-  font-size: 1rem;
-  font-weight: 900;
+  color: var(--ivory);
+  font-size: 0.98rem;
+  font-weight: 800;
 }
 
 .menu-row li em {
-  color: rgba(31, 53, 24, 0.68);
-  font-size: 0.92rem;
+  color: rgba(255, 253, 247, 0.72);
+  font-size: 0.9rem;
   font-style: normal;
-  font-weight: 600;
   grid-column: 2;
   line-height: 1.48;
 }
