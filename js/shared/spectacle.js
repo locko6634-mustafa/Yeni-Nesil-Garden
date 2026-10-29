@@ -5,13 +5,15 @@ export function initVisualSpectacle() {
   document.documentElement.classList.add("has-spectacle-js");
 
   initScrollProgress();
-  initAmbientAtmosphere(prefersReducedMotion);
+  initAmbientAtmosphere(prefersReducedMotion, isCoarsePointer);
+  initHeroCinemaSwitcher(prefersReducedMotion);
+  initVenuesAccordion();
+  initGastronomyPreview();
   initTypographyChoreography(prefersReducedMotion);
   initScrollReveals(prefersReducedMotion);
   initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer);
   initMagneticElements(prefersReducedMotion, isCoarsePointer);
-  initCustomCursor(prefersReducedMotion, isCoarsePointer);
-  initParallaxHero(prefersReducedMotion);
+  initParallaxHero(prefersReducedMotion, isCoarsePointer);
   initAnimatedNumbers(prefersReducedMotion);
   initPackageSwitchIndicator();
   initActiveSectionNav();
@@ -23,20 +25,164 @@ function initScrollProgress() {
   progressBar.setAttribute("aria-hidden", "true");
   document.body.append(progressBar);
 
-  const updateProgress = () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const ratio = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
-    progressBar.style.setProperty("--scroll-progress", ratio.toFixed(4));
-    document.documentElement.classList.toggle("is-scrolled", scrollTop > 32);
+  let maxScroll = 1;
+  let rafId = 0;
+  let isScrolledState = false;
+
+  const measureScrollBounds = () => {
+    maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
   };
 
-  updateProgress();
-  window.addEventListener("scroll", updateProgress, { passive: true });
-  window.addEventListener("resize", updateProgress, { passive: true });
+  const renderProgress = () => {
+    rafId = 0;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const ratio = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
+    progressBar.style.setProperty("--scroll-progress", ratio.toFixed(4));
+
+    const nextScrolled = scrollTop > 32;
+    if (nextScrolled !== isScrolledState) {
+      isScrolledState = nextScrolled;
+      document.documentElement.classList.toggle("is-scrolled", nextScrolled);
+    }
+  };
+
+  const requestUpdate = () => {
+    if (!rafId) {
+      rafId = window.requestAnimationFrame(renderProgress);
+    }
+  };
+
+  measureScrollBounds();
+  renderProgress();
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener(
+    "resize",
+    () => {
+      measureScrollBounds();
+      requestUpdate();
+    },
+    { passive: true }
+  );
+  window.addEventListener("load", measureScrollBounds, { once: true, passive: true });
 }
 
-function initAmbientAtmosphere(prefersReducedMotion) {
+function initHeroCinemaSwitcher(prefersReducedMotion) {
+  const slides = Array.from(document.querySelectorAll("[data-hero-slide]"));
+  const triggers = Array.from(document.querySelectorAll("[data-slide-trigger]"));
+
+  if (slides.length === 0 || triggers.length === 0) {
+    return;
+  }
+
+  let currentIndex = 0;
+  let timerId = 0;
+
+  const activateSlide = (index) => {
+    currentIndex = index % slides.length;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === currentIndex);
+    });
+    triggers.forEach((btn, i) => {
+      btn.classList.toggle("is-active", i === currentIndex);
+    });
+  };
+
+  const startAutoPlay = () => {
+    if (prefersReducedMotion) return;
+    window.clearInterval(timerId);
+    timerId = window.setInterval(() => {
+      activateSlide((currentIndex + 1) % slides.length);
+    }, 5200);
+  };
+
+  triggers.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      activateSlide(index);
+      startAutoPlay();
+    });
+    btn.addEventListener("pointerenter", () => {
+      activateSlide(index);
+      startAutoPlay();
+    });
+  });
+
+  startAutoPlay();
+}
+
+function initVenuesAccordion() {
+  const panels = Array.from(document.querySelectorAll("[data-venue-panel]"));
+  if (panels.length === 0) {
+    return;
+  }
+
+  panels.forEach((panel) => {
+    const setActive = () => {
+      panels.forEach((p) => p.classList.toggle("is-active", p === panel));
+    };
+    panel.addEventListener("pointerenter", setActive);
+    panel.addEventListener("focus", setActive);
+  });
+}
+
+function initGastronomyPreview() {
+  const previewImg = document.getElementById("gastronomy-active-img");
+  const previewCat = document.getElementById("gastronomy-active-cat");
+  const previewTitle = document.getElementById("gastronomy-active-title");
+  const menuRows = Array.from(document.querySelectorAll(".menu-row[data-menu-img]"));
+
+  if (!previewImg || !previewCat || !previewTitle || menuRows.length === 0) {
+    return;
+  }
+
+  const updatePreview = (row) => {
+    const nextSrc = row.getAttribute("data-menu-img");
+    const nextCat = row.getAttribute("data-menu-cat");
+    const nextTitle = row.getAttribute("data-menu-title");
+
+    if (nextSrc && previewImg.getAttribute("src") !== nextSrc) {
+      previewImg.style.opacity = "0.35";
+      previewImg.style.transform = "scale(1.06)";
+      window.setTimeout(() => {
+        previewImg.setAttribute("src", nextSrc);
+        previewImg.style.opacity = "1";
+        previewImg.style.transform = "scale(1)";
+      }, 150);
+    }
+
+    if (nextCat) previewCat.textContent = nextCat;
+    if (nextTitle) previewTitle.textContent = nextTitle;
+  };
+
+  menuRows.forEach((row) => {
+    row.addEventListener("pointerenter", () => updatePreview(row));
+    row.addEventListener("toggle", () => {
+      if (row.open) {
+        updatePreview(row);
+      }
+    });
+  });
+}
+
+function createGlowSprite(coreColor, midColor) {
+  const size = 32;
+  const offscreen = document.createElement("canvas");
+  offscreen.width = size;
+  offscreen.height = size;
+  const octx = offscreen.getContext("2d");
+  if (!octx) return offscreen;
+
+  const half = size / 2;
+  const grad = octx.createRadialGradient(half, half, 0, half, half, half);
+  grad.addColorStop(0, coreColor);
+  grad.addColorStop(0.32, midColor);
+  grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+  octx.fillStyle = grad;
+  octx.fillRect(0, 0, size, size);
+  return offscreen;
+}
+
+function initAmbientAtmosphere(prefersReducedMotion, isCoarsePointer) {
   const ambient = document.createElement("div");
   ambient.className = "spectacle-ambient";
   ambient.setAttribute("aria-hidden", "true");
@@ -48,17 +194,18 @@ function initAmbientAtmosphere(prefersReducedMotion) {
   const orb3 = document.createElement("span");
   orb3.className = "spectacle-orb spectacle-orb--rose";
 
-  const canvas = document.createElement("canvas");
-  canvas.className = "spectacle-canvas";
-
-  ambient.append(orb1, orb2, orb3, canvas);
+  ambient.append(orb1, orb2, orb3);
   document.body.prepend(ambient);
 
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || isCoarsePointer) {
     return;
   }
 
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement("canvas");
+  canvas.className = "spectacle-canvas";
+  ambient.append(canvas);
+
+  const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) {
     return;
   }
@@ -67,31 +214,29 @@ function initAmbientAtmosphere(prefersReducedMotion) {
   let height = 0;
   let animationFrameId = 0;
 
-  const palette = [
-    "rgba(195, 155, 95, 0.42)",
-    "rgba(111, 167, 43, 0.34)",
-    "rgba(184, 111, 96, 0.3)",
-    "rgba(168, 190, 141, 0.38)"
+  const sprites = [
+    createGlowSprite("rgba(195, 155, 95, 0.9)", "rgba(195, 155, 95, 0.28)"),
+    createGlowSprite("rgba(111, 167, 43, 0.85)", "rgba(111, 167, 43, 0.24)"),
+    createGlowSprite("rgba(184, 111, 96, 0.82)", "rgba(184, 111, 96, 0.22)"),
+    createGlowSprite("rgba(168, 190, 141, 0.86)", "rgba(168, 190, 141, 0.25)")
   ];
 
-  const particles = Array.from({ length: 34 }, (_, i) => ({
-    x: (i * 97) % 1000,
-    y: (i * 173) % 1000,
-    radius: 1.4 + (i % 4) * 1.1,
-    vx: ((i % 5) - 2) * 0.14 || 0.12,
-    vy: -0.18 - (i % 4) * 0.08,
-    alpha: 0.25 + (i % 5) * 0.12,
+  const particles = Array.from({ length: 22 }, (_, i) => ({
+    x: (i * 127) % 1200,
+    y: (i * 193) % 900,
+    drawSize: (1.5 + (i % 4) * 1.1) * 7,
+    vx: ((i % 5) - 2) * 0.13 || 0.11,
+    vy: -0.16 - (i % 4) * 0.07,
+    alpha: 0.24 + (i % 5) * 0.11,
     phase: i * 0.7,
-    color: palette[i % palette.length]
+    sprite: sprites[i % sprites.length]
   }));
 
   const resize = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = window.innerWidth;
     height = window.innerHeight;
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.width = width;
+    canvas.height = height;
   };
 
   resize();
@@ -114,7 +259,7 @@ function initAmbientAtmosphere(prefersReducedMotion) {
 
     const t = time * 0.001;
     for (const p of particles) {
-      p.x += p.vx + Math.sin(t + p.phase) * 0.18;
+      p.x += p.vx + Math.sin(t + p.phase) * 0.16;
       p.y += p.vy;
 
       if (p.x < -20) p.x = width + 20;
@@ -124,21 +269,21 @@ function initAmbientAtmosphere(prefersReducedMotion) {
 
       const dx = p.x - mouseX;
       const dy = p.y - mouseY;
-      const dist = Math.hypot(dx, dy);
-      const influence = dist < 180 ? (1 - dist / 180) * 14 : 0;
-      const drawX = p.x + (dist > 1 ? (dx / dist) * influence : 0);
-      const drawY = p.y + (dist > 1 ? (dy / dist) * influence : 0);
+      const distSq = dx * dx + dy * dy;
+      let drawX = p.x;
+      let drawY = p.y;
+
+      if (distSq < 32400 && distSq > 1) {
+        const dist = Math.sqrt(distSq);
+        const influence = (1 - dist / 180) * 14;
+        drawX += (dx / dist) * influence;
+        drawY += (dy / dist) * influence;
+      }
 
       const pulse = 0.65 + 0.35 * Math.sin(t * 1.8 + p.phase);
-      ctx.save();
+      const half = p.drawSize * 0.5;
       ctx.globalAlpha = p.alpha * pulse;
-      ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.arc(drawX, drawY, p.radius, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+      ctx.drawImage(p.sprite, drawX - half, drawY - half, p.drawSize, p.drawSize);
     }
 
     animationFrameId = window.requestAnimationFrame(render);
@@ -160,7 +305,7 @@ function initTypographyChoreography(prefersReducedMotion) {
     return;
   }
 
-  const heroHeading = document.querySelector(".hero-overlay h1, .garden-detail-hero h1");
+  const heroHeading = document.querySelector(".cinema-title, .garden-detail-hero h1");
   if (heroHeading && !heroHeading.dataset.choreographed) {
     heroHeading.dataset.choreographed = "true";
     heroHeading.classList.add("spectacle-hero-title");
@@ -169,15 +314,16 @@ function initTypographyChoreography(prefersReducedMotion) {
 
 function initScrollReveals(prefersReducedMotion) {
   const revealSelectors = [
-    ".hero-showcase",
+    ".cinema-hero__stage",
     ".garden-detail-hero",
-    ".section-heading",
+    ".editorial-header",
     ".garden-media-heading",
     ".garden-other-heading",
     ".review-heading",
     ".faq-heading",
     ".contact-heading",
-    ".garden-card",
+    ".venue-panel",
+    ".gastronomy-preview",
     ".service-card",
     ".package-switch",
     ".package-card",
@@ -187,7 +333,9 @@ function initScrollReveals(prefersReducedMotion) {
     ".contact-map",
     ".contact-channel",
     ".contact-phone",
+    ".garden-gallery",
     ".garden-video-card",
+    ".garden-video-empty",
     ".garden-other-card",
     ".garden-detail-cta"
   ];
@@ -236,22 +384,25 @@ function initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer) 
   }
 
   const interactiveCards = document.querySelectorAll(
-    ".garden-card, .service-card, .package-card, .testimonial-card, .contact-channel, .garden-other-card, .garden-video-card, .menu-row, .faq-item"
+    ".service-card, .package-card, .testimonial-card, .contact-channel, .garden-gallery figure, .garden-other-card, .garden-video-card, .garden-detail-cta"
   );
 
   interactiveCards.forEach((card) => {
     card.classList.add("spectacle-interactive-card");
+    const maxTilt = 4.2;
+    let cachedRect = null;
+    let rafId = 0;
+    let lastX = 0;
+    let lastY = 0;
 
-    const maxTilt = card.matches(".menu-row, .faq-item") ? 1.8 : 5.5;
+    const applyCardTilt = () => {
+      rafId = 0;
+      if (!cachedRect || !cachedRect.width || !cachedRect.height) return;
 
-    card.addEventListener("pointermove", (event) => {
-      const rect = card.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const px = (x / rect.width) * 2 - 1;
-      const py = (y / rect.height) * 2 - 1;
+      const x = lastX - cachedRect.left;
+      const y = lastY - cachedRect.top;
+      const px = (x / cachedRect.width) * 2 - 1;
+      const py = (y / cachedRect.height) * 2 - 1;
 
       const rotateX = (-py * maxTilt).toFixed(2);
       const rotateY = (px * maxTilt).toFixed(2);
@@ -260,12 +411,46 @@ function initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer) 
       card.style.setProperty("--spot-y", `${y.toFixed(1)}px`);
       card.style.setProperty("--tilt-x", `${rotateX}deg`);
       card.style.setProperty("--tilt-y", `${rotateY}deg`);
-    });
+    };
 
-    card.addEventListener("pointerleave", () => {
-      card.style.setProperty("--tilt-x", "0deg");
-      card.style.setProperty("--tilt-y", "0deg");
-    });
+    card.addEventListener(
+      "pointerenter",
+      () => {
+        cachedRect = card.getBoundingClientRect();
+        card.classList.add("is-pointer-active");
+      },
+      { passive: true }
+    );
+
+    card.addEventListener(
+      "pointermove",
+      (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        if (!cachedRect) {
+          cachedRect = card.getBoundingClientRect();
+        }
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(applyCardTilt);
+        }
+      },
+      { passive: true }
+    );
+
+    card.addEventListener(
+      "pointerleave",
+      () => {
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+        cachedRect = null;
+        card.classList.remove("is-pointer-active");
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+      },
+      { passive: true }
+    );
   });
 }
 
@@ -275,149 +460,156 @@ function initMagneticElements(prefersReducedMotion, isCoarsePointer) {
   }
 
   const magneticTargets = document.querySelectorAll(
-    ".button, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
+    ".btn-luxe, .button, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
   );
 
   magneticTargets.forEach((el) => {
     el.classList.add("spectacle-magnetic");
+    let cachedRect = null;
+    let rafId = 0;
+    let lastX = 0;
+    let lastY = 0;
 
-    el.addEventListener("pointermove", (event) => {
-      const rect = el.getBoundingClientRect();
-      const offsetX = event.clientX - (rect.left + rect.width / 2);
-      const offsetY = event.clientY - (rect.top + rect.height / 2);
-      el.style.setProperty("--mag-x", `${(offsetX * 0.22).toFixed(1)}px`);
-      el.style.setProperty("--mag-y", `${(offsetY * 0.28).toFixed(1)}px`);
-    });
+    const applyMagnet = () => {
+      rafId = 0;
+      if (!cachedRect) return;
+      const offsetX = lastX - (cachedRect.left + cachedRect.width / 2);
+      const offsetY = lastY - (cachedRect.top + cachedRect.height / 2);
+      el.style.setProperty("--mag-x", `${(offsetX * 0.2).toFixed(1)}px`);
+      el.style.setProperty("--mag-y", `${(offsetY * 0.25).toFixed(1)}px`);
+    };
 
-    el.addEventListener("pointerleave", () => {
-      el.style.setProperty("--mag-x", "0px");
-      el.style.setProperty("--mag-y", "0px");
-    });
-  });
-}
-
-function initCustomCursor(prefersReducedMotion, isCoarsePointer) {
-  if (prefersReducedMotion || isCoarsePointer) {
-    return;
-  }
-
-  const cursor = document.createElement("div");
-  cursor.className = "spectacle-cursor";
-  cursor.setAttribute("aria-hidden", "true");
-
-  const cursorDot = document.createElement("div");
-  cursorDot.className = "spectacle-cursor__dot";
-  const cursorRing = document.createElement("div");
-  cursorRing.className = "spectacle-cursor__ring";
-  const cursorLabel = document.createElement("span");
-  cursorLabel.className = "spectacle-cursor__label";
-
-  cursorRing.append(cursorLabel);
-  cursor.append(cursorDot, cursorRing);
-  document.body.append(cursor);
-
-  let targetX = -100;
-  let targetY = -100;
-  let ringX = -100;
-  let ringY = -100;
-  let isActive = false;
-
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      cursorDot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
-
-      if (!isActive) {
-        isActive = true;
-        ringX = targetX;
-        ringY = targetY;
-        cursor.classList.add("is-visible");
-      }
-    },
-    { passive: true }
-  );
-
-  const animateRing = () => {
-    ringX += (targetX - ringX) * 0.18;
-    ringY += (targetY - ringY) * 0.18;
-    cursorRing.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0)`;
-    window.requestAnimationFrame(animateRing);
-  };
-  window.requestAnimationFrame(animateRing);
-
-  document.addEventListener("pointerover", (e) => {
-    const interactive = e.target.closest(
-      "a, button, summary, label, .garden-card, .service-card, .garden-other-card, .garden-video-card"
+    el.addEventListener(
+      "pointerenter",
+      () => {
+        cachedRect = el.getBoundingClientRect();
+        el.classList.add("is-pointer-active");
+      },
+      { passive: true }
     );
 
-    if (!interactive) {
-      cursor.classList.remove("is-hovering", "has-label");
-      cursorLabel.textContent = "";
-      return;
-    }
+    el.addEventListener(
+      "pointermove",
+      (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        if (!cachedRect) {
+          cachedRect = el.getBoundingClientRect();
+        }
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(applyMagnet);
+        }
+      },
+      { passive: true }
+    );
 
-    cursor.classList.add("is-hovering");
-    if (interactive.matches(".garden-card, .garden-other-card")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "Keşfet";
-    } else if (interactive.matches(".garden-gallery-open")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "Büyüt";
-    } else if (interactive.matches(".garden-video-play, .garden-video-card")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "İzle";
-    } else {
-      cursor.classList.remove("has-label");
-      cursorLabel.textContent = "";
-    }
+    el.addEventListener(
+      "pointerleave",
+      () => {
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+        cachedRect = null;
+        el.classList.remove("is-pointer-active");
+        el.style.setProperty("--mag-x", "0px");
+        el.style.setProperty("--mag-y", "0px");
+      },
+      { passive: true }
+    );
   });
 }
 
-function initParallaxHero(prefersReducedMotion) {
+function initParallaxHero(prefersReducedMotion, isCoarsePointer) {
   if (prefersReducedMotion) {
     return;
   }
 
-  const heroContainer = document.querySelector(".hero-showcase, .garden-detail-hero");
-  const heroImage = heroContainer?.querySelector("img");
+  const heroContainer = document.querySelector(".cinema-hero, .garden-detail-hero");
+  const heroImages = heroContainer?.querySelectorAll(".cinema-hero__bg-img, picture img, :scope > img");
 
-  if (!heroContainer || !heroImage) {
+  if (!heroContainer || !heroImages || heroImages.length === 0) {
     return;
   }
 
-  const updateParallax = () => {
+  let heroTop = 0;
+  let heroWidth = 1;
+  let heroHeight = 1;
+  let scrollRafId = 0;
+  let panRafId = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+
+  const measureHero = () => {
     const rect = heroContainer.getBoundingClientRect();
-    if (rect.bottom < 0 || rect.top > window.innerHeight) {
-      return;
-    }
-    const progress = Math.min(Math.max(-rect.top / Math.max(rect.height, 1), -0.3), 1);
-    const translateY = (progress * 44).toFixed(1);
-    const scale = (1.06 + Math.max(progress, 0) * 0.06).toFixed(3);
-    heroImage.style.setProperty("--hero-parallax-y", `${translateY}px`);
-    heroImage.style.setProperty("--hero-parallax-scale", scale);
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    heroTop = rect.top + scrollTop;
+    heroWidth = Math.max(rect.width, 1);
+    heroHeight = Math.max(rect.height, 1);
   };
 
-  updateParallax();
-  window.addEventListener("scroll", updateParallax, { passive: true });
+  const renderParallax = () => {
+    scrollRafId = 0;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const relativeTop = heroTop - scrollTop;
+    if (relativeTop + heroHeight < 0 || relativeTop > window.innerHeight) {
+      return;
+    }
+    const progress = Math.min(Math.max(-relativeTop / heroHeight, -0.3), 1);
+    const translateY = `${(progress * 42).toFixed(1)}px`;
+    heroImages.forEach((img) => {
+      img.style.setProperty("--hero-parallax-y", translateY);
+    });
+  };
 
-  heroContainer.addEventListener(
-    "pointermove",
-    (e) => {
-      const rect = heroContainer.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * -14;
-      const ny = ((e.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * -10;
-      heroImage.style.setProperty("--hero-pan-x", `${nx.toFixed(1)}px`);
-      heroImage.style.setProperty("--hero-pan-y", `${ny.toFixed(1)}px`);
+  const requestParallax = () => {
+    if (!scrollRafId) {
+      scrollRafId = window.requestAnimationFrame(renderParallax);
+    }
+  };
+
+  measureHero();
+  renderParallax();
+
+  window.addEventListener("scroll", requestParallax, { passive: true });
+  window.addEventListener(
+    "resize",
+    () => {
+      measureHero();
+      requestParallax();
     },
     { passive: true }
   );
 
-  heroContainer.addEventListener("pointerleave", () => {
-    heroImage.style.setProperty("--hero-pan-x", "0px");
-    heroImage.style.setProperty("--hero-pan-y", "0px");
-  });
+  if (isCoarsePointer) {
+    return;
+  }
+
+  const renderPan = () => {
+    panRafId = 0;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const relativeTop = heroTop - scrollTop;
+    const nx = ((pointerX / heroWidth) - 0.5) * -14;
+    const ny = (((pointerY - relativeTop) / heroHeight) - 0.5) * -10;
+    const panX = `${nx.toFixed(1)}px`;
+    const panY = `${ny.toFixed(1)}px`;
+    heroImages.forEach((img) => {
+      img.style.setProperty("--hero-pan-x", panX);
+      img.style.setProperty("--hero-pan-y", panY);
+    });
+  };
+
+  heroContainer.addEventListener(
+    "pointermove",
+    (e) => {
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      if (!panRafId) {
+        panRafId = window.requestAnimationFrame(renderPan);
+      }
+    },
+    { passive: true }
+  );
 }
 
 function initAnimatedNumbers(prefersReducedMotion) {

@@ -1,64 +1,18 @@
-.media-section,
+/* BÖLÜM 05: ÇİFT HİKAYELERİ FILMSTRIP & DEĞERLENDİRME SAHNESİ */
+
 .satisfaction {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(195, 155, 95, 0.18), transparent 38rem),
+    radial-gradient(circle at 82% 80%, rgba(111, 167, 43, 0.16), transparent 38rem),
+    linear-gradient(180deg, var(--mint) 0%, var(--background) 100%);
+  border-block: 1px solid rgba(31, 53, 24, 0.12);
   max-width: none;
-}
-
-.media-section .section-heading,
-.media-grid,
-.satisfaction .section-heading,
-.satisfaction-grid {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1180px;
-}
-
-.media-grid {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.image-slot.wide {
-  grid-column: span 2;
-  min-height: 380px;
-}
-
-.video-slot {
-  background:
-    linear-gradient(145deg, rgba(31, 53, 24, 0.7), rgba(31, 53, 24, 0.42)),
-    linear-gradient(120deg, rgba(111, 167, 43, 0.38), rgba(184, 111, 96, 0.26));
-  color: #fff;
-  flex-direction: column;
-  min-height: 380px;
-}
-
-.play-mark {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.26);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 999px;
-  display: flex;
-  height: 72px;
-  justify-content: center;
-  margin-bottom: 14px;
-  width: 72px;
-}
-
-.play-mark::before {
-  border-bottom: 13px solid transparent;
-  border-left: 20px solid #fff;
-  border-top: 13px solid transparent;
-  content: "";
-  margin-left: 5px;
-}
-
-.satisfaction {
-  background:
-    radial-gradient(circle at 18% 20%, rgba(195, 155, 95, 0.16), transparent 36rem),
-    radial-gradient(circle at 82% 80%, rgba(111, 167, 43, 0.14), transparent 36rem),
-    linear-gradient(180deg, rgba(232, 242, 220, 0.45), rgba(245, 246, 239, 0.85));
-  border-block: 1px solid rgba(31, 53, 24, 0.1);
   position: relative;
+}
+
+.satisfaction-shell {
+  margin: 0 auto;
+  max-width: 1380px;
 }
 
 .satisfaction-grid {
@@ -66,9 +20,9 @@
   gap: 22px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1180px;
+  max-width: 1380px;
   overflow-x: auto;
-  padding: 10px clamp(14px, 4vw, 58px) 24px;
+  padding: 10px 4px 24px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
