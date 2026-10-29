@@ -69,10 +69,12 @@
 }
 
 .testimonial-card {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   background: var(--ivory);
-  border: 1px solid rgba(31, 53, 24, 0.14);
+  border: 1px solid rgba(31, 53, 24, 0.16);
   border-radius: 30px;
-  box-shadow: 0 22px 52px rgba(31, 53, 24, 0.1);
+  box-shadow: 0 24px 54px rgba(31, 53, 24, 0.12);
   display: grid;
   flex: 0 0 min(430px, 82vw);
   gap: 18px;
@@ -100,12 +102,20 @@
   position: absolute;
   right: 22px;
   top: 10px;
+  transition: color 360ms ease, transform 360ms var(--ease-spring);
   z-index: 0;
 }
 
 .testimonial-card:hover {
   border-color: var(--gold);
-  box-shadow: 0 30px 68px rgba(31, 53, 24, 0.18);
+  box-shadow:
+    0 32px 72px rgba(31, 53, 24, 0.2),
+    0 0 24px rgba(195, 155, 95, 0.2);
+}
+
+.testimonial-card:hover::after {
+  color: rgba(195, 155, 95, 0.35);
+  transform: scale(1.08) rotate(-4deg);
 }
 
 .review-card-head {

@@ -1,4 +1,4 @@
-/* Görsel Şölen (Spectacle) Atmosfer, İmleç ve Sahne Koreografisi */
+/* Görsel Şölen (Spectacle) Atmosfer, Sahne Koreografisi & Mikro-Etkileşimler */
 
 .spectacle-scroll-progress {
   background: linear-gradient(90deg, var(--green), var(--gold), var(--rose));
@@ -12,6 +12,21 @@
   transform: scaleX(var(--scroll-progress, 0));
   transform-origin: 0 50%;
   z-index: 120;
+}
+
+.spectacle-scroll-progress::after {
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 12px 3px var(--gold),
+    0 0 24px 6px rgba(111, 167, 43, 0.6);
+  content: "";
+  height: 8px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 8px;
 }
 
 .spectacle-ambient {
@@ -92,14 +107,15 @@
   }
 }
 
-/* Sahneye Giriş (Scroll Reveal) Koreografisi */
+/* Kademeli Sahneye Giriş (Scroll Reveal) Koreografisi */
 html.has-spectacle-js .spectacle-reveal {
   opacity: 0;
-  transform: translate3d(0, 38px, 0) scale(0.975);
+  transform: translate3d(0, 36px, 0) scale(0.98);
   transition:
-    opacity 820ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 820ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 880ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 880ms cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
 }
 
 html.has-spectacle-js .spectacle-reveal.is-visible {
@@ -108,13 +124,13 @@ html.has-spectacle-js .spectacle-reveal.is-visible {
 }
 
 .spectacle-hero-title {
-  animation: hero-title-entrance 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: hero-title-entrance 920ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes hero-title-entrance {
   0% {
     opacity: 0;
-    transform: translate3d(0, 24px, 0) scale(0.97);
+    transform: translate3d(0, 26px, 0) scale(0.97);
   }
   100% {
     opacity: 1;
@@ -122,13 +138,184 @@ html.has-spectacle-js .spectacle-reveal.is-visible {
   }
 }
 
-.spectacle-interactive-card.is-pointer-active,
-.spectacle-magnetic.is-pointer-active {
+/* İnteraktif 3D Tilt & Dinamik Spotlight Işıltısı */
+.spectacle-interactive-card {
+  position: relative;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  transition:
+    transform 160ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 420ms var(--ease-out-expo),
+    border-color 360ms ease,
+    background-color 360ms ease;
+  will-change: transform;
+}
+
+/* Kart İç Spotlight Işığı (Farenin Koordinatlarını İzleyen Parlak Hüzme) */
+.spectacle-interactive-card::before {
+  background: radial-gradient(
+    440px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(195, 155, 95, 0.18) 0%,
+    rgba(111, 167, 43, 0.08) 38%,
+    transparent 72%
+  );
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 360ms ease;
+  z-index: 2;
+}
+
+/* Kart Kenarlık Spotlight Işıltısı (Lüks İnce Kristal Çerçeve) */
+.spectacle-interactive-card::after {
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(195, 155, 95, 0.72) 0%,
+    rgba(111, 167, 43, 0.32) 40%,
+    transparent 72%
+  );
+  border-radius: inherit;
+  content: "";
+  inset: -1px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  padding: 1px;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 360ms ease;
+  z-index: 3;
+}
+
+.spectacle-interactive-card.is-pointer-active::before,
+.spectacle-interactive-card.is-pointer-active::after {
+  opacity: 1;
+}
+
+.spectacle-interactive-card.is-pointer-active {
   transition:
     transform 90ms linear,
     box-shadow 360ms var(--ease-out-expo),
     border-color 320ms ease,
     background-color 320ms ease !important;
+}
+
+/* Butonlarda Lüks Sheen / Shimmer Işık Geçişi */
+.btn-luxe,
+.button,
+.nav-cta,
+.venue-panel__cta,
+.review-heading a {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxe::after,
+.button::after,
+.nav-cta::after,
+.venue-panel__cta::after,
+.review-heading a::after {
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0) 36%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0) 64%,
+    transparent 80%
+  );
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-120%);
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+
+.btn-luxe:hover::after,
+.button:hover::after,
+.nav-cta:hover::after,
+.venue-panel__cta:hover::after,
+.review-heading a:hover::after {
+  transform: translateX(120%);
+}
+
+/* Birincil Aksiyon Butonunda Nefes Alan Altın Parıltı */
+@keyframes luxe-gold-pulse {
+  0%, 100% {
+    box-shadow: 0 16px 36px rgba(195, 155, 95, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  }
+  50% {
+    box-shadow: 0 22px 52px rgba(195, 155, 95, 0.54), 0 0 28px rgba(195, 155, 95, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  }
+}
+
+.btn-luxe--gold,
+.button.primary {
+  animation: luxe-gold-pulse 4.5s ease-in-out infinite;
+}
+
+/* Manyetik Elemanlar */
+.spectacle-magnetic {
+  transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0);
+  transition: transform 380ms var(--ease-out-expo);
+  will-change: transform;
+}
+
+.spectacle-magnetic.is-pointer-active {
+  transition: transform 80ms linear !important;
+}
+
+/* Akıcı Tipografik Altın Işık Dalgası */
+@keyframes text-shimmer-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cinema-title__line--accent,
+.review-heading h2 span,
+.contact-heading h2 {
+  background: linear-gradient(
+    130deg,
+    var(--ivory) 0%,
+    #f2dbab 25%,
+    var(--gold) 50%,
+    #e8bd78 75%,
+    var(--sage) 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer-flow 8s ease-in-out infinite;
+}
+
+/* Dokunmatik ve İndirgenmiş Hareket Koruması (Mobil & A11y) */
+@media (hover: none) or (pointer: coarse) {
+  .spectacle-interactive-card {
+    transform: none !important;
+    transition: box-shadow 320ms ease, border-color 320ms ease;
+  }
+
+  .spectacle-interactive-card::before,
+  .spectacle-interactive-card::after {
+    display: none !important;
+  }
+
+  .spectacle-magnetic {
+    transform: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -137,7 +324,12 @@ html.has-spectacle-js .spectacle-reveal.is-visible {
   }
 
   .spectacle-orb,
-  .spectacle-hero-title {
+  .spectacle-hero-title,
+  .btn-luxe--gold,
+  .button.primary,
+  .cinema-title__line--accent,
+  .review-heading h2 span,
+  .contact-heading h2 {
     animation: none !important;
   }
 

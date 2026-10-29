@@ -384,7 +384,7 @@ function initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer) 
   }
 
   const interactiveCards = document.querySelectorAll(
-    ".service-card, .package-card, .testimonial-card, .contact-channel, .garden-gallery figure, .garden-other-card, .garden-video-card, .garden-detail-cta"
+    ".service-card, .package-card, .testimonial-card, .contact-channel, .venue-panel, .cinema-switcher__item, .menu-row, .faq-item, .garden-gallery figure, .garden-other-card, .garden-video-card, .garden-detail-cta"
   );
 
   interactiveCards.forEach((card) => {
@@ -460,7 +460,7 @@ function initMagneticElements(prefersReducedMotion, isCoarsePointer) {
   }
 
   const magneticTargets = document.querySelectorAll(
-    ".btn-luxe, .button, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
+    ".btn-luxe, .button, .nav-cta, .venue-panel__cta, .review-heading a, .contact-phone, .garden-hero-primary, .garden-detail-back, .contact-map-bar a, .garden-gallery-toggle"
   );
 
   magneticTargets.forEach((el) => {
@@ -527,6 +527,7 @@ function initParallaxHero(prefersReducedMotion, isCoarsePointer) {
 
   const heroContainer = document.querySelector(".cinema-hero, .garden-detail-hero");
   const heroImages = heroContainer?.querySelectorAll(".cinema-hero__bg-img, picture img, :scope > img");
+  const heroStage = heroContainer?.querySelector(".cinema-hero__stage, .garden-detail-hero > div");
 
   if (!heroContainer || !heroImages || heroImages.length === 0) {
     return;
@@ -556,10 +557,13 @@ function initParallaxHero(prefersReducedMotion, isCoarsePointer) {
       return;
     }
     const progress = Math.min(Math.max(-relativeTop / heroHeight, -0.3), 1);
-    const translateY = `${(progress * 42).toFixed(1)}px`;
+    const translateY = `${(progress * 48).toFixed(1)}px`;
     heroImages.forEach((img) => {
       img.style.setProperty("--hero-parallax-y", translateY);
     });
+    if (heroStage) {
+      heroStage.style.setProperty("--hero-stage-y", `${(-progress * 22).toFixed(1)}px`);
+    }
   };
 
   const requestParallax = () => {
