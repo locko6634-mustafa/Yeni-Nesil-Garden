@@ -72,8 +72,7 @@
 
 .contact-map-bar {
   align-items: center;
-  backdrop-filter: blur(22px) saturate(160%);
-  background: rgba(255, 253, 247, 0.94);
+  background: rgba(255, 253, 247, 0.96);
   border: 1px solid rgba(31, 53, 24, 0.14);
   border-radius: 20px;
   bottom: 16px;

@@ -16,7 +16,6 @@
 }
 
 .package-switch {
-  backdrop-filter: blur(22px);
   background: var(--ivory);
   border: 1px solid rgba(31, 53, 24, 0.16);
   border-radius: 999px;
@@ -145,8 +144,7 @@
 }
 
 .package-cover span {
-  backdrop-filter: blur(12px);
-  background: rgba(18, 26, 16, 0.76);
+  background: rgba(18, 26, 16, 0.86);
   border: 1px solid rgba(195, 155, 95, 0.55);
   border-radius: 999px;
   color: var(--gold);

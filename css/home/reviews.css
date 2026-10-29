@@ -69,7 +69,6 @@
 }
 
 .testimonial-card {
-  backdrop-filter: blur(22px) saturate(160%);
   background: var(--ivory);
   border: 1px solid rgba(31, 53, 24, 0.14);
   border-radius: 30px;
