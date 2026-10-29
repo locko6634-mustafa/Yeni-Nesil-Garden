@@ -287,7 +287,9 @@ function initScrollReveals(prefersReducedMotion) {
     ".contact-map",
     ".contact-channel",
     ".contact-phone",
+    ".garden-gallery",
     ".garden-video-card",
+    ".garden-video-empty",
     ".garden-other-card",
     ".garden-detail-cta"
   ];
@@ -336,7 +338,7 @@ function initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer) 
   }
 
   const interactiveCards = document.querySelectorAll(
-    ".service-card, .package-card, .testimonial-card, .contact-channel, .garden-other-card, .garden-video-card"
+    ".service-card, .package-card, .testimonial-card, .contact-channel, .garden-gallery figure, .garden-other-card, .garden-video-card, .garden-detail-cta"
   );
 
   interactiveCards.forEach((card) => {
