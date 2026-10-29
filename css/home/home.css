@@ -270,13 +270,13 @@ html.is-scrolled .nav {
   border-top: 1px solid rgba(255, 253, 247, 0.18);
   display: grid;
   gap: 24px;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: 1fr;
   padding-top: 26px;
 }
 
 .cinema-switcher {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
@@ -318,43 +318,6 @@ html.is-scrolled .nav {
   background: rgba(195, 155, 95, 0.22);
   border-color: var(--gold);
   transform: translateY(-3px);
-}
-
-.cinema-metrics {
-  backdrop-filter: blur(18px);
-  background: rgba(18, 26, 16, 0.56);
-  border: 1px solid rgba(255, 253, 247, 0.14);
-  border-radius: 20px;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding: 14px 18px;
-}
-
-.cinema-metric {
-  border-left: 1px solid rgba(255, 253, 247, 0.14);
-  display: grid;
-  gap: 2px;
-  padding-left: 12px;
-}
-
-.cinema-metric:first-child {
-  border-left: 0;
-  padding-left: 0;
-}
-
-.cinema-metric strong {
-  color: var(--gold);
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 1.38rem;
-  line-height: 1.05;
-}
-
-.cinema-metric span {
-  color: rgba(255, 253, 247, 0.72);
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1.25;
 }
 
 /* SONSUZ BOTANİK MARQUEE ŞERİDİ */

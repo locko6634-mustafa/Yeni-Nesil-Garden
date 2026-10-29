@@ -65,24 +65,8 @@
 .venue-panel__top {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
-}
-
-.venue-panel__num {
-  align-items: center;
-  backdrop-filter: blur(14px);
-  background: rgba(255, 253, 247, 0.16);
-  border: 1px solid rgba(255, 253, 247, 0.35);
-  border-radius: 50%;
-  color: var(--ivory);
-  display: inline-flex;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 1rem;
-  font-weight: 800;
-  height: 46px;
-  justify-content: center;
-  width: 46px;
 }
 
 .venue-panel__pill {

@@ -282,7 +282,6 @@ function initScrollReveals(prefersReducedMotion) {
     ".package-switch",
     ".package-card",
     ".menu-row",
-    ".couples-filmstrip__item",
     ".testimonial-card",
     ".faq-item",
     ".contact-map",
