@@ -52,19 +52,23 @@
   margin-left: 5px;
 }
 
-
 .satisfaction {
-  background: #f4f4f4;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(195, 155, 95, 0.16), transparent 36rem),
+    radial-gradient(circle at 82% 80%, rgba(111, 167, 43, 0.14), transparent 36rem),
+    linear-gradient(180deg, rgba(232, 242, 220, 0.45), rgba(245, 246, 239, 0.85));
+  border-block: 1px solid rgba(31, 53, 24, 0.1);
+  position: relative;
 }
 
 .satisfaction-grid {
   display: flex;
-  gap: 18px;
+  gap: 22px;
   margin-left: auto;
   margin-right: auto;
   max-width: 1180px;
   overflow-x: auto;
-  padding: 4px clamp(14px, 4vw, 58px) 18px;
+  padding: 10px clamp(14px, 4vw, 58px) 24px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }

@@ -1,17 +1,22 @@
 .contact {
-  background: var(--deep);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 38px;
-  box-shadow: 0 30px 80px rgba(18, 26, 16, 0.24);
-  margin-bottom: 48px;
-  margin-top: 22px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(195, 155, 95, 0.24), transparent 34rem),
+    radial-gradient(circle at 12% 88%, rgba(111, 167, 43, 0.2), transparent 34rem),
+    linear-gradient(145deg, #162811 0%, var(--deep) 58%, #243d1c 100%);
+  border: 1px solid rgba(255, 253, 247, 0.18);
+  border-radius: 42px;
+  box-shadow:
+    0 36px 96px rgba(14, 24, 10, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  margin-bottom: 56px;
+  margin-top: 28px;
   overflow: hidden;
-  padding: clamp(30px, 5vw, 58px);
+  padding: clamp(32px, 5vw, 64px);
   position: relative;
 }
 
 .contact::before {
-  background: radial-gradient(circle, rgba(168, 190, 141, 0.24) 0%, rgba(168, 190, 141, 0) 68%);
+  background: radial-gradient(circle, rgba(168, 190, 141, 0.28) 0%, rgba(168, 190, 141, 0) 68%);
   content: "";
   height: 520px;
   pointer-events: none;
@@ -26,39 +31,44 @@
   display: grid;
   gap: 34px;
   grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
-  margin-bottom: 34px;
+  margin-bottom: 38px;
   position: relative;
 }
 
 .contact-heading h2 {
+  background: linear-gradient(135deg, var(--ivory) 0%, #f1d9ad 65%, var(--sage) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   color: var(--ivory);
+  -webkit-text-fill-color: transparent;
   font-size: clamp(2.7rem, 5vw, 4.45rem);
   margin-bottom: 0;
   max-width: 720px;
 }
 
 .contact-heading > p {
-  color: rgba(255, 253, 247, 0.72);
-  font-size: 1.04rem;
+  color: rgba(255, 253, 247, 0.78);
+  font-size: 1.06rem;
   line-height: 1.65;
 }
 
 .contact .eyebrow {
-  color: #d9bc8e;
+  color: #e6c693;
 }
 
 .contact-layout {
   display: grid;
-  gap: 20px;
+  gap: 22px;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
   position: relative;
 }
 
 .contact-map {
   background: var(--ivory);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 26px;
-  min-height: 440px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(8, 16, 6, 0.28);
+  min-height: 450px;
   overflow: hidden;
   position: relative;
 }
@@ -67,25 +77,25 @@
   border: 0;
   display: block;
   height: 100%;
-  min-height: 440px;
+  min-height: 450px;
   width: 100%;
 }
 
 .contact-map-bar {
   align-items: center;
-  backdrop-filter: blur(18px) saturate(140%);
-  background: rgba(255, 253, 247, 0.93);
-  border: 1px solid rgba(31, 53, 24, 0.12);
-  border-radius: 18px;
-  bottom: 14px;
-  box-shadow: 0 16px 38px rgba(18, 26, 16, 0.16);
+  backdrop-filter: blur(22px) saturate(160%);
+  background: rgba(255, 253, 247, 0.94);
+  border: 1px solid rgba(31, 53, 24, 0.14);
+  border-radius: 20px;
+  bottom: 16px;
+  box-shadow: 0 18px 42px rgba(18, 26, 16, 0.22);
   display: flex;
   gap: 18px;
   justify-content: space-between;
-  left: 14px;
-  padding: 14px 16px;
+  left: 16px;
+  padding: 14px 18px;
   position: absolute;
-  right: 14px;
+  right: 16px;
 }
 
 .contact-map-bar div {
@@ -97,18 +107,20 @@
   color: var(--rose);
   font-size: 0.68rem;
   font-weight: 900;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .contact-map-bar strong {
   color: var(--deep);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
 }
 
 .contact-map-bar a {
   align-items: center;
-  background: var(--deep);
-  border-radius: 14px;
+  background: linear-gradient(135deg, var(--deep), #2e4e23);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(31, 53, 24, 0.22);
   color: #fff;
   display: inline-flex;
   flex: 0 0 auto;
@@ -116,49 +128,93 @@
   font-weight: 900;
   gap: 8px;
   min-height: 44px;
-  padding: 0 15px;
+  padding: 0 18px;
+  transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0);
+  transition: transform 320ms var(--ease-out-expo), box-shadow 320ms ease;
+}
+
+.contact-map-bar a:hover {
+  box-shadow: 0 14px 30px rgba(31, 53, 24, 0.34);
+  transform: translate3d(var(--mag-x, 0px), calc(var(--mag-y, 0px) - 2px), 0);
 }
 
 .contact-channels {
   display: grid;
-  gap: 14px;
+  gap: 16px;
   grid-template-rows: 1fr 1fr auto;
 }
 
 .contact-channel {
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 26px;
+  box-shadow:
+    0 20px 44px rgba(10, 18, 8, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
   color: #fff;
   display: grid;
   gap: 16px;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 150px;
-  padding: 22px;
-  transition: border-color 180ms ease, transform 180ms ease;
+  isolation: isolate;
+  min-height: 154px;
+  overflow: hidden;
+  padding: 24px;
+  position: relative;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition:
+    border-color 360ms ease,
+    transform 420ms var(--ease-out-expo),
+    box-shadow 420ms var(--ease-out-expo);
+}
+
+.contact-channel::before {
+  background: radial-gradient(
+    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(255, 255, 255, 0.22),
+    transparent 72%
+  );
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 360ms ease;
+  z-index: 0;
+}
+
+.contact-channel:hover::before {
+  opacity: 1;
 }
 
 .contact-channel:hover {
-  border-color: rgba(255, 255, 255, 0.36);
-  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.48);
+  box-shadow: 0 26px 56px rgba(8, 15, 6, 0.36);
 }
 
 .contact-channel-whatsapp {
-  background: #2c6b43;
+  background: linear-gradient(135deg, #2c6b43 0%, #3b8856 100%);
 }
 
 .contact-channel-instagram {
-  background: #8e574f;
+  background: linear-gradient(135deg, #8e574f 0%, var(--rose) 55%, var(--gold) 140%);
 }
 
 .contact-icon {
   align-items: center;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 18px;
   display: flex;
-  height: 54px;
+  height: 58px;
   justify-content: center;
-  width: 54px;
+  position: relative;
+  transition: transform 420ms var(--ease-spring);
+  width: 58px;
+  z-index: 1;
+}
+
+.contact-channel:hover .contact-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .contact-icon svg {
@@ -169,46 +225,68 @@
 
 .contact-channel-copy {
   display: grid;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-channel-copy small {
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 0.72rem;
   font-weight: 800;
-  margin-bottom: 5px;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
   text-transform: uppercase;
 }
 
 .contact-channel-copy strong {
   font-family: var(--font-display), Georgia, serif;
-  font-size: 1.34rem;
+  font-size: 1.4rem;
   line-height: 1.08;
 }
 
 .contact-channel-copy > span {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.9rem;
-  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  margin-top: 6px;
 }
 
 .contact-arrow {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
+  position: relative;
+  transition: transform 320ms var(--ease-spring);
+  z-index: 1;
+}
+
+.contact-channel:hover .contact-arrow {
+  transform: translate(3px, -3px);
 }
 
 .contact-phone {
   align-items: center;
+  backdrop-filter: blur(16px);
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  color: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.82);
   display: flex;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   justify-content: space-between;
-  min-height: 58px;
-  padding: 12px 16px;
+  min-height: 62px;
+  padding: 12px 20px;
+  transition:
+    background-color 280ms ease,
+    border-color 280ms ease,
+    transform 280ms var(--ease-out-expo);
+}
+
+.contact-phone:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(195, 155, 95, 0.55);
+  transform: translateY(-2px);
 }
 
 .contact-phone strong {
-  color: #fff;
-  font-size: 0.94rem;
+  color: var(--ivory);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
 }
