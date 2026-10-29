@@ -28,7 +28,7 @@ const sections = await Promise.all(
 function minifyCss(css) {
   return css
     .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\s*([\{\}\:\;\,\>\~])\s*/g, "$1")
+    .replace(/\s*([\{\}\:\;\,\>\+\~])\s*/g, "$1")
     .replace(/;;+/g, ";")
     .trim();
 }
