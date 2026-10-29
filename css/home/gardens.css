@@ -65,48 +65,10 @@
   z-index: -1;
 }
 
-.venue-panel__top {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.venue-panel__pill {
-  background: rgba(18, 26, 16, 0.78);
-  border: 1px solid rgba(195, 155, 95, 0.48);
-  border-radius: 999px;
-  color: var(--gold);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  opacity: 0;
-  padding: 7px 14px;
-  text-transform: uppercase;
-  transform: translateY(-8px);
-  transition: opacity 380ms ease, transform 380ms ease;
-  white-space: nowrap;
-}
-
-.venue-panel.is-active .venue-panel__pill,
-.venue-panel:hover .venue-panel__pill,
-.venue-panel:focus-visible .venue-panel__pill {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .venue-panel__content {
   display: grid;
   gap: 10px;
   margin-top: auto;
-}
-
-.venue-panel__kicker {
-  color: var(--gold);
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 }
 
 .venue-panel h3 {

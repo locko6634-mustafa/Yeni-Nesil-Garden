@@ -13,8 +13,7 @@
     min-height: 420px;
   }
 
-  .venue-panel .venue-panel__desc,
-  .venue-panel .venue-panel__pill {
+  .venue-panel .venue-panel__desc {
     max-height: 140px;
     opacity: 1;
     transform: none;
