@@ -10,7 +10,6 @@ export function initVisualSpectacle() {
   initScrollReveals(prefersReducedMotion);
   initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer);
   initMagneticElements(prefersReducedMotion, isCoarsePointer);
-  initCustomCursor(prefersReducedMotion, isCoarsePointer);
   initParallaxHero(prefersReducedMotion);
   initAnimatedNumbers(prefersReducedMotion);
   initPackageSwitchIndicator();
@@ -293,85 +292,6 @@ function initMagneticElements(prefersReducedMotion, isCoarsePointer) {
       el.style.setProperty("--mag-x", "0px");
       el.style.setProperty("--mag-y", "0px");
     });
-  });
-}
-
-function initCustomCursor(prefersReducedMotion, isCoarsePointer) {
-  if (prefersReducedMotion || isCoarsePointer) {
-    return;
-  }
-
-  const cursor = document.createElement("div");
-  cursor.className = "spectacle-cursor";
-  cursor.setAttribute("aria-hidden", "true");
-
-  const cursorDot = document.createElement("div");
-  cursorDot.className = "spectacle-cursor__dot";
-  const cursorRing = document.createElement("div");
-  cursorRing.className = "spectacle-cursor__ring";
-  const cursorLabel = document.createElement("span");
-  cursorLabel.className = "spectacle-cursor__label";
-
-  cursorRing.append(cursorLabel);
-  cursor.append(cursorDot, cursorRing);
-  document.body.append(cursor);
-
-  let targetX = -100;
-  let targetY = -100;
-  let ringX = -100;
-  let ringY = -100;
-  let isActive = false;
-
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      cursorDot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
-
-      if (!isActive) {
-        isActive = true;
-        ringX = targetX;
-        ringY = targetY;
-        cursor.classList.add("is-visible");
-      }
-    },
-    { passive: true }
-  );
-
-  const animateRing = () => {
-    ringX += (targetX - ringX) * 0.18;
-    ringY += (targetY - ringY) * 0.18;
-    cursorRing.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0)`;
-    window.requestAnimationFrame(animateRing);
-  };
-  window.requestAnimationFrame(animateRing);
-
-  document.addEventListener("pointerover", (e) => {
-    const interactive = e.target.closest(
-      "a, button, summary, label, .garden-card, .service-card, .garden-other-card, .garden-video-card"
-    );
-
-    if (!interactive) {
-      cursor.classList.remove("is-hovering", "has-label");
-      cursorLabel.textContent = "";
-      return;
-    }
-
-    cursor.classList.add("is-hovering");
-    if (interactive.matches(".garden-card, .garden-other-card")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "Keşfet";
-    } else if (interactive.matches(".garden-gallery-open")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "Büyüt";
-    } else if (interactive.matches(".garden-video-play, .garden-video-card")) {
-      cursor.classList.add("has-label");
-      cursorLabel.textContent = "İzle";
-    } else {
-      cursor.classList.remove("has-label");
-      cursorLabel.textContent = "";
-    }
   });
 }
 
