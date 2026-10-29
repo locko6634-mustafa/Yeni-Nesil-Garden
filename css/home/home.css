@@ -315,49 +315,6 @@ html.is-scrolled .nav {
   transform: translateY(-3px);
 }
 
-/* SONSUZ BOTANİK MARQUEE ŞERİDİ */
-.botanical-marquee {
-  background: var(--deep);
-  border-bottom: 1px solid rgba(195, 155, 95, 0.28);
-  border-top: 1px solid rgba(195, 155, 95, 0.28);
-  color: var(--ivory);
-  overflow: hidden;
-  padding: 18px 0;
-  position: relative;
-  z-index: 3;
-}
-
-.botanical-marquee__track {
-  align-items: center;
-  animation: marquee-scroll 38s linear infinite;
-  display: flex;
-  gap: 28px;
-  width: max-content;
-}
-
-.botanical-marquee__track span {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 0.96rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.botanical-marquee__track i {
-  color: var(--gold);
-  font-style: normal;
-}
-
-@keyframes marquee-scroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
 /* Yardımcı görsel yuvaları */
 .image-slot,
 .video-slot {

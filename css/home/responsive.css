@@ -268,19 +268,6 @@
     font-size: 0.98rem;
   }
 
-  .botanical-marquee {
-    padding: 13px 0;
-  }
-
-  .botanical-marquee__track {
-    gap: 20px;
-  }
-
-  .botanical-marquee__track span {
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-  }
-
   .venues-accordion,
   .services-bento,
   .services-grid {
