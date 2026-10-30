@@ -158,6 +158,7 @@ jobs:
             ServerAliveCountMax 4
             ConnectTimeout 30
             TCPKeepAlive yes
+            KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
           EOF
           chmod 600 "$HOME/.ssh/config"
 
@@ -170,6 +171,7 @@ jobs:
             -p "$SERVER_PORT" \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
+            -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org \
             -o ServerAliveInterval=15 \
             -o ServerAliveCountMax=4 \
             -o ConnectTimeout=30 \
@@ -181,7 +183,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ssh_opts="-v -i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
+          ssh_opts="-i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
 
           synced=false
           for attempt in 1 2 3; do
@@ -217,6 +219,7 @@ jobs:
             -p "$SERVER_PORT" \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
+            -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org \
             -o ServerAliveInterval=15 \
             -o ServerAliveCountMax=4 \
             -o ConnectTimeout=30 \
