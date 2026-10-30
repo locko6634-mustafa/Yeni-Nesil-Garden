@@ -161,12 +161,27 @@ jobs:
           EOF
           chmod 600 "$HOME/.ssh/config"
 
+      - name: Test SSH connection
+        if: steps.deployment.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh -v -i "$HOME/.ssh/id_ed25519" \
+            -p "$SERVER_PORT" \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=4 \
+            -o ConnectTimeout=30 \
+            -o TCPKeepAlive=yes \
+            "$SERVER_USER@$SERVER_HOST" "echo 'SSH connection verified successfully on host \$(hostname)'"
+
       - name: Sync static site
         if: steps.deployment.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          ssh_opts="-i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
+          ssh_opts="-v -i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
 
           synced=false
           for attempt in 1 2 3; do
