@@ -24,82 +24,15 @@
 }
 
 .gastronomy-stage {
-  align-items: start;
-  display: grid;
-  gap: 38px;
-  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
-}
-
-.gastronomy-preview {
-  position: sticky;
-  top: 124px;
-}
-
-.gastronomy-preview__frame {
-  aspect-ratio: 1 / 1;
-  border: 2px solid rgba(195, 155, 95, 0.55);
-  border-radius: 34px;
-  box-shadow:
-    0 32px 76px rgba(0, 0, 0, 0.46),
-    0 0 36px rgba(195, 155, 95, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  overflow: hidden;
-  position: relative;
-}
-
-.gastronomy-preview__frame img {
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 680ms var(--ease-out-expo), opacity 320ms ease;
+  margin: 0 auto;
+  max-width: 880px;
   width: 100%;
-}
-
-.gastronomy-preview__frame::after {
-  background: linear-gradient(180deg, transparent 48%, rgba(12, 20, 9, 0.88) 100%);
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.gastronomy-preview__badge {
-  bottom: 24px;
-  color: var(--ivory);
-  display: grid;
-  gap: 4px;
-  left: 24px;
-  position: absolute;
-  right: 24px;
-  z-index: 2;
-}
-
-.gastronomy-preview__badge small {
-  color: var(--gold);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.gastronomy-preview__badge strong {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 1.85rem;
-  line-height: 1.05;
-}
-
-.gastronomy-preview__note {
-  background: rgba(255, 253, 247, 0.06);
-  border: 1px solid rgba(255, 253, 247, 0.14);
-  border-radius: 20px;
-  color: rgba(255, 253, 247, 0.82);
-  font-size: 0.88rem;
-  margin-top: 16px;
-  padding: 16px 20px;
 }
 
 .menu-list {
   display: grid;
   gap: 14px;
+  width: 100%;
 }
 
 .menu-row {

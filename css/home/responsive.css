@@ -19,13 +19,6 @@
     transform: none;
   }
 
-  .gastronomy-stage {
-    grid-template-columns: 1fr;
-  }
-
-  .gastronomy-preview {
-    display: none;
-  }
 
   .services-bento,
   .services-grid {

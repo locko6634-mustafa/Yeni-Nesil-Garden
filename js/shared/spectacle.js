@@ -8,7 +8,6 @@ export function initVisualSpectacle() {
   initAmbientAtmosphere(prefersReducedMotion, isCoarsePointer);
   initHeroCinemaSwitcher(prefersReducedMotion);
   initVenuesAccordion();
-  initGastronomyPreview();
   initTypographyChoreography(prefersReducedMotion);
   initScrollReveals(prefersReducedMotion);
   initInteractiveTiltAndSpotlight(prefersReducedMotion, isCoarsePointer);
@@ -125,44 +124,6 @@ function initVenuesAccordion() {
   });
 }
 
-function initGastronomyPreview() {
-  const previewImg = document.getElementById("gastronomy-active-img");
-  const previewCat = document.getElementById("gastronomy-active-cat");
-  const previewTitle = document.getElementById("gastronomy-active-title");
-  const menuRows = Array.from(document.querySelectorAll(".menu-row[data-menu-img]"));
-
-  if (!previewImg || !previewCat || !previewTitle || menuRows.length === 0) {
-    return;
-  }
-
-  const updatePreview = (row) => {
-    const nextSrc = row.getAttribute("data-menu-img");
-    const nextCat = row.getAttribute("data-menu-cat");
-    const nextTitle = row.getAttribute("data-menu-title");
-
-    if (nextSrc && previewImg.getAttribute("src") !== nextSrc) {
-      previewImg.style.opacity = "0.35";
-      previewImg.style.transform = "scale(1.06)";
-      window.setTimeout(() => {
-        previewImg.setAttribute("src", nextSrc);
-        previewImg.style.opacity = "1";
-        previewImg.style.transform = "scale(1)";
-      }, 150);
-    }
-
-    if (nextCat) previewCat.textContent = nextCat;
-    if (nextTitle) previewTitle.textContent = nextTitle;
-  };
-
-  menuRows.forEach((row) => {
-    row.addEventListener("pointerenter", () => updatePreview(row));
-    row.addEventListener("toggle", () => {
-      if (row.open) {
-        updatePreview(row);
-      }
-    });
-  });
-}
 
 function createGlowSprite(coreColor, midColor) {
   const size = 32;
@@ -323,7 +284,6 @@ function initScrollReveals(prefersReducedMotion) {
     ".faq-heading",
     ".contact-heading",
     ".venue-panel",
-    ".gastronomy-preview",
     ".service-card",
     ".package-switch",
     ".package-card",
