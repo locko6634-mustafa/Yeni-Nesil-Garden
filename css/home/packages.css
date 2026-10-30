@@ -151,6 +151,11 @@
   width: 100%;
 }
 
+.package-cover--gold img,
+.photo-grid .package-card--featured .package-cover img {
+  object-position: center top;
+}
+
 .package-card:hover .package-cover img {
   transform: scale(1.08);
 }
