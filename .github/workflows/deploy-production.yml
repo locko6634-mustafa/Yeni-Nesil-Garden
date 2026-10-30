@@ -152,21 +152,46 @@ jobs:
           printf '%s\n' "$scanned_host_key" > "$HOME/.ssh/known_hosts"
           chmod 600 "$HOME/.ssh/known_hosts"
 
+          cat << 'EOF' > "$HOME/.ssh/config"
+          Host *
+            ServerAliveInterval 15
+            ServerAliveCountMax 4
+            ConnectTimeout 30
+            TCPKeepAlive yes
+          EOF
+          chmod 600 "$HOME/.ssh/config"
+
       - name: Sync static site
         if: steps.deployment.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          rsync -az --delete --delay-updates \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='.agents/' \
-            --exclude='storage/public-media/videos/' \
-            --exclude='run_server.bat' \
-            --exclude='sunucu_baslat.ps1' \
-            --exclude='tools/' \
-            -e "ssh -i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
-            ./ "$SERVER_USER@$SERVER_HOST:/opt/yesil-nesil-garden/app/"
+          ssh_opts="-i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
+
+          synced=false
+          for attempt in 1 2 3; do
+            echo "Sync attempt $attempt..."
+            if rsync -avz --delete \
+              --exclude='.git/' \
+              --exclude='.github/' \
+              --exclude='.agents/' \
+              --exclude='storage/public-media/videos/' \
+              --exclude='run_server.bat' \
+              --exclude='sunucu_baslat.ps1' \
+              --exclude='tools/' \
+              -e "ssh $ssh_opts" \
+              ./ "$SERVER_USER@$SERVER_HOST:/opt/yesil-nesil-garden/app/"; then
+              synced=true
+              break
+            fi
+            echo "Attempt $attempt failed, retrying in 5 seconds..."
+            sleep 5
+          done
+
+          if [ "$synced" != "true" ]; then
+            echo "rsync failed after 3 attempts" >&2
+            exit 1
+          fi
 
       - name: Build and activate release
         if: steps.deployment.outputs.ready == 'true'
@@ -177,6 +202,10 @@ jobs:
             -p "$SERVER_PORT" \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=4 \
+            -o ConnectTimeout=30 \
+            -o TCPKeepAlive=yes \
             "$SERVER_USER@$SERVER_HOST" \
             "cd /opt/yesil-nesil-garden/app && BUILD_REVISION='$GITHUB_SHA' docker compose -f compose.production.yaml up -d --build --remove-orphans --wait --wait-timeout 90"
 
