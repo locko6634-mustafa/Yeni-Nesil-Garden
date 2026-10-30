@@ -154,8 +154,8 @@ jobs:
 
           cat << 'EOF' > "$HOME/.ssh/config"
           Host *
-            ServerAliveInterval 15
-            ServerAliveCountMax 4
+            ServerAliveInterval 30
+            ServerAliveCountMax 10
             ConnectTimeout 30
             TCPKeepAlive yes
             KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
@@ -167,13 +167,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ssh -v -i "$HOME/.ssh/id_ed25519" \
+          ssh -i "$HOME/.ssh/id_ed25519" \
             -p "$SERVER_PORT" \
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org \
-            -o ServerAliveInterval=15 \
-            -o ServerAliveCountMax=4 \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=10 \
             -o ConnectTimeout=30 \
             -o TCPKeepAlive=yes \
             "$SERVER_USER@$SERVER_HOST" "echo 'SSH connection verified successfully on host \$(hostname)'"
@@ -183,12 +183,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ssh_opts="-i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
+          ssh_opts="-i $HOME/.ssh/id_ed25519 -p $SERVER_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org -o ServerAliveInterval=30 -o ServerAliveCountMax=10 -o ConnectTimeout=30 -o TCPKeepAlive=yes"
 
           synced=false
           for attempt in 1 2 3; do
             echo "Sync attempt $attempt..."
-            if rsync -avz --delete \
+            if rsync -av --timeout=180 --delete \
               --exclude='.git/' \
               --exclude='.github/' \
               --exclude='.agents/' \
@@ -220,8 +220,8 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             -o KexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org \
-            -o ServerAliveInterval=15 \
-            -o ServerAliveCountMax=4 \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=10 \
             -o ConnectTimeout=30 \
             -o TCPKeepAlive=yes \
             "$SERVER_USER@$SERVER_HOST" \
